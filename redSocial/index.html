@@ -1,0 +1,55 @@
+<html lang="es">
+<head>
+  <title>United Games</title> <!--Aqui es donde va el nombre-->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Imports de bootstrap -->
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+  <!--import de w3css-->
+  <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+
+  <!--Imports de AngularJS -->
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
+  
+  <!-- libreria base64 -->
+  <script src="lib/angular-base64.min.js"></script>
+   <script src="lib/angular-utf8-base64.min.js"></script>
+
+  <!--imports propios-->
+  <link rel="stylesheet" href="css/colorTheme.css">
+  <link rel="stylesheet" href="css/estiloAjustes.css">
+  <link rel="stylesheet" href="css/estiloBuscar.css">
+  <link rel="stylesheet" href="css/estiloIndex.css">
+  <link rel="stylesheet" href="css/estiloNovedades.css">
+  <link rel="stylesheet" href="css/estiloPerfil.css">
+  <link rel="stylesheet" href="css/estiloVideojuego.css">
+
+  <!--SCRIPTS PROPIOS-->
+  <!-- estados de la app-->
+  <script src="app.js"></script>
+  <!--servicios-->
+  <script src="javascript/servicios.js"></script>
+  <!--directivas-->
+  <script src="javascript/directivas.js"></script>
+  <!--controladores-->
+  <script src="javascript/controllers/initSesion.js"></script>
+  <script src="javascript/controllers/navbar.js"></script>
+  <script src="javascript/controllers/ajustes.js"></script>
+  <script src="javascript/controllers/novedades.js"></script>
+
+</head>
+
+
+
+<body ng-app="myApp">
+
+  <navbar></navbar>
+  <ui-view></ui-view>
+
+</body>
+</html>

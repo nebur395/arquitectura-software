@@ -1,0 +1,118 @@
+.theme-color {color:#fff !important;background-color:#691A99 !important} /*800*/
+.theme-color2 {color:#fff !important;background-color:#7A1EA1 !important} /*700*/
+.theme-color3 {color:#fff !important;background-color:#9B26Af !important} /*500*/
+.theme-accent {color:rgba(77,77,77,0.7) !important;background-color:#68EFAD !important;
+  border: 1px solid #16d076;padding: 10px 20px;font-weight: 600;} /*action*/
+.theme-accent2 {color:rgba(77,77,77,0.7) !important;background-color: #FF5252 !important;
+  border: 1px solid #d34f4f;padding: 10px 20px;font-weight: 600;} /*action*/
+.theme-accent-s {color:rgba(77,77,77,0.7) !important;background-color:#68EFAD !important;
+  border: 1px solid #16d076;font-weight: 600;} /*action*/
+.theme-color-text {color:#9B26Af !important}
+.theme-color-text-action{color:#46ec9c !important}
+
+body {
+  background-image: url("../img/background.jpg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+/*color de las letras del boton del dropdwon*/
+.navbar-inverse .navbar-nav>li>a {
+  color:#fff;
+}
+/*color de hover del boton home del navbar*/
+.navbar-brand:hover {
+  background-color:#7A1EA1 !important;
+}
+/*color de class=active en los botones navbar*/
+.dropdown-menu>.active>a, .dropdown-menu>.active>a:focus, .dropdown-menu>.active>a:hover {
+  background-color:#7A1EA1 !important;
+}
+/**/
+.active>a, .active>a:focus, .active>a:hover {
+  background-color:#7A1EA1 !important;
+}
+/*color del hover de los botones del navbar*/
+.navbar-inverse .navbar-nav>li>a:focus, .navbar-inverse .navbar-nav>li>a:hover {
+  background-color:#7A1EA1 !important;
+}
+/*color de fondo del dropdown*/
+.dropdown-menu {
+  background-color: #691A99;
+}
+/*color del dropdown pulsado */
+.navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:focus,
+  .navbar-inverse .navbar-nav>.open>a:hover {
+  background-color: #7A1EA1;
+}
+/*color del boton "hover" del dropdown */
+.dropdown-menu>li>a:focus, .dropdown-menu>li>a:hover {
+  background-color: #7A1EA1;
+  color:#fff;
+}
+/*color de letras de opciones del dropdown */
+.dropdown-menu>li>a {
+  color:#fff;
+}
+
+/*Quitar el underline de los links*/
+a:focus, a:hover {
+  text-decoration: none;
+}
+/*posicion en el gif para las estrellas */
+.estrellaOn{
+  width: 16px;
+  height: 16px;
+  background: url("../img/estrellaOn.gif") 0 0;
+}
+.estrellaOff{
+  width: 16px;
+  height: 16px;
+  background: url("../img/estrellaOff.gif") 0 0;
+}
+.cincoEstrella{
+  display: inline-block;
+  margin-bottom: -10px;
+  width: 100px;
+  height: 30px;
+  background: url("../img/valoracion.gif") 0 -334px;
+}
+.cuatroEstrella{
+  display: inline-block;
+  margin-bottom: -10px;
+  width: 100px;
+  height: 30px;
+  background: url("../img/valoracion.gif") 0 -262px;
+}
+.tresEstrella{
+  display: inline-block;
+  margin-bottom: -10px;
+  width: 100px;
+  height: 30px;
+  background: url("../img/valoracion.gif") 0 -189px;
+}
+.dosEstrella{
+  display: inline-block;
+  margin-bottom: -10px;
+  width: 100px;
+  height: 30px;
+  background: url("../img/valoracion.gif") 0 -119px;
+}
+.unaEstrella{
+  display: inline-block;
+  margin-bottom: -10px;
+  width: 100px;
+  height: 30px;
+  background: url("../img/valoracion.gif") 0 -44px;
+}
+/*para que no se quede el primer contenido debajo del navBar*/
+#primerContenido:before {
+  display: block;
+  content: " ";
+  height: 100px;
+  visibility: hidden;
+}
+.font {
+  font-family: Palatins Linotype, serif;
+}

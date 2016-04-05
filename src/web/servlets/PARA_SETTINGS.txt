@@ -1,0 +1,31 @@
+Me llegará un JSON con los siguientes datos cuando el usuario pulse el botón:
+
+id: auth.idUser(),
+nombreUsuario: $scope.nombreUsuario,
+nombreApellidos: $scope.nombreApellidos,
+oldPass: $scope.oldPassword,
+pass: $scope.password,
+rePass: $scope.rePassword
+
+Comprobar que existe nombreUsuario y oldPass y que pass y rePass son iguales.
+
+Devolver un JSON con nombreUsuario, ID y nombreApellidos o un string en caso de fallo.
+
+
+Cuando entre en la página llega petición a otro servlet. Me llega un JSON con la ID del usuario.
+
+Tendré que devolver lo siguiente:
+
+{
+ "seguidores": [
+ {"nombreUsuario":nombreDelUsuario, "id":elIdDelUsuario, "nombreApellidos":elNombreYLosApellidos},
+ {"nombreUsuario":nombreDelUsuario, "id":elIdDelUsuario, "nombreApellidos":elNombreYLosApellidos},
+ {"nombreUsuario":nombreDelUsuario, "id":elIdDelUsuario, "nombreApellidos":elNombreYLosApellidos},
+ ]
+}
+
+
+Si el usuario pulsa el botón de dejar de seguir a otro usuario, me llegará el ID del usuario y el ID del usuario que quiere dejar de seguir.
+No devuelvo nada.
+
+

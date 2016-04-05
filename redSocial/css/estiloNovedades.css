@@ -1,0 +1,26 @@
+#estiloNovedades #cuerpo{
+  background-color:rgb(248, 248, 248);
+  color:rgb(119, 119, 119);
+  font-size:110%;
+  border: 1px solid rgb(231, 231, 231);
+  padding-right: 0;
+  padding-left: 0;
+  box-shadow: 0 0 5px 5px #4d4d4d;
+}
+#estiloNovedades .row {
+  margin: 0 0 1% 0;
+}
+#estiloNovedades h1{
+  color:rgb(69, 69, 69);
+  font-size:250%;
+  text-align:center;
+}
+#estiloNovedades h1:before {
+  display: block;
+  content: " ";
+  height: 100px;
+  visibility: hidden;
+}
+#estiloNovedades #novedades {
+  margin-bottom: 0;
+}

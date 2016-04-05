@@ -1,0 +1,40 @@
+<!--menu -->
+<nav class="navbar navbar-inverse navbar-fixed-top theme-color font">
+  <div class="container-fluid">
+    <!-- NavBar colapsado-->
+    <div class="navbar-header">
+      <!-- Boton de la derecha-->
+      <button ng-if="sesionActiva()" type="button" class="navbar-toggle" data-toggle="collapse"
+              data-target="#myNavbar">
+        <!--Barritas dentro del botón -->
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand theme-color" href="#/novedades" rel="home">
+        UnitedGames <!--Logo pantalla pequeña-->
+      </a>
+    </div>
+    <!-- NavBar por defecto-->
+    <div ng-if="sesionActiva()" class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+        <!-- Boton de Buscar -->
+        <!--TODO | <li ng-class="{ active: isActive('/')}">-->
+        <li>
+          <a href="#">Buscar</a><!--TODO | modificar el link-->
+        </li>
+        <!--Menu desplegable-->
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown">
+            Cuenta<span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+            <!--TODO | <li  ng-class="{ active: isActive('/')}"><a href="#">Ajustes</a></li>-->
+            <li><a href="#/ajustes">Ajustes</a></li>
+            <li><a ng-click="salir()">Salir</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

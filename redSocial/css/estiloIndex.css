@@ -1,0 +1,50 @@
+/*para centrar las cajas*/
+#estiloIndex #outer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+#estiloIndex #outer #container {
+  padding: 15px 25px;
+  width: 100%;
+  max-width: 70%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
+  box-shadow: 0px 0px 5px 5px #4d4d4d;
+}
+/*estilo*/
+#estiloIndex #container {
+  color:rgb(119, 119, 119);
+  font-size:110%;
+}
+#estiloIndex h1{
+  text-align:center;
+  color:rgb(69, 69, 69);
+}
+#estiloIndex #cajaRegistro{
+  border-left: 1px solid rgba(150,150,150,0.6);
+}
+#estiloIndex #botonIniciarSesion {
+  text-align:center;
+  margin-top: 50px;
+}
+#estiloIndex #formIniciarSesion {
+  padding-top: 40px
+}
+
+@media only screen and (max-width: 992px) {
+  #estiloIndex #cajaRegistro {
+    border-left:none;
+  }
+  #estiloIndex #botonIniciarSesion {
+    margin-top: 0px;
+  }
+  #estiloIndex #formIniciarSesion {
+    padding-top: 0px;
+  }
+  #estiloIndex #tituloIniciarSesion {
+    margin-top: 40%;
+  }
+}
