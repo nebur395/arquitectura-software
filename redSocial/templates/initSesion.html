@@ -5,18 +5,15 @@
       <!--caja iniciar sesion-->
       <div class="col-md-6">
         <h1 id="tituloIniciarSesion" class="theme-color-text font">Iniciar sesión</h1>
-        <form id="formIniciarSesion" ng-submit="iniciarSesion()"
-              class="w3-container">
+        <form id="formIniciarSesion" ng-submit="iniciarSesion()" class="w3-container">
           <!--input usuario-->
           <p><label>Usuario:</label>
-            <input type="text" class="w3-input" placeholder=
-                "Introduzca usuario" ng-model="usarioIniciar"
-                   ng-click="hideErrorIniciar()" required></p>
+            <input type="text" class="w3-input" placeholder="Introduzca usuario"
+                   ng-model="usarioIniciar" ng-click="hideErrorIniciar()" required></p>
           <!--input contraseña-->
           <p><label>Contraseña:</label>
-            <input type="password" class="w3-input"
-                   placeholder="Introduzca contraseña" ng-model="pwdIniciar"
-                   ng-click="hideErrorIniciar()" required></p>
+            <input type="password" class="w3-input" placeholder="Introduzca contraseña"
+                   ng-model="pwdIniciar" ng-click="hideErrorIniciar()" required></p>
           <!--submit-->
           <p id="botonIniciarSesion">
             <button type="submit" class="w3-btn w3-round-large theme-accent">
@@ -30,23 +27,19 @@
       <!--caja registrarse-->
       <div class="col-md-6" id="cajaRegistro">
         <h1 class="theme-color-text font">Registrarse</h1>
-        <form ng-submit="registrarse()"
-              class="w3-container">
+        <form ng-submit="registrarse()" class="w3-container">
           <!--input usuario-->
           <p><label>Usuario:</label>
-            <input type="text" class="w3-input" placeholder=
-                "Introduzca usuario" ng-model="usarioRegistrar"
-                   ng-click="hideErrorRegistrar()" required></p>
+            <input type="text" class="w3-input" placeholder="Introduzca usuario"
+                   ng-model="usarioRegistrar" ng-click="hideErrorRegistrar()" required></p>
           <!--input contraseña-->
           <p><label>Contraseña:</label>
-            <input type="password" class="w3-input" A
-                   placeholder="Introduzca contraseña" ng-model="pwd1Registrar"
-                   ng-click="hideErrorRegistrar()" required></p>
+            <input type="password" class="w3-input" placeholder="Introduzca contraseña"
+                   ng-model="pwd1Registrar" ng-click="hideErrorRegistrar()" required></p>
           <!--input contraseña-->
           <p><label>Repetir contraseña:</label>
-            <input type="password" class="w3-input"
-                   placeholder="Repita contraseña"ng-model="pwd2Registrar"
-                   ng-click="hideErrorRegistrar()" required></p>
+            <input type="password" class="w3-input" placeholder="Repita contraseña"
+                   ng-model="pwd2Registrar" ng-click="hideErrorRegistrar()" required></p>
           <!--submit-->
           <p style="text-align:center;">
             <button type="submit" class="w3-btn w3-round-large theme-accent">

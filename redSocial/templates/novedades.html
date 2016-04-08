@@ -8,7 +8,7 @@
       <div class="form-group" style="float: right;">
         <label for="mostrar">Mostrar: </label>
         <select  id="mostrar" class="form-control" ng-model="novedades"
-          ng-options="x for x in mostrar">
+                 ng-options="x for x in mostrar">
         </select>
       </div>
     </div>
@@ -27,10 +27,10 @@
     <div ng-if="novedades == 'Valoraciones'" class="row">
       <ul class="list-group" id="novedades">
         <li class="list-group-item" ng-repeat="valoracion in novedadesValoraciones">
-        <a href="" class="theme-color-text-action">{{valoracion.nombreUsuario}}</a>
-        ({{valoracion.nombreApellidos}}) ha valorado el juego
-        <a href="" class="theme-color-text-action">{{valoracion.juego}}</a>
-        con <span ng-class="valoracion.valoracion"></span></li>
+          <a href="" class="theme-color-text-action">{{valoracion.nombreUsuario}}</a>
+          ({{valoracion.nombreApellidos}}) ha valorado el juego
+          <a href="" class="theme-color-text-action">{{valoracion.juego}}</a>
+          con <span ng-class="valoracion.valoracion"></span></li>
       </ul>
     </div>
 

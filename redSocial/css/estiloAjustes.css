@@ -5,7 +5,7 @@
   border: 1px solid rgb(231, 231, 231);
   padding-right: 0;
   padding-left: 0;
-  box-shadow: 0px 0px 5px 5px #4d4d4d;
+  box-shadow: 0 0 5px 5px #4d4d4d;
 }
 #estiloAjustes #ajustes {
   border-bottom: 1px solid rgba(155, 38, 175,0.6);
