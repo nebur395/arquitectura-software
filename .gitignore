@@ -1,2 +1,17 @@
 apache-tomcat-7.0.68/
 apache-tomcat-7.0.68.tar.gz
+
+# intellij
+*.eml
+*.iml
+*.ipr
+*.iws
+.*.sw?
+.idea
+
+# eclipse specific
+.metadata
+jrebel.lic
+.settings
+.classpath
+.project
