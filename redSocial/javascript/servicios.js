@@ -93,6 +93,12 @@ angular.module('myApp')
         };
     })
 
+    .factory('buscarService', function () {
+        return {
+
+        };
+    })
+
     .factory('ajustesService', function ($http,auth) {
         return {
             cambioAjustes: function(user,callbackExito,callbackError) {
@@ -124,7 +130,7 @@ angular.module('myApp')
                 }).error(function(){
                 });
             },
-            dejarSeguir: function(idUser,idSeguidor) {
+            dejarSeguir: function(idUser,idSeguidor,callbackMensaje,callbackBorrarId) {
                 $http({
                     method: 'POST',
                     url: 'dejarSeguir',
@@ -133,7 +139,8 @@ angular.module('myApp')
                         'Content-Type': 'application/json; charset=UTF-8'
                     }
                 }).success(function(){
-                    
+                    callbackMensaje();
+                    callbackBorrarId(idSeguidor);
                 }).error(function(){
 
                 });
