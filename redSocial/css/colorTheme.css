@@ -116,3 +116,14 @@ a:focus, a:hover {
 .font {
   font-family: Palatins Linotype, serif;
 }
+.navbar-inverse .navbar-nav>li>a {
+  cursor: pointer;
+}
+.dropdown-menu>li>a {
+  cursor: pointer;
+}
+@media only screen and (max-width: 767px) {
+  .navbar-inverse .navbar-nav .open .dropdown-menu>li>a {
+    color: #fff;
+  }
+}
