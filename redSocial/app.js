@@ -2,7 +2,7 @@ angular.module('myApp', ['ui.router','ab-base64'])
 
     .config(function($stateProvider, $urlRouterProvider){
         $stateProvider
-
+            
             .state('novedades', {
                 url: "/novedades",
                 templateUrl: "templates/novedades.html",
@@ -13,6 +13,7 @@ angular.module('myApp', ['ui.router','ab-base64'])
                     }
                 }
             })
+            
             .state('ajustes', {
                 url: "/ajustes",
                 templateUrl: "templates/ajustes.html",
@@ -23,6 +24,7 @@ angular.module('myApp', ['ui.router','ab-base64'])
                     }
                 }
             })
+            
             .state('initSesion', {
                 url: "/initSesion",
                 templateUrl: "templates/initSesion.html",
@@ -33,7 +35,6 @@ angular.module('myApp', ['ui.router','ab-base64'])
                     }
                 }
             });
-            
         
         $urlRouterProvider.otherwise('initSesion');
     });
