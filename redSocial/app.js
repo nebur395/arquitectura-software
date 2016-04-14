@@ -24,6 +24,17 @@ angular.module('myApp', ['ui.router','ab-base64'])
                     }
                 }
             })
+
+            .state('buscar', {
+                url: "/buscar",
+                templateUrl: "templates/buscar.html",
+                controller: "buscarCtrl",
+                onEnter: function($state,auth){
+                    if(!auth.isAuthenticated()){
+                        $state.go('initSesion');
+                    }
+                }
+            })
             
             .state('initSesion', {
                 url: "/initSesion",

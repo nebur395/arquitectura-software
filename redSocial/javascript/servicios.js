@@ -95,7 +95,54 @@ angular.module('myApp')
 
     .factory('buscarService', function () {
         return {
+            buscar: function(callback) {
+                /*$http({
+                    method: 'POST',
+                    url: 'Buscar',
+                    headers: {
+                        'Content-Type': 'application/json; charset=UTF-8'
+                    }
+                }).success(function(data){
+                    callback(data);
 
+                }).error(function(){
+                });*/
+                var videojuegos =  [
+                    {
+                        id: 1,
+                        nombre: "God of war III",
+                        descripcion: "zaragoza",
+                        lanzamiento: "18-03-2010",
+                        desarrolladora: "SCE Studios Santa Mónica",
+                        distribuidora: "Sony Computer Entertainment",
+                        genero: "Acción-aventura",
+                        plataforma: "PlayStation 3, PlayStation 4",
+                        valoracion: "cuatroEstrella",
+                    },
+                    {
+                        id: 2,
+                        nombre: "The last of us",
+                        descripcion: "zaragoza",
+                        lanzamiento: "14-06-2013",
+                        desarrolladora: "Naughty Dog",
+                        distribuidora: "Sony Computer Entertainment",
+                        genero: "Survival horror, Acción-aventura",
+                        plataforma: "PlayStation 3, PlayStation 4",
+                        valoracion: "cincoEstrella",
+                    },
+                    {
+                        id: 3,
+                        nombre: "Guild Wars 2",
+                        descripcion: "zaragoza",
+                        lanzamiento: "28-08-2012",
+                        desarrolladora: "ArenaNet",
+                        distribuidora: "NCosft",
+                        genero: "MMORPG",
+                        plataforma: "PC",
+                        valoracion: "cincoEstrella",
+                    }];
+                callback(videojuegos);
+            }
         };
     })
 

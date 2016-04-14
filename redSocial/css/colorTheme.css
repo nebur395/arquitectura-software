@@ -62,11 +62,17 @@ a:focus, a:hover {
 }
 /*posicion en el gif para las estrellas */
 .estrellaOn{
+  cursor: pointer;
+  display: inline-block;
+  margin-bottom: -3px;
   width: 16px;
   height: 16px;
   background: url("../img/estrellaOn.gif") 0 0;
 }
 .estrellaOff{
+  cursor: pointer;
+  display: inline-block;
+  margin-bottom: -3px;
   width: 16px;
   height: 16px;
   background: url("../img/estrellaOff.gif") 0 0;
