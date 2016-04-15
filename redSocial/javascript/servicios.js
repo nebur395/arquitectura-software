@@ -93,17 +93,50 @@ angular.module('myApp')
         };
     })
 
-    .factory('videojuegoService', function () {
+    .factory('usuarioService', function ($http) {
+        return {
+            setUsuario: function(idUser,callback) {
+                $http({
+                    method: 'POST',
+                    url: 'Novedades',
+                    data: JSON.stringify({"idUser":idUser}),
+                    headers: {
+                        'Content-Type': 'application/json; charset=UTF-8'
+                    }
+                }).success(function(data){
+                    callback(data.comentarios,data.valoraciones);
+
+                }).error(function(){
+
+                });
+            }
+        };
+    })
+    
+    .factory('videojuegoService', function (auth) {
 
         var videojuegoID = 0;
 
         return {
+            guardarOpinion: function(tipo,opinion,callbackExito,callbackError) {
+                $http({
+                    method: 'POST',
+                    url: 'Opinar',
+                    data: JSON.stringify({"idUser":auth.idUser(), "tipo":tipo, "opinion":opinion}),
+                    headers: {
+                        'Content-Type': 'application/json; charset=UTF-8'
+                    }
+                }).success(function(data){
+                    callbackExito();
+                }).error(function(data){
+                    callbackError(data);
+                });
+            },
             setVideojuego: function(videojuego) {
                 videojuegoID = videojuego;
             },
             getInfo: function(callback) {
-                var videojuegos =
-                    {
+                var videojuego = {
                         id: 1,
                         nombre: "God of war III",
                         descripcion: "zaragoza",
@@ -112,9 +145,25 @@ angular.module('myApp')
                         distribuidora: "Sony Computer Entertainment",
                         genero: "Acción-aventura",
                         plataforma: "PlayStation 3, PlayStation 4",
-                        valoracion: "cuatroEstrella",
-                    };
-                callback(videojuegos);
+                        valoracion: "cuatroEstrella"
+                };
+                var  comentario = [{
+                    idUsuario: 1,
+                    nombreUsuario: "Nebur",
+                    nombreApellidos: 'Rubén Moreno',
+                    fecha: "30-04-2012",
+                    contenido: "basdaosidljasoidjasodiasjdoasildjasldkasdasdasdasdasdasdasdasdasd"
+                    
+                }];
+                var  valoracion = [{
+                    idUsuario: 1,
+                    nombreUsuario: "Nebur",
+                    nombreApellidos: 'Rubén Moreno',
+                    fecha: "30-04-2012",
+                    valoracion: "cincoEstrella"
+
+                }];
+                callback(videojuego,comentario,valoracion);
                 /*$http({
                     method: 'POST',
                     url: 'Videojuego',
@@ -154,7 +203,7 @@ angular.module('myApp')
                         distribuidora: "Sony Computer Entertainment",
                         genero: "Acción-aventura",
                         plataforma: "PlayStation 3, PlayStation 4",
-                        valoracion: "cuatroEstrella",
+                        valoracion: "cuatroEstrella"
                     },
                     {
                         id: 2,
@@ -165,7 +214,7 @@ angular.module('myApp')
                         distribuidora: "Sony Computer Entertainment",
                         genero: "Survival horror, Acción-aventura",
                         plataforma: "PlayStation 3, PlayStation 4",
-                        valoracion: "cincoEstrella",
+                        valoracion: "cincoEstrella"
                     },
                     {
                         id: 3,
@@ -176,7 +225,7 @@ angular.module('myApp')
                         distribuidora: "NCosft",
                         genero: "MMORPG",
                         plataforma: "PC",
-                        valoracion: "cincoEstrella",
+                        valoracion: "cincoEstrella"
                     }];
                 callback(videojuegos);
             }
@@ -210,7 +259,6 @@ angular.module('myApp')
                     }
                 }).success(function(data){
                     callback(data.seguidores);
-
                 }).error(function(){
                 });
             },
@@ -226,7 +274,6 @@ angular.module('myApp')
                     callbackMensaje();
                     callbackBorrarId(idSeguidor);
                 }).error(function(){
-
                 });
             }
         };

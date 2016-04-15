@@ -21,40 +21,105 @@
 
     <!--lista de comentarios-->
     <div class="col-md-12" id="listaComentarios">
-
-      <h2 class="col-md-8 theme-color-text" style="padding-left: 40%">Comentarios </h2>
-      <div class="form-group col-md-4" style="margin-bottom: 1%;margin-top: 1%;">
-        <select  class="form-control">
-          <option value="" disabled selected>Filtrar Comentarios</option>
-          <option value="todos">Todos</option>
-          <option value="todos">Seguidores</option>
-        </select>
-
+      <div class="row">
+        <button class="col-md-2 w3-btn w3-round-large theme-accent-s w3-small"
+                data-toggle="modal" data-target="#comentarioModal" style="margin:1%">Comentar</button>
+        <button class="col-md-2 w3-btn w3-round-large theme-accent-s w3-small"
+                data-toggle="modal" data-target="#valorarModal" style="margin:1%">Valorar</button>
+        <h2 class="col-md-4 theme-color-text" style="text-align:center">Comentarios</h2>
+        <div class="form-inline col-md-3" style="margin-bottom: 1%;margin-top: 1%;">
+          <label for="mostrar">Mostrar: </label>
+          <select  id="mostrar" class="form-control" ng-model="opinion"
+                   ng-options="x for x in mostrar">
+          </select>
+        </div>
       </div>
-      <ul class="list-group" style="margin-top: 5%">
-        <li class="list-group-item">
-          <h3><a class="theme-color-text-action" href="paginaPerfil.html">Kratos</a>
-            <span class="fecha"> (Rubén Moreno) 20-02-2016</span>
-					<span class="fecha"style="float:right">Valoración
-		  			<img class="tresEstrella" src=""></span></h3>
-          <p>God of War (literalmente en español Dios de la Guerra) es una serie de videojuegos en 3.ª persona creada por SCE Santa Monica Studio y distribuida por Sony Computer Entertainment. Se basa en las aventuras de un semidiós griego, Kratos, quién se enfrenta a diversos personajes de la mitología griega, tanto héroes (Heracles, Teseo, Perseo, etc.) y especies mitológicas (tales como gorgonas, arpías, o minotauros) como dioses griegos (Ares, Poseidón, Zeus, entre otros) y titanes (como Gaia y Cronos). Aunque el guerrero espartano acostumbra enemistad con la mayoría de los Dioses, recibe ayuda de muchos de ellos, en especial de Atenea.</p>
-        </li>
-        <li class="list-group-item">
-          <h3><a class="theme-color-text-action" href="paginaPerfil.html">Rayman</a>
-            <span class="fecha"> (Sergio Martín) 21-02-2016</span>
-					<span class="fecha"style="float:right">Valoración
-		  			<img class="tresEstrella" src=""></span></h3>
-          <p>God of War (literalmente en español Dios de la Guerra) es una serie de videojuegos en 3.ª persona creada por SCE Santa Monica Studio y distribuida por Sony Computer Entertainment. Se basa en las aventuras de un semidiós griego, Kratos, quién se enfrenta a diversos personajes de la mitología griega, tanto héroes (Heracles, Teseo, Perseo, etc.) y especies mitológicas (tales como gorgonas, arpías, o minotauros) como dioses griegos (Ares, Poseidón, Zeus, entre otros) y titanes (como Gaia y Cronos). Aunque el guerrero espartano acostumbra enemistad con la mayoría de los Dioses, recibe ayuda de muchos de ellos, en especial de Atenea.</p>
-        </li>
-        <li class="list-group-item">
-          <h3><a class="theme-color-text-action" href="paginaPerfil.html">Thrall</a>
-            <span class="fecha"> (Iñigo Gascón) 22-02-2016</span>
-					<span class="fecha"style="float:right">Valoración
-		  			<img class="tresEstrella" src=""></span></h3>
-          <p>God of War (literalmente en español Dios de la Guerra) es una serie de videojuegos en 3.ª persona creada por SCE Santa Monica Studio y distribuida por Sony Computer Entertainment. Se basa en las aventuras de un semidiós griego, Kratos, quién se enfrenta a diversos personajes de la mitología griega, tanto héroes (Heracles, Teseo, Perseo, etc.) y especies mitológicas (tales como gorgonas, arpías, o minotauros) como dioses griegos (Ares, Poseidón, Zeus, entre otros) y titanes (como Gaia y Cronos). Aunque el guerrero espartano acostumbra enemistad con la mayoría de los Dioses, recibe ayuda de muchos de ellos, en especial de Atenea.</p>
-        </li>
-      </ul>
 
+      <!-- mensaje que se mostrará cuando la operación tenga éxito -->
+      <div ng-if="exito" class="alert alert-success">
+        <strong>¡Éxito!</strong> Se ha añadido su opinión correctamente.
+      </div>
+      <!-- mensaje que se mostrará cuando la operación NO tenga éxito-->
+      <div ng-if="error" class="alert alert-danger">
+        <strong>Woops!</strong> {{errorMsg}}
+      </div>
+
+      <!-- lista de comentarios -->
+      <div ng-if="opinion == 'Comentarios'">
+        <ul class="list-group" style="margin-top: 5%">
+          <li class="list-group-item" ng-repeat="comentario in listaComentarios">
+            <h3><a class="theme-color-text-action" ng-click="entrarUsuario(comentario.idUsuario)">
+              {{comentario.nombreUsuario}}</a>
+              <span class="fecha"> ({{comentario.nombreApellidos}}) {{comentario.fecha}}</span></h3>
+            <p>{{comentario.contenido}}</p>
+          </li>
+        </ul>
+      </div>
+
+      <!-- lista de valoraciones -->
+      <div ng-if="opinion == 'Valoraciones'">
+        <ul class="list-group" style="margin-top: 5%">
+          <li class="list-group-item" ng-repeat="valoracion in listaValoraciones">
+            <a ng-click="entrarUsuario(valoracion.idUsuario)" class="theme-color-text-action">
+              {{valoracion.nombreUsuario}}</a>
+            ({{valoracion.nombreApellidos}}) le ha dado una puntiación el {{valoracion.fecha}}
+            de <span ng-class="valoracion.valoracion"></span></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- comentario modal popup -->
+    <div id="comentarioModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <!-- modal content -->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button class="close" data-dismiss="modal">&times;</button>
+          </div>
+          <div class="modal-body">
+            <form role="form" ng-submit="guardarComentario()">
+              <!-- comentario textarea -->
+              <div class="form-group">
+                <label for="comentarioTextArea"><strong>Deje su comentario: </strong></label>
+                <textarea id="comentarioTextArea" rows="5" ng-model="comentario"
+                          class="form-control" required></textarea>
+              </div>
+              <button class="w3-btn w3-round-large theme-accent2" ng-click="cerrarModal()">
+                Cancelar</button>
+              <button type="submit" class="w3-btn w3-round-large theme-accent">
+                Guardar</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- comentario modal popup -->
+    <div id="valorarModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <!-- modal content -->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button class="close" data-dismiss="modal">&times;</button>
+          </div>
+          <div class="modal-body">
+            <form role="form" ng-submit="guardarComentario()">
+              <!-- comentario textarea -->
+              <div class="form-group">
+                <p><strong>Deje su valoración: </strong>
+                  <span class="estrellaOff" ng-click="valorar(1)"></span>
+                  <span class="estrellaOff" ng-click="valorar(2)"></span>
+                  <span class="estrellaOff" ng-click="valorar(3)"></span>
+                  <span class="estrellaOff" ng-click="valorar(4)"></span>
+                  <span class="estrellaOff" ng-click="valorar(5)"></span></p>
+
+              </div>
+              <button class="w3-btn w3-round-large theme-accent2" data-dismiss="modal">
+                Cancelar</button>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
 
   </div>
