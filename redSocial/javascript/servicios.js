@@ -93,7 +93,44 @@ angular.module('myApp')
         };
     })
 
-    .factory('buscarService', function () {
+    .factory('videojuegoService', function () {
+
+        var videojuegoID = 0;
+
+        return {
+            setVideojuego: function(videojuego) {
+                videojuegoID = videojuego;
+            },
+            getInfo: function(callback) {
+                var videojuegos =
+                    {
+                        id: 1,
+                        nombre: "God of war III",
+                        descripcion: "zaragoza",
+                        lanzamiento: "18-03-2010",
+                        desarrolladora: "SCE Studios Santa Mónica",
+                        distribuidora: "Sony Computer Entertainment",
+                        genero: "Acción-aventura",
+                        plataforma: "PlayStation 3, PlayStation 4",
+                        valoracion: "cuatroEstrella",
+                    };
+                callback(videojuegos);
+                /*$http({
+                    method: 'POST',
+                    url: 'Videojuego',
+                    data: JSON.stringify({"idVideojuego":videojuegoID}),
+                    headers: {
+                        'Content-Type': 'application/json; charset=UTF-8'
+                    }
+                }).success(function(data){
+                    callback(data.videojuego,data.comentarios,data.valoraciones);
+                }).error(function(){
+                });*/
+            }
+        };
+    })
+
+    .factory('buscarService', function ($http) {
         return {
             buscar: function(callback) {
                 /*$http({
