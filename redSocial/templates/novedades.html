@@ -19,7 +19,8 @@
         <li class="list-group-item" ng-repeat="comentario in novedadesComentarios">
           <a href="" class="theme-color-text-action">{{comentario.nombreUsuario}}</a>
           ({{comentario.nombreApellidos}}) ha comentado el juego
-          <a href="" class="theme-color-text-action">{{comentario.juego}}</a></li>
+          <a ng-click="entrarVideojuego(comentario.idJuego)" class=
+              "theme-color-text-action">{{comentario.juego}}</a></li>
       </ul>
     </div>
 
@@ -29,8 +30,8 @@
         <li class="list-group-item" ng-repeat="valoracion in novedadesValoraciones">
           <a href="" class="theme-color-text-action">{{valoracion.nombreUsuario}}</a>
           ({{valoracion.nombreApellidos}}) ha valorado el juego
-          <a href="" class="theme-color-text-action">{{valoracion.juego}}</a>
-          con <span ng-class="valoracion.valoracion"></span></li>
+          <a ng-click="entrarVideojuego(valoracion.idJuego)" class="theme-color-text-action">
+            {{valoracion.juego}}</a>con <span ng-class="valoracion.valoracion"></span></li>
       </ul>
     </div>
 

@@ -1,6 +1,6 @@
 angular.module('myApp')
 
-    .controller('novedadesCtrl', [ '$scope','auth', 'novedadesService', function($scope,auth,novedadesService){
+    .controller('novedadesCtrl', [ '$scope', '$state', 'auth', 'novedadesService', 'videojuegoService', function($scope,$state,auth,novedadesService,videojuegoService){
         $scope.mostrar = ["Comentarios","Valoraciones"];
         $scope.novedades = "Comentarios";
         $scope.novedadesComentarios;
@@ -13,5 +13,10 @@ angular.module('myApp')
             });
         };
         $scope.cogerNovedades();
+
+        $scope.entrarVideojuego = function (id) {
+            videojuegoService.setVideojuego(id);
+            $state.go('videojuego');
+        }
         
     }]);
