@@ -25,6 +25,17 @@ angular.module('myApp', ['ui.router','ab-base64'])
                 }
             })
 
+            .state('videojuego', {
+                url: "/videojuego",
+                templateUrl: "templates/videojuego.html",
+                controller: "videojuegoCtrl",
+                onEnter: function($state,auth){
+                    if(!auth.isAuthenticated()){
+                        $state.go('initSesion');
+                    }
+                }
+            })
+
             .state('buscar', {
                 url: "/buscar",
                 templateUrl: "templates/buscar.html",
