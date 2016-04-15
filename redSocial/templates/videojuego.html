@@ -1,0 +1,61 @@
+<div id="estiloVideojuegos">
+  <div class="container" id="cuerpo">
+
+    <!--Informacion del perfil-->
+    <div class="col-md-12">
+      <h1 id="primerContenido" class="font">{{videojuego.nombre}}</h1>
+      <div class="col-md-4 w3-card-4" style="padding:1%;text-align:center">
+        <img ng-src="{{'img/' + videojuego.id + '.jpg'}}" style="max-width:100%">
+        <p>Valoracion</p>
+        <span ng-class="videojuego.valoracion"></span>
+      </div>
+      <div class="col-md-8" style="padding:3%;">
+        <p id="descripcion">{{videojuego.descripcion}}</p>
+        <p><b>Fecha de lanzamiento: </b>{{videojuego.lanzamiento}}</p>
+        <p><b>Desarrolladora: </b>{{videojuego.desarrolladora}}</p>
+        <p><b>Distribuidora: </b>{{videojuego.distribuidora}}</p>
+        <p><b>Género: </b>{{videojuego.genero}}</p>
+        <p><b>Plataforma: </b>{{videojuego.plataforma}}</p>
+      </div>
+    </div>
+
+    <!--lista de comentarios-->
+    <div class="col-md-12" id="listaComentarios">
+
+      <h2 class="col-md-8 theme-color-text" style="padding-left: 40%">Comentarios </h2>
+      <div class="form-group col-md-4" style="margin-bottom: 1%;margin-top: 1%;">
+        <select  class="form-control">
+          <option value="" disabled selected>Filtrar Comentarios</option>
+          <option value="todos">Todos</option>
+          <option value="todos">Seguidores</option>
+        </select>
+
+      </div>
+      <ul class="list-group" style="margin-top: 5%">
+        <li class="list-group-item">
+          <h3><a class="theme-color-text-action" href="paginaPerfil.html">Kratos</a>
+            <span class="fecha"> (Rubén Moreno) 20-02-2016</span>
+					<span class="fecha"style="float:right">Valoración
+		  			<img class="tresEstrella" src=""></span></h3>
+          <p>God of War (literalmente en español Dios de la Guerra) es una serie de videojuegos en 3.ª persona creada por SCE Santa Monica Studio y distribuida por Sony Computer Entertainment. Se basa en las aventuras de un semidiós griego, Kratos, quién se enfrenta a diversos personajes de la mitología griega, tanto héroes (Heracles, Teseo, Perseo, etc.) y especies mitológicas (tales como gorgonas, arpías, o minotauros) como dioses griegos (Ares, Poseidón, Zeus, entre otros) y titanes (como Gaia y Cronos). Aunque el guerrero espartano acostumbra enemistad con la mayoría de los Dioses, recibe ayuda de muchos de ellos, en especial de Atenea.</p>
+        </li>
+        <li class="list-group-item">
+          <h3><a class="theme-color-text-action" href="paginaPerfil.html">Rayman</a>
+            <span class="fecha"> (Sergio Martín) 21-02-2016</span>
+					<span class="fecha"style="float:right">Valoración
+		  			<img class="tresEstrella" src=""></span></h3>
+          <p>God of War (literalmente en español Dios de la Guerra) es una serie de videojuegos en 3.ª persona creada por SCE Santa Monica Studio y distribuida por Sony Computer Entertainment. Se basa en las aventuras de un semidiós griego, Kratos, quién se enfrenta a diversos personajes de la mitología griega, tanto héroes (Heracles, Teseo, Perseo, etc.) y especies mitológicas (tales como gorgonas, arpías, o minotauros) como dioses griegos (Ares, Poseidón, Zeus, entre otros) y titanes (como Gaia y Cronos). Aunque el guerrero espartano acostumbra enemistad con la mayoría de los Dioses, recibe ayuda de muchos de ellos, en especial de Atenea.</p>
+        </li>
+        <li class="list-group-item">
+          <h3><a class="theme-color-text-action" href="paginaPerfil.html">Thrall</a>
+            <span class="fecha"> (Iñigo Gascón) 22-02-2016</span>
+					<span class="fecha"style="float:right">Valoración
+		  			<img class="tresEstrella" src=""></span></h3>
+          <p>God of War (literalmente en español Dios de la Guerra) es una serie de videojuegos en 3.ª persona creada por SCE Santa Monica Studio y distribuida por Sony Computer Entertainment. Se basa en las aventuras de un semidiós griego, Kratos, quién se enfrenta a diversos personajes de la mitología griega, tanto héroes (Heracles, Teseo, Perseo, etc.) y especies mitológicas (tales como gorgonas, arpías, o minotauros) como dioses griegos (Ares, Poseidón, Zeus, entre otros) y titanes (como Gaia y Cronos). Aunque el guerrero espartano acostumbra enemistad con la mayoría de los Dioses, recibe ayuda de muchos de ellos, en especial de Atenea.</p>
+        </li>
+      </ul>
+
+    </div>
+
+  </div>
+</div>
