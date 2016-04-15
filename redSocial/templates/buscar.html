@@ -49,14 +49,14 @@
             "videojuego in listaVideojuegos | filter: {'nombre':busqueda,'genero':genero,'plataforma':plataforma,'valoracion':valoracion}">
           <div class="media">
             <div class="media-left">
-              <a href="">
+              <a ng-click="entrarVideojuego(videojuego.id)">
                 <img class="media-object" ng-src="{{'img/' + videojuego.id + '.jpg'}}"
                      height=256px max-width=auto>
               </a>
             </div>
             <div class="media-body">
               <h2 class="media-heading">
-                <a href="" class="theme-color-text-action">
+                <a ng-click="entrarVideojuego(videojuego.id)" class="theme-color-text-action">
                   {{videojuego.nombre}}</a></h2>
               <p><b>Fecha de lanzamiento: </b>{{videojuego.lanzamiento}}</p>
               <p><b>Desarrolladora: </b>{{videojuego.desarrolladora}}</p>

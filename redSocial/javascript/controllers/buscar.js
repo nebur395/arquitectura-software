@@ -1,6 +1,6 @@
 angular.module('myApp')
 
-    .controller('buscarCtrl', [ '$scope','auth', 'buscarService', function($scope,auth,buscarService){
+    .controller('buscarCtrl', [ '$scope', '$state', 'auth', 'buscarService', 'videojuegoService', function($scope,$state,auth,buscarService,videojuegoService){
         $scope.listaVideojuegos;
         $scope.busqueda = "";
         $scope.listaGenero = ["MMORPG","Survival horror","Acción-Aventura"];
@@ -52,6 +52,11 @@ angular.module('myApp')
         
         $scope.estrellaOn = function (num) {
             return $scope.listaValoraciones[num-1];
+        };
+
+        $scope.entrarVideojuego = function (id) {
+            videojuegoService.setVideojuego(id);
+            $state.go('videojuego');
         }
 
     }]);
