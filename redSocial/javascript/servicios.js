@@ -93,27 +93,80 @@ angular.module('myApp')
         };
     })
 
-    .factory('usuarioService', function ($http) {
+    .factory('usuarioService', function ($http,auth) {
+
+        var usuarioID = 0;
+
         return {
-            setUsuario: function(idUser,callback) {
+            setUsuario: function(usuario) {
+                usuarioID = usuario;
+            },
+            getInfo: function(callback) {
+                var usuario = {
+                    id: 1,
+                    nombreUsuario: "Kratos",
+                    nombreReal: "Rubén Moreno",
+                    fecha: "18-03-2010",
+                    comentarios: "3",
+                    tipo: 1
+                };
+                var comentario = [{
+                    idJuego: 1,
+                    nombre: "God of war III",
+                    fecha: "30-04-2012",
+                    contenido: "basdaosidljasoidjasodiasjdoasildjasldkasdasdasdasdasdasdasdasdasd"
+
+                }];
+                var valoracion = [{
+                    idJuego: 1,
+                    nombre: "God of war III",
+                    fecha: "30-04-2012",
+                    valoracion: "cincoEstrella"
+
+                }];
+                callback(usuario, comentario, valoracion);
+                /*$http({
+                 method: 'POST',
+                 url: 'Usuario',
+                 data: JSON.stringify({"idUsuario":usuarioID}),
+                 headers: {
+                 'Content-Type': 'application/json; charset=UTF-8'
+                 }
+                 }).success(function(data){
+                 callback(data.usuario,data.comentarios,data.valoraciones);
+                 }).error(function(){
+                 });*/
+            },
+            seguir: function(usuario) {
                 $http({
                     method: 'POST',
-                    url: 'Novedades',
-                    data: JSON.stringify({"idUser":idUser}),
+                    url: '',
+                    data: JSON.stringify({"idUser":auth.idUser(), "idSeguidor":usuario.id}),
                     headers: {
                         'Content-Type': 'application/json; charset=UTF-8'
                     }
-                }).success(function(data){
-                    callback(data.comentarios,data.valoraciones);
-
+                }).success(function(){
+                    usuario.tipo = 3;
                 }).error(function(){
-
+                });
+            },
+            dejarSeguir: function(usuario) {
+                $http({
+                    method: 'POST',
+                    url: '',
+                    data: JSON.stringify({"idUser":auth.idUser(), "idSeguidor":usuario.id}),
+                    headers: {
+                        'Content-Type': 'application/json; charset=UTF-8'
+                    }
+                }).success(function(){
+                    usuario.tipo = 2;
+                }).error(function(){
                 });
             }
         };
     })
     
-    .factory('videojuegoService', function (auth) {
+    .factory('videojuegoService', function ($http,auth) {
 
         var videojuegoID = 0;
 

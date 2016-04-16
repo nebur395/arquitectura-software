@@ -1,3 +1,60 @@
-<div class="estiloUsuario">
+<div id="estiloUsuario">
+  <div class="container" id="cuerpo">
+
+    <!--Informacion del perfil-->
+    <div class="col-md-12">
+      <h1 id="primerContenido" class="font">{{usuario.nombreUsuario}}
+        <button ng-click="irAjustes()" style="float:right;font-size: 70%" class="w3-btn w3-round-large
+				theme-accent" ng-if="usuarioAjustes">
+          Ajustes</button>
+      <button ng-click="seguir()" style="float:right;font-size: 70%" class="w3-btn w3-round-large
+				theme-accent" ng-if="usuarioNoSeguido">
+        Seguir</button>
+      <button ng-click="dejarSeguir()" style="float:right;font-size: 70%" class="w3-btn w3-round-large
+				theme-accent" ng-if="usuarioSeguido">
+        Dejar de seguir</button></h1>
+      <h2>({{usuario.nombreReal}})</h2>
+      <p> Usuario desde el {{usuario.fecha}}</p>
+      <p> Comentarios: {{usuario.comentarios}}</p>
+
+    </div>
+
+
+    <!--lista de comentarios-->
+    <div class="col-md-12" id="listaComentarios">
+
+      <div class="row">
+        <h1 class="col-md-9 theme-color-text" style="text-align:center">Opiniones</h1>
+        <div class="form-inline col-md-3" style="margin-bottom: 1%;margin-top: 1%;">
+          <label for="mostrar">Mostrar: </label>
+          <select  id="mostrar" class="form-control" ng-model="opinion"
+                   ng-options="x for x in mostrar">
+          </select>
+        </div>
+      </div>
+
+      <!-- lista de comentarios -->
+      <div ng-if="opinion == 'Comentarios'">
+        <ul class="list-group">
+          <li class="list-group-item" ng-repeat="comentario in listaComentarios">
+            <h3><a class="theme-color-text-action" ng-click="entrarVideojuego(comentario.idJuego)">{{comentario.nombre}}</a>
+              <span class="fecha">{{comentario.fecha}}</span></h3>
+            <p>{{comentario.contenido}}</p>
+          </li>
+        </ul>
+      </div>
+
+      <!-- lista de valoraciones -->
+      <div ng-if="opinion == 'Valoraciones'">
+        <ul class="list-group">
+          <li class="list-group-item" ng-repeat="valoracion in listaValoraciones">
+            Ha puntuado <a class="theme-color-text-action" ng-click=
+              "entrarVideojuego(valoracion.idJuego)">{{valoracion.nombre}}</a>
+            el {{valoracion.fecha}} con <span ng-class="valoracion.valoracion"></span></li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
 
 </div>
