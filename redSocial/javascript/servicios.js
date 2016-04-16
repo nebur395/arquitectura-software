@@ -105,7 +105,7 @@ angular.module('myApp')
                 $http({
                  method: 'POST',
                  url: 'Usuario',
-                 data: JSON.stringify({"idUsuario":usuarioID, "id":auth.idUser()}),
+                 data: JSON.stringify({"idUsuario":usuarioID, "idUser":auth.idUser()}),
                  headers: {
                  'Content-Type': 'application/json; charset=UTF-8'
                  }
