@@ -42,7 +42,7 @@
       <h2 class="theme-color-text">Lista de seguidores</h2>
       <ul class="list-group" id="listaSeguidores">
         <li class="list-group-item" ng-repeat="seguidor in seguidores">
-          <a href="" class="theme-color-text-action">{{seguidor.nombreUsuario}}</a>
+          <a ng-click="entrarUsuario(seguidor.idUsuario)" class="theme-color-text-action">{{seguidor.nombreUsuario}}</a>
           ({{seguidor.nombreApellidos}})
           <button ng-click="dejarSeguir(seguidor.id)" style="float:right"
                   class="w3-btn w3-round-large theme-accent-s w3-small">
