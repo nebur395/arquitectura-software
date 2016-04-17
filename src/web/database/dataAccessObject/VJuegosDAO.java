@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import web.database.conection.gestorDeConexiones;
 
@@ -150,6 +151,16 @@ public class VJuegosDAO {
 			if ( conn != null ) gestorDeConexiones.releaseConnection(conn);
 		}
 		return false;
+	}
+	
+	public static ArrayList<VJuegoVO> searchVideojuego( String query ){
+		//Esto es una prueba hardcodeada para probar el servlet de buscar. TODO: Implementar.
+		ArrayList<VJuegoVO> list = new ArrayList<VJuegoVO>();
+		list.add(new VJuegoVO(2, "Call of Duty", "Niños rata everywhere", "Infinity Ward", 
+								"Activision", "PC", "Shooter", 2016));
+		list.add(new VJuegoVO(3, "The Old Republic", "Star Wars mola", "Bioware", 
+								"Electronic Arts", "PC", "MMORPG", 2008));
+		return list;												
 	}
 
 }

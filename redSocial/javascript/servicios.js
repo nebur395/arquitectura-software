@@ -191,6 +191,7 @@ angular.module('myApp')
                         'Content-Type': 'application/json; charset=UTF-8'
                     }
                 }).success(function(data){
+					console.log(data);
                     callback(data);
                 }).error(function(){
                 });

@@ -66,4 +66,13 @@
 		<servlet-name>DejarDeSeguir</servlet-name>
 		<url-pattern>/dejarSeguir</url-pattern>
     </servlet-mapping>
+    
+     <servlet>
+		<servlet-name>Buscar</servlet-name>
+		<servlet-class>web.servlets.Buscar</servlet-class>
+    </servlet>
+    <servlet-mapping>
+		<servlet-name>Buscar</servlet-name>
+		<url-pattern>/Buscar</url-pattern>
+    </servlet-mapping>
 </web-app>
