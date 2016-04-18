@@ -111,5 +111,10 @@ public class PuntuacionesDAO {
 		}
 		return false;
 	}
+	
+	public static boolean existsPuntuacion( int usuarioID, int vJID ){
+		
+		return false;
+	}
 
 }

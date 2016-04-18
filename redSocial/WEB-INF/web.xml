@@ -84,4 +84,13 @@
 		<servlet-name>Seguir</servlet-name>
 		<url-pattern>/Seguir</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+		<servlet-name>Opinar</servlet-name>
+		<servlet-class>web.servlets.Opinar</servlet-class>
+    </servlet>
+    <servlet-mapping>
+		<servlet-name>Opinar</servlet-name>
+		<url-pattern>/Opinar</url-pattern>
+    </servlet-mapping>
 </web-app>
