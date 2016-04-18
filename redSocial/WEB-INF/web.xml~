@@ -67,21 +67,12 @@
 		<url-pattern>/dejarSeguir</url-pattern>
     </servlet-mapping>
     
-    <servlet>
+     <servlet>
 		<servlet-name>Buscar</servlet-name>
 		<servlet-class>web.servlets.Buscar</servlet-class>
     </servlet>
     <servlet-mapping>
 		<servlet-name>Buscar</servlet-name>
 		<url-pattern>/Buscar</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-		<servlet-name>Seguir</servlet-name>
-		<servlet-class>web.servlets.Seguir</servlet-class>
-    </servlet>
-    <servlet-mapping>
-		<servlet-name>Seguir</servlet-name>
-		<url-pattern>/Seguir</url-pattern>
     </servlet-mapping>
 </web-app>
