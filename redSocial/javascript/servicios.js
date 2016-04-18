@@ -152,7 +152,7 @@ angular.module('myApp')
                 $http({
                     method: 'POST',
                     url: 'Opinar',
-                    data: JSON.stringify({"idUser":auth.idUser(), "tipo":tipo, "opinion":opinion}),
+                    data: JSON.stringify({"idUser":auth.idUser(), "tipo":tipo, "opinion":opinion, "idVideojuego":videojuegoID}),
                     headers: {
                         'Content-Type': 'application/json; charset=UTF-8'
                     }
