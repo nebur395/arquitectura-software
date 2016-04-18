@@ -15,3 +15,6 @@ jrebel.lic
 .settings
 .classpath
 .project
+
+#Temporal files
+*~
