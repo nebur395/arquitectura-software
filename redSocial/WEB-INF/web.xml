@@ -93,4 +93,13 @@
 		<servlet-name>Opinar</servlet-name>
 		<url-pattern>/Opinar</url-pattern>
     </servlet-mapping>
+    
+    <servlet>
+		<servlet-name>Videojuego</servlet-name>
+		<servlet-class>web.servlets.Videojuego</servlet-class>
+    </servlet>
+    <servlet-mapping>
+		<servlet-name>Videojuego</servlet-name>
+		<url-pattern>/Videojuego</url-pattern>
+    </servlet-mapping>
 </web-app>

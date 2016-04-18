@@ -9,7 +9,8 @@ public class PuntuacionesUtils{
 	
 	public static String puntuacionToString(int puntuacion){
 		
-		if(puntuacion==1){ return "uno"; }
+		if(puntuacion==0){ return "cero"; }
+		else if(puntuacion==1){ return "uno"; }
 		else if(puntuacion==2){ return "dos"; }
 		else if(puntuacion==3){ return "tres"; }
 		else if(puntuacion==4){ return "cuatro"; }
@@ -23,9 +24,13 @@ public class PuntuacionesUtils{
 			PuntuacionVO vo = itr.next();
 			puntuacion += vo.getPuntuacion();
 		}
-		puntuacion = puntuacion/list.size();
 		
-		if(puntuacion==1){ return "unoEstrella"; }
+		if (puntuacion != 0){
+			puntuacion = puntuacion/list.size();
+		}
+		
+		if(puntuacion==0){ return "ceroEstrella"; }
+		else if(puntuacion==1){ return "unoEstrella"; }
 		else if(puntuacion==2){ return "dosEstrella"; }
 		else if(puntuacion==3){ return "tresEstrella"; }
 		else if(puntuacion==4){ return "cuatroEstrella"; }
