@@ -54,7 +54,7 @@ public class Opinar extends HttpServlet{
 		}
 		JSONObject json = JSONObject.fromObject(jb.toString());
 		idUser = json.getInt("idUser");
-		idJuego = json.getInt("idJuego");
+		idJuego = json.getInt("idVideojuego");
 		//Si es un comentario
 		if(json.getBoolean("tipo")){
 			String opinion = json.getString("opinion");

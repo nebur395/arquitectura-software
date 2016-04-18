@@ -23,6 +23,7 @@ import web.database.dataAccessObject.FeedComentariosDAO;
 import web.database.dataAccessObject.FeedPuntuacionesDAO;
 import web.database.valueObject.ComentarioVO;
 import web.database.valueObject.PuntuacionVO;
+import web.utils.PuntuacionesUtils;
 
 /**
  * Servlet implementation class DejarDeSeguir
@@ -90,7 +91,7 @@ import web.database.valueObject.PuntuacionVO;
 			puntuacion.element("nombreApellidos", uVo.getNombre());
 			puntuacion.element("idUsuario", pVo.getUsuarioID());
 			puntuacion.element("juego", jVo.getTitulo());
-			puntuacion.element("valoracion", puntuacionToString(pVo.getPuntuacion())+"Estrella");
+			puntuacion.element("valoracion", PuntuacionesUtils.puntuacionToString(pVo.getPuntuacion())+"Estrella");
 			puntuacion.element("idJuego", pVo.getvJuego());
 			jaPuntuaciones.add(puntuacion);
 		}
@@ -102,14 +103,5 @@ import web.database.valueObject.PuntuacionVO;
 		response.setContentType("application/json; charset=UTF-8");
 		response.getWriter().write(mainJson.toString());
 		
-	}
-	
-	private String puntuacionToString(int puntuacion){
-		
-		if(puntuacion==1){ return "uno"; }
-		else if(puntuacion==2){ return "dos"; }
-		else if(puntuacion==3){ return "tres"; }
-		else if(puntuacion==4){ return "cuatro"; }
-		else { return "cinco"; }
 	}
  }
