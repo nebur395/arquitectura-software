@@ -114,7 +114,32 @@ public class FollowsDAO {
 	
 	//TODO: Implementar
 	public static boolean isFollower( int follower, int followed ){
-		return true;
+		
+		Connection conn = null;
+		try{
+			Class.forName(gestorDeConexiones.JDBC_DRIVER);
+			conn = gestorDeConexiones.requestConnection();
+			Statement stmt = conn.createStatement();
+			
+			//Parte intertesante--------------------------------------------------------
+			
+			String sql = String.format("select * from seguimientos where seguidor='%s' AND seguido='%s'", follower, followed);
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			
+			if ( rs.next() ){
+				return true;
+			}					
+			//Fin de la parte interesante---------------------------------------------
+		} catch (ClassNotFoundException e){
+			e.printStackTrace();
+		} catch (SQLException e){
+			e.printStackTrace();
+		} finally {
+			
+			if ( conn != null ) gestorDeConexiones.releaseConnection(conn);
+		}
+		return false;
 	}
 
 

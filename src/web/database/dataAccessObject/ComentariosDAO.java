@@ -85,12 +85,41 @@ public class ComentariosDAO {
 		return null;
 	}
 	
-	//TODO: Implementar método. Ahora está hardcodeado.
+	//TODO: Testear listComentarioUser
 	public static ArrayList<ComentarioVO> listComentarioUser( int idUser ){
-		ArrayList<ComentarioVO> list = new ArrayList<ComentarioVO>();
-		list.add(new ComentarioVO(1, 4, 2, "Comentario de prueba", "2016-04-19"));
-		list.add(new ComentarioVO(2, 4, 3, "Comentario de prueba2", "2016-04-19"));
-		return list;
+				
+		Connection conn = null;
+		try{
+			Class.forName(gestorDeConexiones.JDBC_DRIVER);
+			conn = gestorDeConexiones.requestConnection();
+			Statement stmt = conn.createStatement();
+			
+			//Parte intertesante--------------------------------------------------------
+			
+			String sql = String.format("SELECT _id, usuario, videojuego, comentario, tiempo FROM comentarios " +
+					"WHERE usuario='%s'", idUser);
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			ArrayList<ComentarioVO> list = new ArrayList<ComentarioVO>();
+			
+			while( rs.next() ){
+		
+				list.add(new ComentarioVO(rs.getInt("_id"), rs.getInt("usuario"), rs.getInt("videojuego"), 
+						rs.getString("comentario"),  rs.getString("tiempo")));
+			}			
+			return list;
+			
+			//Fin de la parte interesante---------------------------------------------
+		} catch (ClassNotFoundException e){
+			e.printStackTrace();
+		} catch (SQLException e){
+			e.printStackTrace();
+		} finally {
+		
+			if ( conn != null ) gestorDeConexiones.releaseConnection(conn);
+		}
+		
+		return null;		
 	}
 	
 	public static boolean deleteComentario( int commentID ){

@@ -84,12 +84,37 @@ public class PuntuacionesDAO {
 		return null;
 	}
 	
-	//TODO: Implementar método. Ahora está hardcodeado.
+	//TODO: Testear listPuntuacionesUser
 	public static ArrayList<PuntuacionVO> listPuntuacionesUser( int idUser ){
-		ArrayList<PuntuacionVO> list = new ArrayList<PuntuacionVO>();
-		list.add(new PuntuacionVO(4, 2, 4, "2016-04-19"));
-		list.add(new PuntuacionVO(4, 3, 3, "2016-04-19"));
-		return list;
+		Connection conn = null;
+		try{
+			Class.forName(gestorDeConexiones.JDBC_DRIVER);
+			conn = gestorDeConexiones.requestConnection();
+			Statement stmt = conn.createStatement();
+			
+			//Parte intertesante--------------------------------------------------------
+			
+			String sql = String.format("SELECT usuario, videojuego, nota, tiempo FROM notas " +
+					"WHERE usuario='%s'", idUser);
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			ArrayList<PuntuacionVO> list = new ArrayList<PuntuacionVO>();
+			
+			while( rs.next() ){
+				
+				list.add( new PuntuacionVO(rs.getInt("usuario"), rs.getInt("videojuego"), rs.getInt("nota"), rs.getString("tiempo")) );
+			}			
+			return list;
+			
+			//Fin de la parte interesante---------------------------------------------
+		} catch (ClassNotFoundException e){
+			e.printStackTrace();
+		} catch (SQLException e){
+			e.printStackTrace();
+		} finally {
+			if ( conn != null ) gestorDeConexiones.releaseConnection(conn);
+		}
+		return null;
 	}
 	
 	public static boolean deletePuntuacion( int usuarioID, int vJID  ){

@@ -66,11 +66,11 @@ public class UsuariosDAO {
 			
 			//Parte intertesante--------------------------------------------------------
 			
-			String sql = String.format("select _id, nickname, nombre, pass from usuarios where nickname='%s'", nickname);
+			String sql = String.format("select _id, nickname, nombre, pass, fecha from usuarios where nickname='%s'", nickname);
 			ResultSet rs = stmt.executeQuery(sql);
 			
 			if( rs.next() ){
-				return new UsuarioVO (rs.getInt("_id"), rs.getString("nickname"), rs.getString("nombre"), rs.getString("pass"), "--add campo fecha--");
+				return new UsuarioVO (rs.getInt("_id"), rs.getString("nickname"), rs.getString("nombre"), rs.getString("pass"), rs.getString("fecha"));
 			}
 			System.out.println("El usuario no existe");
 			return null;
@@ -102,11 +102,11 @@ public class UsuariosDAO {
 			
 			//Parte intertesante--------------------------------------------------------
 			
-			String sql = String.format("select _id, nickname, nombre, pass from usuarios where _id='%s'", id);
+			String sql = String.format("select _id, nickname, nombre, pass, fecha from usuarios where _id='%s'", id);
 			ResultSet rs = stmt.executeQuery(sql);
 			
 			if( rs.next() ){
-				return new UsuarioVO (rs.getInt("_id"), rs.getString("nickname"), rs.getString("nombre"), rs.getString("pass"), "--add campo fecha--");
+				return new UsuarioVO (rs.getInt("_id"), rs.getString("nickname"), rs.getString("nombre"), rs.getString("pass"), rs.getString("fecha"));
 			}
 			System.out.println("El usuario no existe");
 			return null;
