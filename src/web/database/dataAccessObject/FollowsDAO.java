@@ -111,7 +111,11 @@ public class FollowsDAO {
 		return null;
 		
 	}
-
+	
+	//TODO: Implementar
+	public static boolean isFollower( int follower, int followed ){
+		return true;
+	}
 
 
 }

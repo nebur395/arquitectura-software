@@ -84,6 +84,14 @@ public class PuntuacionesDAO {
 		return null;
 	}
 	
+	//TODO: Implementar método. Ahora está hardcodeado.
+	public static ArrayList<PuntuacionVO> listPuntuacionesUser( int idUser ){
+		ArrayList<PuntuacionVO> list = new ArrayList<PuntuacionVO>();
+		list.add(new PuntuacionVO(4, 2, 4, "2016-04-19"));
+		list.add(new PuntuacionVO(4, 3, 3, "2016-04-19"));
+		return list;
+	}
+	
 	public static boolean deletePuntuacion( int usuarioID, int vJID  ){
 		
 		Connection conn = null;
@@ -111,10 +119,4 @@ public class PuntuacionesDAO {
 		}
 		return false;
 	}
-	
-	public static boolean existsPuntuacion( int usuarioID, int vJID ){
-		
-		return false;
-	}
-
 }

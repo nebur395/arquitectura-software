@@ -19,18 +19,19 @@ import web.database.dataAccessObject.PuntuacionesDAO;
 import web.database.dataAccessObject.ComentariosDAO;
 import web.database.dataAccessObject.VJuegosDAO;
 import web.database.dataAccessObject.UsuariosDAO;
+import web.database.dataAccessObject.FollowsDAO;
 import web.database.valueObject.VJuegoVO;
 import web.database.valueObject.UsuarioVO;
 import web.database.valueObject.ComentarioVO;
 import web.database.valueObject.PuntuacionVO;
 import web.utils.PuntuacionesUtils;
 
-public class Videojuego extends HttpServlet {
+public class Usuario extends HttpServlet {
 	
 	/**
      * @see HttpServlet#HttpServlet()
      */
-    public Videojuego() {
+    public Usuario() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -46,7 +47,8 @@ public class Videojuego extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int idJuego;
+		int idUser;
+		int idProfile;
 		
 		StringBuffer jb = new StringBuffer();
 		String line = null;
@@ -60,42 +62,46 @@ public class Videojuego extends HttpServlet {
 			System.out.printf("Error al leer el JSON");
 		}
 		JSONObject json = JSONObject.fromObject(jb.toString());
-		idJuego = json.getInt("idVideojuego");
+		idUser = json.getInt("idUser");
+		idProfile = json.getInt("idUsuario");
 		
-		VJuegoVO jVo = VJuegosDAO.findVJuego(idJuego);
-		JSONObject juego = JSONObject.fromObject(jVo.serialize());
-		juego.element("valoracion", PuntuacionesUtils.calcularPuntuacion(PuntuacionesDAO.listPuntuaciones(jVo.get_id())));
+		UsuarioVO vo = UsuariosDAO.findUser(idUser);
+		JSONObject usuario = JSONObject.fromObject(vo.serialize());
+		usuario.element("comentarios", ComentariosDAO.numComentarios(idUser));
+		int tipo;
+		if(idUser == idProfile){ tipo=1; }
+		else if(FollowsDAO.isFollower(idUser, idProfile)){ tipo=3; }
+		else { tipo=2; }
+		usuario.element("tipo", tipo);
 		
 		JSONArray jaComentarios = new JSONArray();
-		Iterator<ComentarioVO> comentsIter = (ComentariosDAO.listComentario(idJuego)).iterator();
+		Iterator<ComentarioVO> comentsIter = (ComentariosDAO.listComentarioUser(idProfile)).iterator();
 		while(comentsIter.hasNext()){
-			ComentarioVO vo = comentsIter.next();
-			UsuarioVO uVo = UsuariosDAO.findUser(vo.getUsuarioID());
+			ComentarioVO cVo = comentsIter.next();
+			VJuegoVO jVo = VJuegosDAO.findVJuego(cVo.getvJuego());
 			JSONObject comentario = new JSONObject();
-			comentario.element("idUsuario", uVo.get_id());
-			comentario.element("nombreUsuario", uVo.getNickname());
-			comentario.element("nombreApellidos", uVo.getNombre());
-			comentario.element("fecha", (vo.getFecha()).substring(0,10));
-			comentario.element("contenido", vo.getComentario());
+			comentario.element("idJuego", jVo.get_id());
+			comentario.element("nombre", jVo.getTitulo());
+			comentario.element("fecha", (cVo.getFecha()).substring(0,10));
+			comentario.element("contenido", cVo.getComentario());
 			jaComentarios.add(comentario);
 		}
 		
 		JSONArray jaPuntuaciones = new JSONArray();
-		Iterator<PuntuacionVO> puntuacionesIter = (PuntuacionesDAO.listPuntuaciones(idJuego)).iterator();
+		Iterator<PuntuacionVO> puntuacionesIter = (PuntuacionesDAO.listPuntuacionesUser(idProfile)).iterator();
 		while(puntuacionesIter.hasNext()){
-			PuntuacionVO vo = puntuacionesIter.next();
-			UsuarioVO uVo = UsuariosDAO.findUser(vo.getUsuarioID());
+			PuntuacionVO pVo = puntuacionesIter.next();
+			VJuegoVO jVo = VJuegosDAO.findVJuego(pVo.getvJuego());
 			JSONObject puntuacion = new JSONObject();
-			puntuacion.element("idUsuario", uVo.get_id());
-			puntuacion.element("nombreUsuario", uVo.getNickname());
-			puntuacion.element("nombreApellidos", uVo.getNombre());
-			puntuacion.element("fecha", (vo.getFecha()).substring(0,10));
-			puntuacion.element("valoracion", PuntuacionesUtils.puntuacionToString(vo.getPuntuacion())+"Estrella");
+			puntuacion.element("idJuego", jVo.get_id());
+			puntuacion.element("nombre", jVo.getTitulo());
+			puntuacion.element("fecha", (pVo.getFecha()).substring(0,10));
+			puntuacion.element("valoracion", PuntuacionesUtils.puntuacionToString(pVo.getPuntuacion())+"Estrella");
 			jaPuntuaciones.add(puntuacion);
 		}
 		
 		JSONObject mainJson = new JSONObject();
-		mainJson.element("videojuego", juego);
+		mainJson.element("usuario", usuario);
 		mainJson.element("comentarios", jaComentarios);
 		mainJson.element("valoraciones", jaPuntuaciones);
 		response.setStatus(HttpServletResponse.SC_OK);

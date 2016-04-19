@@ -66,7 +66,7 @@ public class Opinar extends HttpServlet{
 			}
 		}
 		//Si es una valoración
-		else if(!(PuntuacionesDAO.existsPuntuacion(idUser, idJuego))){
+		else{
 			int opinion = json.getInt("opinion");
 			if(PuntuacionesDAO.addPuntuacion(idUser, idJuego, opinion)){
 				response.setStatus(HttpServletResponse.SC_OK);
@@ -74,11 +74,6 @@ public class Opinar extends HttpServlet{
 			else{
 				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			}
-		}
-		else{
-			response.setContentType("text/html; charset=UTF-8");
-			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-			response.getWriter().println("Ya has valorado este videojuego");
 		}
 	}
 	
