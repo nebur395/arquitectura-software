@@ -111,7 +111,10 @@ public class FollowsDAO {
 		return null;
 		
 	}
-
+	
+	public static boolean isFollower( int follower, int followed){
+		return true;
+	}
 
 
 }
