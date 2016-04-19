@@ -85,6 +85,14 @@ public class ComentariosDAO {
 		return null;
 	}
 	
+	//TODO: Implementar método. Ahora está hardcodeado.
+	public static ArrayList<ComentarioVO> listComentarioUser( int idUser ){
+		ArrayList<ComentarioVO> list = new ArrayList<ComentarioVO>();
+		list.add(new ComentarioVO(1, 4, 2, "Comentario de prueba", "2016-04-19"));
+		list.add(new ComentarioVO(2, 4, 3, "Comentario de prueba2", "2016-04-19"));
+		return list;
+	}
+	
 	public static boolean deleteComentario( int commentID ){
 		
 		Connection conn = null;
@@ -111,6 +119,11 @@ public class ComentariosDAO {
 			if ( conn != null ) gestorDeConexiones.releaseConnection(conn);
 		}
 		return false;
+	}
+	
+	//TODO: Implementar este método
+	public static int numComentarios( int idUser ){
+		return 2;
 	}
 
 }

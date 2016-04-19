@@ -39,7 +39,7 @@ public class UsuarioVO {
 	}
 	
 	public String serialize(){	
-		return String.format("{\"id\": %s, \"nickname\": \"%s\",  \"nombre\": \"%s\",\"passwd\": \"%s\", \"fecha\": \"%s\" }", 
+		return String.format("{\"id\": %s, \"nombreUsuario\": \"%s\",  \"nombreReal\": \"%s\", \"fecha\": \"%s\" }", 
 				_id, nickname, nombre, passwd, fecha);
 	}
 		

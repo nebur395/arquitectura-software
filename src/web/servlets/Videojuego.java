@@ -63,8 +63,6 @@ public class Videojuego extends HttpServlet {
 		idJuego = json.getInt("idVideojuego");
 		
 		VJuegoVO jVo = VJuegosDAO.findVJuego(idJuego);
-		System.out.printf("******idJuego es: %d%n", idJuego);
-		System.out.println(jVo);
 		JSONObject juego = JSONObject.fromObject(jVo.serialize());
 		juego.element("valoracion", PuntuacionesUtils.calcularPuntuacion(PuntuacionesDAO.listPuntuaciones(jVo.get_id())));
 		
