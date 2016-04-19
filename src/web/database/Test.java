@@ -32,6 +32,7 @@ public class Test {
 		//Limpiamos la base de datos
 		dbAdapter.ejecutarFicheroSQL("resources/limpiarBD.sql");
 		
+		
 		testUsuarios();
 		testVideojuegos();
 		testComentarios();
@@ -83,7 +84,9 @@ public class Test {
 		UsuariosDAO.deleteUser("hombreEfimero");
 		System.out.println("OK\n");
 		
+		System.out.println("Buscamos a hombrefimero");
 		System.out.println(UsuariosDAO.findUser("hombreEfimero"));
+		System.out.println("OK\n");
 	}
 	
 	private static void testVideojuegos(){
@@ -105,6 +108,20 @@ public class Test {
 		System.out.println(VJuegosDAO.findVJuego(3)); //Imprimimos la vuelo
 		System.out.println("OK\n");
 		
+		System.out.println("Buscamos videojuego con: capturar");
+		ArrayList<VJuegoVO> list = VJuegosDAO.searchVideojuego("capturar");
+		for(VJuegoVO i:list){
+			System.out.println(i.toString());
+		}
+		System.out.println("OK\n");
+		
+		System.out.println("Buscamos videojuego con: kratos");
+		list = VJuegosDAO.searchVideojuego("kratos");
+		for(VJuegoVO i:list){
+			System.out.println(i.toString());
+		}
+		System.out.println("OK\n");
+		
 		
 		System.out.println("Actualizamos la plataforma de Pokemon");
 		VJuegosDAO.updateVJuego(pok.get_id(), "Pokemon", "Va de campturar bichos", "Nintendo", "Nintendo", "GameBoy", "RPG", 1995);
@@ -112,9 +129,18 @@ public class Test {
 		System.out.println(pok);
 		System.out.println("OK\n");
 		
-		System.out.println("Borramos a hombrefimero");
+		System.out.println("Borramos a efímero");
 		VJuegosDAO.deleteVJuego(3);
 		System.out.println("OK\n");
+		
+		System.out.println("Buscamos todos los videojuegos");
+		list = VJuegosDAO.findAllVJuegos();
+		for(VJuegoVO i:list){
+			System.out.println(i.toString());
+		}
+		System.out.println("OK\n");
+		
+		
 	}
 	
 	private static void testComentarios(){

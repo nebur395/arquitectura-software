@@ -153,14 +153,89 @@ public class VJuegosDAO {
 		return false;
 	}
 	
-	public static ArrayList<VJuegoVO> searchVideojuego( String query ){
-		//Esto es una prueba hardcodeada para probar el servlet de buscar. TODO: Implementar.
-		ArrayList<VJuegoVO> list = new ArrayList<VJuegoVO>();
-		list.add(new VJuegoVO(2, "Call of Duty", "Niños rata everywhere", "Infinity Ward", 
-								"Activision", "PC", "Shooter", 2016));
-		list.add(new VJuegoVO(3, "The Old Republic", "Star Wars mola", "Bioware", 
-								"Electronic Arts", "PC", "MMORPG", 2008));
-		return list;												
+	public static ArrayList<VJuegoVO> findAllVJuegos( ){
+
+		Connection conn = null;
+		try{
+			Class.forName(gestorDeConexiones.JDBC_DRIVER);
+			conn = gestorDeConexiones.requestConnection();
+			Statement stmt = conn.createStatement();
+			
+			//Parte intertesante--------------------------------------------------------
+						
+			String sql = "SELECT `_id`, `titulo`, `descripcion`, `desarrollador`, `distribuidor`, " +
+					"`plataforma`, `genero`, `año` FROM `videojuegos`";
+			
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			
+			ArrayList<VJuegoVO> list = new ArrayList<VJuegoVO>();
+			
+			while( rs.next() ){
+				list.add( new VJuegoVO( rs.getInt("_id"), rs.getString("titulo"), rs.getString("descripcion"), rs.getString("desarrollador"), 
+						rs.getString("distribuidor"), rs.getString("plataforma"), rs.getString("genero"), rs.getInt("año") ));
+			}
+						
+			return list;
+			
+			//Fin de la parte interesante---------------------------------------------
+		} catch (ClassNotFoundException e){
+			e.printStackTrace();
+		} catch (SQLException e){
+			e.printStackTrace();
+		} finally {
+			
+			if ( conn != null ) gestorDeConexiones.releaseConnection(conn);
+		}
+		
+		return null;												
+	}
+
+	
+	public static ArrayList<VJuegoVO> searchVideojuego( String searchField ){
+
+		Connection conn = null;
+		try{
+			Class.forName(gestorDeConexiones.JDBC_DRIVER);
+			conn = gestorDeConexiones.requestConnection();
+			Statement stmt = conn.createStatement();
+			
+			//Parte intertesante--------------------------------------------------------
+			
+			searchField = searchField.toLowerCase();
+			
+			String sql = "SELECT `_id`, `titulo`, `descripcion`, `desarrollador`, `distribuidor`, " +
+					"`plataforma`, `genero`, `año` FROM `videojuegos` WHERE " +
+					"LOWER(titulo) LIKE '%"+ searchField + "%' " +
+					"OR LOWER(descripcion) LIKE '%" + searchField + "%' " +
+					"OR LOWER(desarrollador) LIKE '%" + searchField + "%' " +
+					"OR LOWER(distribuidor) LIKE '%" + searchField + "%' " +
+					"OR LOWER(plataforma) LIKE '%" + searchField + "s%' " +
+					"OR LOWER(genero) LIKE '%" + searchField + "%'";
+			
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			
+			ArrayList<VJuegoVO> list = new ArrayList<VJuegoVO>();
+			
+			while( rs.next() ){
+				list.add( new VJuegoVO( rs.getInt("_id"), rs.getString("titulo"), rs.getString("descripcion"), rs.getString("desarrollador"), 
+						rs.getString("distribuidor"), rs.getString("plataforma"), rs.getString("genero"), rs.getInt("año") ));
+			}
+						
+			return list;
+			
+			//Fin de la parte interesante---------------------------------------------
+		} catch (ClassNotFoundException e){
+			e.printStackTrace();
+		} catch (SQLException e){
+			e.printStackTrace();
+		} finally {
+			
+			if ( conn != null ) gestorDeConexiones.releaseConnection(conn);
+		}
+		
+		return null;												
 	}
 
 }
