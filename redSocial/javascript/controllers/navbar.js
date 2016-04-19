@@ -18,6 +18,8 @@ angular.module('myApp')
         };
 
         $scope.salir = function (){
+            localStorage.removeItem('videojuegoID');
+            localStorage.removeItem('usuarioID');
             auth.authenticate(null);
             $state.go('initSesion');
         }

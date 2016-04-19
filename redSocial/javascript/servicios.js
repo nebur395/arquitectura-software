@@ -96,9 +96,13 @@ angular.module('myApp')
     .factory('usuarioService', function ($http,auth) {
 
         var usuarioID = 0;
+        if ((usuarioID == 0) && (localStorage.usuarioID !== undefined)) {
+            usuarioID = localStorage.usuarioID;
+        }
 
         return {
             setUsuario: function(usuario) {
+                localStorage.usuarioID = usuario;
                 usuarioID = usuario;
             },
             getInfo: function(callback) {
@@ -146,6 +150,9 @@ angular.module('myApp')
     .factory('videojuegoService', function ($http,auth) {
 
         var videojuegoID = 0;
+        if ((videojuegoID == 0) && (localStorage.videojuegoID !== undefined)) {
+            videojuegoID = localStorage.videojuegoID;
+        }
 
         return {
             guardarOpinion: function(tipo,opinion,callbackExito,callbackError) {
@@ -163,6 +170,7 @@ angular.module('myApp')
                 });
             },
             setVideojuego: function(videojuego) {
+                localStorage.videojuegoID = videojuego;
                 videojuegoID = videojuego;
             },
             getInfo: function(callback) {
