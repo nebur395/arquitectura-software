@@ -18,6 +18,7 @@ angular.module('myApp')
                 $scope.usuario = usuario;
                 $scope.listaComentarios = comentarios;
                 $scope.listaValoraciones = valoraciones;
+                $scope.elegirBoton();
             });
         };
         $scope.cogerInfo();
@@ -34,7 +35,7 @@ angular.module('myApp')
                     $scope.usuarioSeguido = true;
             }
         };
-        $scope.elegirBoton();
+
 
         $scope.entrarVideojuego = function (id) {
             videojuegoService.setVideojuego(id);
