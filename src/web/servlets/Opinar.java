@@ -14,17 +14,15 @@ import javax.servlet.http.HttpServletResponse;
 import net.sf.json.JSONObject;
 import net.sf.json.JSONException;
 
-import web.database.dataAccessObject.FollowsDAO;
+import web.database.dataAccessObject.PuntuacionesDAO;
+import web.database.dataAccessObject.ComentariosDAO;
 
-/**
- * Servlet implementation class DejarDeSeguir
- */ 
- public class DejarDeSeguir extends HttpServlet {
-	 
+public class Opinar extends HttpServlet{
+	
 	/**
      * @see HttpServlet#HttpServlet()
      */
-    public DejarDeSeguir() {
+    public Opinar() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -40,8 +38,8 @@ import web.database.dataAccessObject.FollowsDAO;
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int id;
-		int idUnfollow;
+		int idUser;
+		int idJuego;
 		
 		StringBuffer jb = new StringBuffer();
 		String line = null;
@@ -55,13 +53,33 @@ import web.database.dataAccessObject.FollowsDAO;
 			System.out.printf("Error al leer el JSON");
 		}
 		JSONObject json = JSONObject.fromObject(jb.toString());
-		id = json.getInt("idUser");
-		idUnfollow = json.getInt("idSeguidor");
-		if(FollowsDAO.unFollow(id, idUnfollow)){
-			response.setStatus(HttpServletResponse.SC_OK);
+		idUser = json.getInt("idUser");
+		idJuego = json.getInt("idVideojuego");
+		//Si es un comentario
+		if(json.getBoolean("tipo")){
+			String opinion = json.getString("opinion");
+			if(ComentariosDAO.addComentario(idUser, idJuego, opinion)){
+				response.setStatus(HttpServletResponse.SC_OK);
+			}
+			else{
+				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			}
+		}
+		//Si es una valoración
+		else if(!(PuntuacionesDAO.existsPuntuacion(idUser, idJuego))){
+			int opinion = json.getInt("opinion");
+			if(PuntuacionesDAO.addPuntuacion(idUser, idJuego, opinion)){
+				response.setStatus(HttpServletResponse.SC_OK);
+			}
+			else{
+				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			}
 		}
 		else{
+			response.setContentType("text/html; charset=UTF-8");
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			response.getWriter().println("Ya has valorado este videojuego");
 		}
 	}
- }
+	
+}

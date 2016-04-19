@@ -61,7 +61,7 @@ public class PuntuacionesDAO {
 			
 			//Parte intertesante--------------------------------------------------------
 			
-			String sql = String.format("SELECT _id, usuario, videojuego, nota, tiempo FROM notas " +
+			String sql = String.format("SELECT usuario, videojuego, nota, tiempo FROM notas " +
 					"WHERE videojuego='%s'", id);
 			ResultSet rs = stmt.executeQuery(sql);
 			
@@ -79,10 +79,8 @@ public class PuntuacionesDAO {
 		} catch (SQLException e){
 			e.printStackTrace();
 		} finally {
-		
 			if ( conn != null ) gestorDeConexiones.releaseConnection(conn);
 		}
-		
 		return null;
 	}
 	
@@ -111,6 +109,11 @@ public class PuntuacionesDAO {
 			
 			if ( conn != null ) gestorDeConexiones.releaseConnection(conn);
 		}
+		return false;
+	}
+	
+	public static boolean existsPuntuacion( int usuarioID, int vJID ){
+		
 		return false;
 	}
 

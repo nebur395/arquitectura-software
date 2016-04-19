@@ -60,13 +60,22 @@ body {
 a:focus, a:hover {
   text-decoration: none;
 }
+a{
+  cursor:pointer;
+}
 /*posicion en el gif para las estrellas */
 .estrellaOn{
+  cursor: pointer;
+  display: inline-block;
+  margin-bottom: -3px;
   width: 16px;
   height: 16px;
   background: url("../img/estrellaOn.gif") 0 0;
 }
 .estrellaOff{
+  cursor: pointer;
+  display: inline-block;
+  margin-bottom: -3px;
   width: 16px;
   height: 16px;
   background: url("../img/estrellaOff.gif") 0 0;
@@ -115,4 +124,15 @@ a:focus, a:hover {
 }
 .font {
   font-family: Palatins Linotype, serif;
+}
+.navbar-inverse .navbar-nav>li>a {
+  cursor: pointer;
+}
+.dropdown-menu>li>a {
+  cursor: pointer;
+}
+@media only screen and (max-width: 767px) {
+  .navbar-inverse .navbar-nav .open .dropdown-menu>li>a {
+    color: #fff;
+  }
 }

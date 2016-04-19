@@ -5,17 +5,23 @@
       <h1 id="primerContenido" class="theme-color-text font">Personaliza tu cuenta</h1>
       <form class="w3-container" ng-submit="guardarCambios()" id="ajustes">
         <p><label>Nombre de usuario:</label>
-          <input ng-click="hideError();hideExito()" class="w3-input" type="text" ng-model="nombreUsuario" required></p>
+          <input ng-click="hideError();hideExito()" class="w3-input" type="text"
+                 ng-model="nombreUsuario" required></p>
         <p><label>Nombre y apellidos:</label>
-          <input ng-click="hideError();hideExito()" class="w3-input" type="text" ng-model="nombreApellidos"></p>
+          <input ng-click="hideError();hideExito()" class="w3-input" type="text"
+                 ng-model="nombreApellidos"></p>
         <p><label>Contraseña actual:</label>
-          <input ng-click="hideError();hideExito()" class="w3-input" type="password" ng-model="oldPassword" required></p>
+          <input ng-click="hideError();hideExito()" class="w3-input" type="password"
+                 ng-model="oldPassword" required></p>
         <p><label>Contraseña nueva:</label>
-          <input ng-click="hideError();hideExito()" class="w3-input" type="password" ng-model="password"></p>
+          <input ng-click="hideError();hideExito()" class="w3-input" type="password"
+                 ng-model="password"></p>
         <p><label>Repetir contraseña nueva:</label>
-          <input ng-click="hideError();hideExito()" class="w3-input" type="password" ng-model="rePassword"></p>
+          <input ng-click="hideError();hideExito()" class="w3-input" type="password"
+                 ng-model="rePassword"></p>
         <p style="text-align: center">
-          <button ng-click="limpiarCambios()" class="w3-btn w3-round-large theme-accent2" id="cancelButton">
+          <button ng-click="limpiarCambios()" class="w3-btn w3-round-large theme-accent2"
+                  id="cancelButton">
             Cancelar</button>
           <button type="submit" class="w3-btn w3-round-large theme-accent">
             Guardar</button></p>
@@ -36,9 +42,10 @@
       <h2 class="theme-color-text">Lista de seguidores</h2>
       <ul class="list-group" id="listaSeguidores">
         <li class="list-group-item" ng-repeat="seguidor in seguidores">
-          <a href="" class="theme-color-text-action">{{seguidor.nombreUsuario}}</a> ({{seguidor.nombreApellidos}})
-          <button ng-click="dejarSeguir(seguidor.id)" style="float:right" class="w3-btn w3-round-large
-					theme-accent-s w3-small">
+          <a ng-click="entrarUsuario(seguidor.idUsuario)" class="theme-color-text-action">{{seguidor.nombreUsuario}}</a>
+          ({{seguidor.nombreApellidos}})
+          <button ng-click="dejarSeguir(seguidor.id)" style="float:right"
+                  class="w3-btn w3-round-large theme-accent-s w3-small">
             Dejar de seguir</button></li>
       </ul>
 

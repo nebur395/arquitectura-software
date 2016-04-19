@@ -16,15 +16,12 @@ import net.sf.json.JSONException;
 
 import web.database.dataAccessObject.FollowsDAO;
 
-/**
- * Servlet implementation class DejarDeSeguir
- */ 
- public class DejarDeSeguir extends HttpServlet {
-	 
+public class Seguir extends HttpServlet {
+	
 	/**
      * @see HttpServlet#HttpServlet()
      */
-    public DejarDeSeguir() {
+    public Seguir() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -41,7 +38,7 @@ import web.database.dataAccessObject.FollowsDAO;
 	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int id;
-		int idUnfollow;
+		int idFollow;
 		
 		StringBuffer jb = new StringBuffer();
 		String line = null;
@@ -56,12 +53,13 @@ import web.database.dataAccessObject.FollowsDAO;
 		}
 		JSONObject json = JSONObject.fromObject(jb.toString());
 		id = json.getInt("idUser");
-		idUnfollow = json.getInt("idSeguidor");
-		if(FollowsDAO.unFollow(id, idUnfollow)){
+		idFollow = json.getInt("idSeguidor");
+		
+		if(FollowsDAO.follow(id, idFollow)){
 			response.setStatus(HttpServletResponse.SC_OK);
 		}
 		else{
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 		}
 	}
- }
+}

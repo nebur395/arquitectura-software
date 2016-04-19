@@ -19,9 +19,8 @@
     <div ng-if="sesionActiva()" class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right">
         <!-- Boton de Buscar -->
-        <!--TODO | <li ng-class="{ active: isActive('/')}">-->
-        <li>
-          <a href="#">Buscar</a><!--TODO | modificar el link-->
+        <li ng-class="{active: isActive('/buscar')}">
+          <a href="#/buscar">Buscar</a>
         </li>
         <!--Menu desplegable-->
         <li class="dropdown">
@@ -29,8 +28,7 @@
             Cuenta<span class="caret"></span>
           </a>
           <ul class="dropdown-menu">
-            <!--TODO | <li  ng-class="{ active: isActive('/')}"><a href="#">Ajustes</a></li>-->
-            <li><a href="#/ajustes">Ajustes</a></li>
+            <li ng-class="{active: isActive('/ajustes')}"><a href="#/ajustes">Ajustes</a></li>
             <li><a ng-click="salir()">Salir</a></li>
           </ul>
         </li>

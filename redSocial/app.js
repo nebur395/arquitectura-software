@@ -2,7 +2,7 @@ angular.module('myApp', ['ui.router','ab-base64'])
 
     .config(function($stateProvider, $urlRouterProvider){
         $stateProvider
-
+            
             .state('novedades', {
                 url: "/novedades",
                 templateUrl: "templates/novedades.html",
@@ -13,6 +13,7 @@ angular.module('myApp', ['ui.router','ab-base64'])
                     }
                 }
             })
+            
             .state('ajustes', {
                 url: "/ajustes",
                 templateUrl: "templates/ajustes.html",
@@ -23,6 +24,40 @@ angular.module('myApp', ['ui.router','ab-base64'])
                     }
                 }
             })
+
+            .state('videojuego', {
+                url: "/videojuego",
+                templateUrl: "templates/videojuego.html",
+                controller: "videojuegoCtrl",
+                onEnter: function($state,auth){
+                    if(!auth.isAuthenticated()){
+                        $state.go('initSesion');
+                    }
+                }
+            })
+
+            .state('buscar', {
+                url: "/buscar",
+                templateUrl: "templates/buscar.html",
+                controller: "buscarCtrl",
+                onEnter: function($state,auth){
+                    if(!auth.isAuthenticated()){
+                        $state.go('initSesion');
+                    }
+                }
+            })
+
+            .state('usuario', {
+                url: "/usuario",
+                templateUrl: "templates/usuario.html",
+                controller: "usuarioCtrl",
+                onEnter: function($state,auth){
+                    if(!auth.isAuthenticated()){
+                        $state.go('initSesion');
+                    }
+                }
+            })
+            
             .state('initSesion', {
                 url: "/initSesion",
                 templateUrl: "templates/initSesion.html",
@@ -33,7 +68,6 @@ angular.module('myApp', ['ui.router','ab-base64'])
                     }
                 }
             });
-            
         
         $urlRouterProvider.otherwise('initSesion');
     });

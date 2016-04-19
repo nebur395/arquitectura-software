@@ -54,8 +54,8 @@ public class VJuegoVO {
 	}
 	
 	public String serialize(){	
-		return String.format("{\"id\": %s, \"titulo\": \"%s\", \"desarrollador\": \"%s\", \"descripcion\": \"%s\"," +
-				" \"distribuidor\": \"%s\", \"plataforma\": \"%s\", \"genero\": \"%s\", \"fecha\": \"%s\" }", 
+		return String.format("{\"id\": %s, \"nombre\": \"%s\", \"desarrolladora\": \"%s\", \"descripcion\": \"%s\"," +
+				" \"distribuidora\": \"%s\", \"plataforma\": \"%s\", \"genero\": \"%s\", \"lanzamiento\": \"%s\" }", 
 				_id, titulo, desarrollador, descripcion, distribuidor, plataforma, genero, anyo);
 	}
 		

@@ -93,6 +93,111 @@ angular.module('myApp')
         };
     })
 
+    .factory('usuarioService', function ($http,auth) {
+
+        var usuarioID = 0;
+
+        return {
+            setUsuario: function(usuario) {
+                usuarioID = usuario;
+            },
+            getInfo: function(callback) {
+                $http({
+                 method: 'POST',
+                 url: 'Usuario',
+                 data: JSON.stringify({"idUsuario":usuarioID, "idUser":auth.idUser()}),
+                 headers: {
+                 'Content-Type': 'application/json; charset=UTF-8'
+                 }
+                 }).success(function(data){
+                 callback(data.usuario,data.comentarios,data.valoraciones);
+                 }).error(function(){
+                 });
+            },
+            seguir: function(usuario) {
+                $http({
+                    method: 'POST',
+                    url: 'Seguir',
+                    data: JSON.stringify({"idUser":auth.idUser(), "idSeguidor":usuario.id}),
+                    headers: {
+                        'Content-Type': 'application/json; charset=UTF-8'
+                    }
+                }).success(function(){
+                    usuario.tipo = 3;
+                }).error(function(){
+                });
+            },
+            dejarSeguir: function(usuario) {
+                $http({
+                    method: 'POST',
+                    url: 'dejarSeguir',
+                    data: JSON.stringify({"idUser":auth.idUser(), "idSeguidor":usuario.id}),
+                    headers: {
+                        'Content-Type': 'application/json; charset=UTF-8'
+                    }
+                }).success(function(){
+                    usuario.tipo = 2;
+                }).error(function(){
+                });
+            }
+        };
+    })
+    
+    .factory('videojuegoService', function ($http,auth) {
+
+        var videojuegoID = 0;
+
+        return {
+            guardarOpinion: function(tipo,opinion,callbackExito,callbackError) {
+                $http({
+                    method: 'POST',
+                    url: 'Opinar',
+                    data: JSON.stringify({"idUser":auth.idUser(), "tipo":tipo, "opinion":opinion, "idVideojuego":videojuegoID}),
+                    headers: {
+                        'Content-Type': 'application/json; charset=UTF-8'
+                    }
+                }).success(function(){
+                    callbackExito();
+                }).error(function(data){
+                    callbackError(data);
+                });
+            },
+            setVideojuego: function(videojuego) {
+                videojuegoID = videojuego;
+            },
+            getInfo: function(callback) {
+                $http({
+                    method: 'POST',
+                    url: 'Videojuego',
+                    data: JSON.stringify({"idVideojuego":videojuegoID}),
+                    headers: {
+                        'Content-Type': 'application/json; charset=UTF-8'
+                    }
+                }).success(function(data){
+                    callback(data.videojuego,data.comentarios,data.valoraciones);
+                }).error(function(){
+                });
+            }
+        };
+    })
+
+    .factory('buscarService', function ($http) {
+        return {
+            buscar: function(callback) {
+                $http({
+                    method: 'POST',
+                    url: 'Buscar',
+                    headers: {
+                        'Content-Type': 'application/json; charset=UTF-8'
+                    }
+                }).success(function(data){
+                    callback(data);
+                }).error(function(){
+                });
+            }
+        };
+    })
+
     .factory('ajustesService', function ($http,auth) {
         return {
             cambioAjustes: function(user,callbackExito,callbackError) {
@@ -120,11 +225,10 @@ angular.module('myApp')
                     }
                 }).success(function(data){
                     callback(data.seguidores);
-
                 }).error(function(){
                 });
             },
-            dejarSeguir: function(idUser,idSeguidor) {
+            dejarSeguir: function(idUser,idSeguidor,callbackMensaje,callbackBorrarId) {
                 $http({
                     method: 'POST',
                     url: 'dejarSeguir',
@@ -133,9 +237,9 @@ angular.module('myApp')
                         'Content-Type': 'application/json; charset=UTF-8'
                     }
                 }).success(function(){
-                    
+                    callbackMensaje();
+                    callbackBorrarId(idSeguidor);
                 }).error(function(){
-
                 });
             }
         };

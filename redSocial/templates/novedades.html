@@ -8,7 +8,7 @@
       <div class="form-group" style="float: right;">
         <label for="mostrar">Mostrar: </label>
         <select  id="mostrar" class="form-control" ng-model="novedades"
-          ng-options="x for x in mostrar">
+                 ng-options="x for x in mostrar">
         </select>
       </div>
     </div>
@@ -17,9 +17,10 @@
     <div ng-if="novedades == 'Comentarios'" class="row">
       <ul class="list-group" id="novedades">
         <li class="list-group-item" ng-repeat="comentario in novedadesComentarios">
-          <a href="" class="theme-color-text-action">{{comentario.nombreUsuario}}</a>
+          <a ng-click="entrarUsuario(comentario.idUsuario)" class="theme-color-text-action">{{comentario.nombreUsuario}}</a>
           ({{comentario.nombreApellidos}}) ha comentado el juego
-          <a href="" class="theme-color-text-action">{{comentario.juego}}</a></li>
+          <a ng-click="entrarVideojuego(comentario.idJuego)" class=
+              "theme-color-text-action">{{comentario.juego}}</a></li>
       </ul>
     </div>
 
@@ -27,10 +28,10 @@
     <div ng-if="novedades == 'Valoraciones'" class="row">
       <ul class="list-group" id="novedades">
         <li class="list-group-item" ng-repeat="valoracion in novedadesValoraciones">
-        <a href="" class="theme-color-text-action">{{valoracion.nombreUsuario}}</a>
-        ({{valoracion.nombreApellidos}}) ha valorado el juego
-        <a href="" class="theme-color-text-action">{{valoracion.juego}}</a>
-        con <span ng-class="valoracion.valoracion"></span></li>
+          <a ng-click="entrarUsuario(valoracion.idUsuario)" class="theme-color-text-action">{{valoracion.nombreUsuario}}</a>
+          ({{valoracion.nombreApellidos}}) ha valorado el juego
+          <a ng-click="entrarVideojuego(valoracion.idJuego)" class="theme-color-text-action">
+            {{valoracion.juego}}</a>con <span ng-class="valoracion.valoracion"></span></li>
       </ul>
     </div>
 

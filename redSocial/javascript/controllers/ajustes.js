@@ -1,6 +1,6 @@
 angular.module('myApp')
 
-    .controller('ajustesCtrl', [ '$scope','auth', 'ajustesService', function($scope,auth,ajustesService){
+    .controller('ajustesCtrl', ['$scope','$state','auth','ajustesService','usuarioService',function($scope,$state,auth,ajustesService,usuarioService){
         
         $scope.nombreUsuarioPrimario = auth.identity();
         $scope.nombreApellidosPrimario = auth.nombreApellidos();
@@ -70,17 +70,26 @@ angular.module('myApp')
         $scope.cogerSeguidores();
 
         $scope.dejarSeguir = function (idSeguidor) {
-            ajustesService.dejarSeguir(auth.idUser(), idSeguidor);
+            ajustesService.dejarSeguir(auth.idUser(), idSeguidor,showExito,borrarSeguidor);
         };
 
-        /*var borrarSeguidor = function (idSeguidor) {
+        var borrarSeguidor = function (idSeguidor) {
             $scope.idDejarSeguir = idSeguidor;
             var aux = $scope.seguidores.findIndex($scope.checkIdSeguidor);
-            $scope.seguidores[aux] = $scope.seguidores.pop();
+            if (aux != ($scope.seguidores.length -1)) {
+                $scope.seguidores[aux] = $scope.seguidores.pop();
+            } else {
+                $scope.seguidores.pop();
+            }
         };
 
         $scope.checkIdSeguidor = function (seguidor) {
             return seguidor.id == $scope.idDejarSeguir;
-        };*/
+        };
+
+        $scope.entrarUsuario = function (id) {
+            usuarioService.setUsuario(id);
+            $state.go('usuario');
+        };
 
     }]);
