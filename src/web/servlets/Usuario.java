@@ -19,17 +19,19 @@ import web.database.dataAccessObject.PuntuacionesDAO;
 import web.database.dataAccessObject.ComentariosDAO;
 import web.database.dataAccessObject.VJuegosDAO;
 import web.database.dataAccessObject.UsuariosDAO;
+import web.database.dataAccessObject.FollowsDAO;
 import web.database.valueObject.VJuegoVO;
 import web.database.valueObject.UsuarioVO;
 import web.database.valueObject.ComentarioVO;
 import web.database.valueObject.PuntuacionVO;
+import web.utils.PuntuacionesUtils;
 
 public class Usuario extends HttpServlet {
 	
 	/**
      * @see HttpServlet#HttpServlet()
      */
-    public Videojuego() {
+    public Usuario() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -46,7 +48,7 @@ public class Usuario extends HttpServlet {
 	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int idUser;
-		int idFollow;
+		int idProfile;
 		
 		StringBuffer jb = new StringBuffer();
 		String line = null;
@@ -61,12 +63,49 @@ public class Usuario extends HttpServlet {
 		}
 		JSONObject json = JSONObject.fromObject(jb.toString());
 		idUser = json.getInt("idUser");
-		idFollow = json.getInt("idUsuario");
+		idProfile = json.getInt("idUsuario");
 		
 		UsuarioVO vo = UsuariosDAO.findUser(idUser);
-		JSONObject usuario = JSONObject.fromOobject(vo.serialize());
-		usuario.element();
+		JSONObject usuario = JSONObject.fromObject(vo.serialize());
+		usuario.element("comentarios", ComentariosDAO.numComentarios(idUser));
+		int tipo;
+		if(idUser == idProfile){ tipo=1; }
+		else if(FollowsDAO.isFollower(idUser, idProfile)){ tipo=3; }
+		else { tipo=2; }
+		usuario.element("tipo", tipo);
 		
+		JSONArray jaComentarios = new JSONArray();
+		Iterator<ComentarioVO> comentsIter = (ComentariosDAO.listComentarioUser(idProfile)).iterator();
+		while(comentsIter.hasNext()){
+			ComentarioVO cVo = comentsIter.next();
+			VJuegoVO jVo = VJuegosDAO.findVJuego(cVo.getvJuego());
+			JSONObject comentario = new JSONObject();
+			comentario.element("idJuego", jVo.get_id());
+			comentario.element("nombre", jVo.getTitulo());
+			comentario.element("fecha", (cVo.getFecha()).substring(0,10));
+			comentario.element("contenido", cVo.getComentario());
+			jaComentarios.add(comentario);
+		}
 		
+		JSONArray jaPuntuaciones = new JSONArray();
+		Iterator<PuntuacionVO> puntuacionesIter = (PuntuacionesDAO.listPuntuacionesUser(idProfile)).iterator();
+		while(puntuacionesIter.hasNext()){
+			PuntuacionVO pVo = puntuacionesIter.next();
+			VJuegoVO jVo = VJuegosDAO.findVJuego(pVo.getvJuego());
+			JSONObject puntuacion = new JSONObject();
+			puntuacion.element("idJuego", jVo.get_id());
+			puntuacion.element("nombre", jVo.getTitulo());
+			puntuacion.element("fecha", (pVo.getFecha()).substring(0,10));
+			puntuacion.element("valoracion", PuntuacionesUtils.puntuacionToString(pVo.getPuntuacion())+"Estrella");
+			jaPuntuaciones.add(puntuacion);
+		}
+		
+		JSONObject mainJson = new JSONObject();
+		mainJson.element("usuario", usuario);
+		mainJson.element("comentarios", jaComentarios);
+		mainJson.element("valoraciones", jaPuntuaciones);
+		response.setStatus(HttpServletResponse.SC_OK);
+		response.setContentType("application/json; charset=UTF-8");
+		response.getWriter().write(mainJson.toString());
 	}
 }

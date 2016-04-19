@@ -102,4 +102,13 @@
 		<servlet-name>Videojuego</servlet-name>
 		<url-pattern>/Videojuego</url-pattern>
     </servlet-mapping>
+    
+    <servlet>
+		<servlet-name>Usuario</servlet-name>
+		<servlet-class>web.servlets.Usuario</servlet-class>
+    </servlet>
+    <servlet-mapping>
+		<servlet-name>Usuario</servlet-name>
+		<url-pattern>/Usuario</url-pattern>
+    </servlet-mapping>
 </web-app>

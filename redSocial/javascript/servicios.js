@@ -110,7 +110,8 @@ angular.module('myApp')
                  'Content-Type': 'application/json; charset=UTF-8'
                  }
                  }).success(function(data){
-                 callback(data.usuario,data.comentarios,data.valoraciones);
+					console.log(data); 
+					callback(data.usuario,data.comentarios,data.valoraciones);
                  }).error(function(){
                  });
             },

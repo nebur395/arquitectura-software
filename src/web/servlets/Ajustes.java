@@ -74,7 +74,7 @@ import web.database.valueObject.UsuarioVO;
 			response.getWriter().println("Usuario incorrecto");
 			error = true;
 		}
-		if((usuario==null)){
+		if((nombre==null)){
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			response.getWriter().println("Nombre incorrecto");
 			error = true;
@@ -84,12 +84,12 @@ import web.database.valueObject.UsuarioVO;
 			response.getWriter().println("Contraseña actual no válida");
 			error = true;
 		}
-		if((newPass==null) || (newPass.trim().equals(""))){
+		if((newPass==null)){
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			response.getWriter().println("Contraseña nueva no válida");
 			error = true;
 		}
-		if((reNewPass==null) || (reNewPass.trim().equals(""))){
+		if((reNewPass==null)){
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			response.getWriter().println("Las nuevas contraseñas no coinciden");
 			error = true;
@@ -102,6 +102,8 @@ import web.database.valueObject.UsuarioVO;
 		//Si no hay ningún error en los datos introducidos
 		if(!error){
 			UsuarioVO vo = UsuariosDAO.findUser(usuario);
+			//Si no se quiere cambiar la contraseña, se deja la actual
+			if(newPass.trim().equals("")){ newPass = pass; }
 			//Si el usuario no existe
 			if(vo==null){
 				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
