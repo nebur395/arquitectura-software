@@ -149,10 +149,5 @@ public class ComentariosDAO {
 		}
 		return false;
 	}
-	
-	//TODO: Implementar este método
-	public static int numComentarios( int idUser ){
-		return 2;
-	}
 
 }

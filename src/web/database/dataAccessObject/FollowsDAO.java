@@ -112,7 +112,6 @@ public class FollowsDAO {
 		
 	}
 	
-	//TODO: Implementar
 	public static boolean isFollower( int follower, int followed ){
 		
 		Connection conn = null;

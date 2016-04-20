@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.lang.StringBuffer;
 import java.io.BufferedReader;
 import java.util.Iterator;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -65,17 +66,9 @@ public class Usuario extends HttpServlet {
 		idUser = json.getInt("idUser");
 		idProfile = json.getInt("idUsuario");
 		
-		UsuarioVO vo = UsuariosDAO.findUser(idUser);
-		JSONObject usuario = JSONObject.fromObject(vo.serialize());
-		usuario.element("comentarios", ComentariosDAO.numComentarios(idUser));
-		int tipo;
-		if(idUser == idProfile){ tipo=1; }
-		else if(FollowsDAO.isFollower(idUser, idProfile)){ tipo=3; }
-		else { tipo=2; }
-		usuario.element("tipo", tipo);
-		
 		JSONArray jaComentarios = new JSONArray();
-		Iterator<ComentarioVO> comentsIter = (ComentariosDAO.listComentarioUser(idProfile)).iterator();
+		ArrayList<ComentarioVO> list = ComentariosDAO.listComentarioUser(idProfile);
+		Iterator<ComentarioVO> comentsIter = list.iterator();
 		while(comentsIter.hasNext()){
 			ComentarioVO cVo = comentsIter.next();
 			VJuegoVO jVo = VJuegosDAO.findVJuego(cVo.getvJuego());
@@ -99,6 +92,15 @@ public class Usuario extends HttpServlet {
 			puntuacion.element("valoracion", PuntuacionesUtils.puntuacionToString(pVo.getPuntuacion())+"Estrella");
 			jaPuntuaciones.add(puntuacion);
 		}
+		
+		UsuarioVO vo = UsuariosDAO.findUser(idUser);
+		JSONObject usuario = JSONObject.fromObject(vo.serialize());
+		usuario.element("comentarios", list.size());
+		int tipo;
+		if(idUser == idProfile){ tipo=1; }
+		else if(FollowsDAO.isFollower(idUser, idProfile)){ tipo=3; }
+		else { tipo=2; }
+		usuario.element("tipo", tipo);
 		
 		JSONObject mainJson = new JSONObject();
 		mainJson.element("usuario", usuario);

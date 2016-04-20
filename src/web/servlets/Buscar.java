@@ -46,7 +46,7 @@ public class Buscar extends HttpServlet {
 	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		JSONArray ja = new JSONArray();
-		Iterator<VJuegoVO> iterador = (VJuegosDAO.searchVideojuego("")).iterator();
+		Iterator<VJuegoVO> iterador = (VJuegosDAO.findAllVJuegos()).iterator();
 		while(iterador.hasNext()){
 			VJuegoVO vo = iterador.next();
 			JSONObject juego = JSONObject.fromObject(vo.serialize());
