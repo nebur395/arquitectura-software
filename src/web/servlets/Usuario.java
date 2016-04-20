@@ -93,7 +93,7 @@ public class Usuario extends HttpServlet {
 			jaPuntuaciones.add(puntuacion);
 		}
 		
-		UsuarioVO vo = UsuariosDAO.findUser(idUser);
+		UsuarioVO vo = UsuariosDAO.findUser(idProfile);
 		JSONObject usuario = JSONObject.fromObject(vo.serialize());
 		usuario.element("comentarios", list.size());
 		int tipo;

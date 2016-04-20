@@ -113,8 +113,7 @@ angular.module('myApp')
                  headers: {
                  'Content-Type': 'application/json; charset=UTF-8'
                  }
-                 }).success(function(data){
-					console.log(data); 
+                 }).success(function(data){ 
 					callback(data.usuario,data.comentarios,data.valoraciones);
                  }).error(function(){
                  });
