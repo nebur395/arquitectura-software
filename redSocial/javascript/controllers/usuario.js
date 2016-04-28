@@ -27,12 +27,18 @@ angular.module('myApp')
             switch ($scope.usuario.tipo) {
                 case 1:
                     $scope.usuarioAjustes = true;
+                    $scope.usuarioNoSeguido = false;
+                    $scope.usuarioSeguido = false;
                     break;
                 case 2:
                     $scope.usuarioNoSeguido = true;
+                    $scope.usuarioAjustes = false;
+                    $scope.usuarioSeguido = false;
                     break;
                 default:
                     $scope.usuarioSeguido = true;
+                    $scope.usuarioAjustes = false;
+                    $scope.usuarioNoSeguido = false;
             }
         };
 
@@ -47,11 +53,15 @@ angular.module('myApp')
         };
         
         $scope.seguir = function () {
-            usuarioService.seguir($scope.usuario);
+            usuarioService.seguir($scope.usuario, function () {
+                $scope.elegirBoton();
+            });
         };
         
         $scope.dejarSeguir = function () {
-            usuarioService.dejarSeguir($scope.usuario);
+            usuarioService.dejarSeguir($scope.usuario, function () {
+                $scope.elegirBoton();
+            });
         }
         
     }]);

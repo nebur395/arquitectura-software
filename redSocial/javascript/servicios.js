@@ -118,7 +118,7 @@ angular.module('myApp')
                  }).error(function(){
                  });
             },
-            seguir: function(usuario) {
+            seguir: function(usuario,callback) {
                 $http({
                     method: 'POST',
                     url: 'Seguir',
@@ -128,10 +128,11 @@ angular.module('myApp')
                     }
                 }).success(function(){
                     usuario.tipo = 3;
+                    callback();
                 }).error(function(){
                 });
             },
-            dejarSeguir: function(usuario) {
+            dejarSeguir: function(usuario,callback) {
                 $http({
                     method: 'POST',
                     url: 'dejarSeguir',
@@ -141,6 +142,7 @@ angular.module('myApp')
                     }
                 }).success(function(){
                     usuario.tipo = 2;
+                    callback();
                 }).error(function(){
                 });
             }
