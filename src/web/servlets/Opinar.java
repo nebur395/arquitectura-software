@@ -16,6 +16,7 @@ import net.sf.json.JSONException;
 
 import web.database.dataAccessObject.PuntuacionesDAO;
 import web.database.dataAccessObject.ComentariosDAO;
+import web.utils.PuntuacionesUtils;
 
 public class Opinar extends HttpServlet{
 	
@@ -55,6 +56,7 @@ public class Opinar extends HttpServlet{
 		JSONObject json = JSONObject.fromObject(jb.toString());
 		idUser = json.getInt("idUser");
 		idJuego = json.getInt("idVideojuego");
+		response.setContentType("text/html; charset=UTF-8");
 		//Si es un comentario
 		if(json.getBoolean("tipo")){
 			String opinion = json.getString("opinion");
@@ -69,7 +71,10 @@ public class Opinar extends HttpServlet{
 		else{
 			int opinion = json.getInt("opinion");
 			if(PuntuacionesDAO.addPuntuacion(idUser, idJuego, opinion)){
+				//Extraigo la nueva puntuación total del juego
+				String valoracion = PuntuacionesUtils.calcularPuntuacion(PuntuacionesDAO.listPuntuaciones(idJuego));
 				response.setStatus(HttpServletResponse.SC_OK);
+				response.getWriter().println(valoracion);
 			}
 			else{
 				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
