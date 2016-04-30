@@ -157,7 +157,7 @@ angular.module('myApp')
         }
 
         return {
-            guardarOpinion: function(tipo,opinion,callbackExito,callbackError) {
+            guardarOpinion: function(tipo,opinion,callbackExito,callbackError,actualizarFeedback) {
                 $http({
                     method: 'POST',
                     url: 'Opinar',
@@ -165,7 +165,8 @@ angular.module('myApp')
                     headers: {
                         'Content-Type': 'application/json; charset=UTF-8'
                     }
-                }).success(function(){
+                }).success(function(data){
+                    actualizarFeedback(data);
                     callbackExito();
                 }).error(function(data){
                     callbackError(data);

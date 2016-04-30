@@ -1,6 +1,6 @@
 angular.module('myApp')
 
-    .controller('videojuegoCtrl', ['$scope','$state','usuarioService','videojuegoService',function($scope,$state,usuarioService,videojuegoService){
+    .controller('videojuegoCtrl', ['$scope','$state','usuarioService','videojuegoService','auth',function($scope,$state,usuarioService,videojuegoService,auth){
         $scope.mostrar = ["Comentarios","Valoraciones"];
         $scope.opinion = "Comentarios";
         $scope.listaComentarios;
@@ -57,7 +57,17 @@ angular.module('myApp')
             $("#comentarioModal").on('hidden.bs.modal', function () {
                 if ($scope.activo) {
                     $scope.activo = false;
-                    videojuegoService.guardarOpinion(true,$scope.comentario,showExito,showError);
+                    videojuegoService.guardarOpinion(true,$scope.comentario,
+                        showExito,showError, function () {
+                            var comentario = {
+                                idUsuario: auth.idUser(),
+                                nombreUsuario: auth.identity(),
+                                fecha: 1,
+                                nombreApellidos: auth.nombreApellidos(),
+                                contenido: $scope.comentario
+                            };
+                            $scope.listaComentarios.push(comentario);
+                        });
                 }
             });
         };
@@ -75,7 +85,36 @@ angular.module('myApp')
             $("#valorarModal").on('hidden.bs.modal', function () {
                 if ($scope.activo) {
                     $scope.activo = false;
-                    videojuegoService.guardarOpinion(false,num,showExito,showError);
+                    videojuegoService.guardarOpinion(false,num,showExito,showError,
+                        function (estrellas) {
+                            $scope.videojuego.valoracion = estrellas;
+                            var numEstrella = "";
+                            switch (num) {
+                                case 1:
+                                    numEstrella = "unaEstrella";
+                                    break;
+                                case 2:
+                                    numEstrella = "dosEstrella";
+                                    break;
+                                case 3:
+                                    numEstrella = "tresEstrella";
+                                    break;
+                                case 4:
+                                    numEstrella = "cuatroEstrella";
+                                    break;
+                                default:
+                                    numEstrella = "cincoEstrella";
+                            }
+                            var valoracion = {
+                                idUsuario: auth.idUser(),
+                                nombreUsuario: auth.identity(),
+                                fecha: 1,
+                                nombreApellidos: auth.nombreApellidos(),
+                                valoracion: numEstrella
+                            };
+
+                            $scope.listaValoraciones.push(valoracion);
+                        });
                 }
             });
         };
