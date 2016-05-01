@@ -166,7 +166,7 @@ angular.module('myApp')
                         'Content-Type': 'application/json; charset=UTF-8'
                     }
                 }).success(function(data){
-                    actualizarFeedback(data);
+                    actualizarFeedback(data.fecha,data.valoracion);
                     callbackExito();
                 }).error(function(data){
                     callbackError(data);

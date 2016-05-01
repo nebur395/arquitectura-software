@@ -58,11 +58,11 @@ angular.module('myApp')
                 if ($scope.activo) {
                     $scope.activo = false;
                     videojuegoService.guardarOpinion(true,$scope.comentario,
-                        showExito,showError, function () {
+                        showExito,showError, function (fecha) {
                             var comentario = {
                                 idUsuario: auth.idUser(),
                                 nombreUsuario: auth.identity(),
-                                fecha: 1,
+                                fecha: fecha,
                                 nombreApellidos: auth.nombreApellidos(),
                                 contenido: $scope.comentario
                             };
@@ -86,7 +86,7 @@ angular.module('myApp')
                 if ($scope.activo) {
                     $scope.activo = false;
                     videojuegoService.guardarOpinion(false,num,showExito,showError,
-                        function (estrellas) {
+                        function (fecha, estrellas) {
                             $scope.videojuego.valoracion = estrellas;
                             var numEstrella = "";
                             switch (num) {
@@ -108,7 +108,7 @@ angular.module('myApp')
                             var valoracion = {
                                 idUsuario: auth.idUser(),
                                 nombreUsuario: auth.identity(),
-                                fecha: 1,
+                                fecha: fecha,
                                 nombreApellidos: auth.nombreApellidos(),
                                 valoracion: numEstrella
                             };
