@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.util.Base64;
 import java.lang.StringBuffer;
 import java.io.BufferedReader;
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -56,12 +59,17 @@ public class Opinar extends HttpServlet{
 		JSONObject json = JSONObject.fromObject(jb.toString());
 		idUser = json.getInt("idUser");
 		idJuego = json.getInt("idVideojuego");
-		response.setContentType("text/html; charset=UTF-8");
+		DateFormat dateF = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = new Date();
 		//Si es un comentario
 		if(json.getBoolean("tipo")){
 			String opinion = json.getString("opinion");
 			if(ComentariosDAO.addComentario(idUser, idJuego, opinion)){
+				JSONObject respuesta = new JSONObject();
+				respuesta.element("fecha", dateF.format(date));
 				response.setStatus(HttpServletResponse.SC_OK);
+				response.setContentType("application/json; charset=UTF-8");
+				response.getWriter().write(respuesta.toString());
 			}
 			else{
 				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
@@ -73,8 +81,12 @@ public class Opinar extends HttpServlet{
 			if(PuntuacionesDAO.addPuntuacion(idUser, idJuego, opinion)){
 				//Extraigo la nueva puntuación total del juego
 				String valoracion = PuntuacionesUtils.calcularPuntuacion(PuntuacionesDAO.listPuntuaciones(idJuego));
+				JSONObject respuesta = new JSONObject();
+				respuesta.element("fecha", dateF.format(date));
+				respuesta.element("valoracion", valoracion);
 				response.setStatus(HttpServletResponse.SC_OK);
-				response.getWriter().println(valoracion);
+				response.setContentType("application/json; charset=UTF-8");
+				response.getWriter().write(respuesta.toString());
 			}
 			else{
 				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
