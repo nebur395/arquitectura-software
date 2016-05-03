@@ -58,12 +58,8 @@ import web.database.dataAccessObject.FollowsDAO;
 		id = json.getInt("idUser");
 		idUnfollow = json.getInt("idSeguidor");
 		try{
-			if(FollowsDAO.unFollow(id, idUnfollow)){
-				response.setStatus(HttpServletResponse.SC_OK);
-			}
-			else{
-				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-			}
+			FollowsDAO.unFollow(id, idUnfollow);
+			response.setStatus(HttpServletResponse.SC_OK);
 		}
 		catch (Exception e){
 			e.printStackTrace();

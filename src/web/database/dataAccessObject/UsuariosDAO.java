@@ -117,7 +117,7 @@ public class UsuariosDAO {
 		}
 	}
 	
-	public static boolean updateUser( int userID, String newNickname, String newNombre, String newPasswd) throws ClassNotFoundException, SQLException{
+	public static void updateUser( int userID, String newNickname, String newNombre, String newPasswd) throws ClassNotFoundException, SQLException{
 		Connection conn = null;
 		try{
 			Class.forName(gestorDeConexiones.JDBC_DRIVER);
@@ -129,7 +129,6 @@ public class UsuariosDAO {
 			String sql = String.format("UPDATE `usuarios` SET `nickname`='%s', `nombre`='%s',`pass`='%s' WHERE _id='%s'", 
 					newNickname, newNombre, newPasswd, userID);
 			stmt.execute(sql);
-			return true;
 		} catch (ClassNotFoundException e){
 			throw e;
 		} catch (SQLException e){

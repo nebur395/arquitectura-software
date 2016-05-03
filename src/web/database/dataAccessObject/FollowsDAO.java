@@ -19,10 +19,10 @@ import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationExceptio
 
 public class FollowsDAO {
 	
-	//TODO: Implementar Unfollow
-	
-	public static boolean follow(int follower, int followed){
+	public static boolean follow(int follower, int followed) throws ClassNotFoundException, SQLException{
 		Connection conn = null;
+		
+		if(follower == followed) { return false; }
 		try{
 			Class.forName(gestorDeConexiones.JDBC_DRIVER);
 			conn = gestorDeConexiones.requestConnection();
@@ -34,22 +34,19 @@ public class FollowsDAO {
 			stmt.execute(sql);
 			return true;
 		} catch (MySQLIntegrityConstraintViolationException e) {
-			
-			System.out.println("El seguimiento ya existe");
+			return false;
 			//Fin de la parte interesante---------------------------------------------
 		} catch (ClassNotFoundException e){
-			e.printStackTrace();
+			throw e;
 		} catch (SQLException e){
-			e.printStackTrace();
+			throw e;
 		} finally {
 			
 			if ( conn != null ) gestorDeConexiones.releaseConnection(conn);
 		}
-		
-		return false;
 	}
 
-	public static boolean unFollow(int follower, int followed){
+	public static void unFollow(int follower, int followed) throws ClassNotFoundException, SQLException{
 		Connection conn = null;
 		try{
 			Class.forName(gestorDeConexiones.JDBC_DRIVER);
@@ -60,24 +57,17 @@ public class FollowsDAO {
 			
 			String sql = String.format("DELETE FROM `seguimientos` WHERE `seguidor`='%s' AND `seguido`='%s'", follower, followed);
 			stmt.execute(sql);
-			return true;
-		} catch (MySQLIntegrityConstraintViolationException e) {
-			
-			System.out.println("El seguimiento no existe");
-			//Fin de la parte interesante---------------------------------------------
 		} catch (ClassNotFoundException e){
-			e.printStackTrace();
+			throw e;
 		} catch (SQLException e){
-			e.printStackTrace();
+			throw e;
 		} finally {
 			
 			if ( conn != null ) gestorDeConexiones.releaseConnection(conn);
 		}
-		
-		return false;
 	}
 	
-	public static ArrayList<UsuarioVO> getFollows( int userID ){
+	public static ArrayList<UsuarioVO> getFollows( int userID ) throws ClassNotFoundException, SQLException{
 				
 		Connection conn = null;
 		try{
@@ -100,19 +90,16 @@ public class FollowsDAO {
 			
 			//Fin de la parte interesante---------------------------------------------
 		} catch (ClassNotFoundException e){
-			e.printStackTrace();
+			throw e;
 		} catch (SQLException e){
-			e.printStackTrace();
+			throw e;
 		} finally {
 			
 			if ( conn != null ) gestorDeConexiones.releaseConnection(conn);
 		}
-		
-		return null;
-		
 	}
 	
-	public static boolean isFollower( int follower, int followed ){
+	public static boolean isFollower( int follower, int followed ) throws ClassNotFoundException, SQLException{
 		
 		Connection conn = null;
 		try{
@@ -128,18 +115,16 @@ public class FollowsDAO {
 			
 			if ( rs.next() ){
 				return true;
-			}					
+			}
+			else { return false; }					
 			//Fin de la parte interesante---------------------------------------------
 		} catch (ClassNotFoundException e){
-			e.printStackTrace();
+			throw e;
 		} catch (SQLException e){
-			e.printStackTrace();
+			throw e;
 		} finally {
 			
 			if ( conn != null ) gestorDeConexiones.releaseConnection(conn);
 		}
-		return false;
 	}
-
-
 }

@@ -65,33 +65,25 @@ public class Opinar extends HttpServlet{
 			//Si es un comentario
 			if(json.getBoolean("tipo")){
 				String opinion = json.getString("opinion");
-				if(ComentariosDAO.addComentario(idUser, idJuego, opinion)){
-					JSONObject respuesta = new JSONObject();
-					respuesta.element("fecha", dateF.format(date));
-					response.setStatus(HttpServletResponse.SC_OK);
-					response.setContentType("application/json; charset=UTF-8");
-					response.getWriter().write(respuesta.toString());
-				}
-				else{
-					response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-				}
+				ComentariosDAO.addComentario(idUser, idJuego, opinion);
+				JSONObject respuesta = new JSONObject();
+				respuesta.element("fecha", dateF.format(date));
+				response.setStatus(HttpServletResponse.SC_OK);
+				response.setContentType("application/json; charset=UTF-8");
+				response.getWriter().write(respuesta.toString());
 			}
 			//Si es una valoración
 			else{
 				int opinion = json.getInt("opinion");
-				if(PuntuacionesDAO.addPuntuacion(idUser, idJuego, opinion)){
-					//Extraigo la nueva puntuación total del juego
-					String valoracion = PuntuacionesUtils.calcularPuntuacion(PuntuacionesDAO.listPuntuaciones(idJuego));
-					JSONObject respuesta = new JSONObject();
-					respuesta.element("fecha", dateF.format(date));
-					respuesta.element("valoracion", valoracion);
-					response.setStatus(HttpServletResponse.SC_OK);
-					response.setContentType("application/json; charset=UTF-8");
-					response.getWriter().write(respuesta.toString());
-				}
-				else{
-					response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-				}
+				PuntuacionesDAO.addPuntuacion(idUser, idJuego, opinion);
+				//Extraigo la nueva puntuación total del juego
+				String valoracion = PuntuacionesUtils.calcularPuntuacion(PuntuacionesDAO.listPuntuaciones(idJuego));
+				JSONObject respuesta = new JSONObject();
+				respuesta.element("fecha", dateF.format(date));
+				respuesta.element("valoracion", valoracion);
+				response.setStatus(HttpServletResponse.SC_OK);
+				response.setContentType("application/json; charset=UTF-8");
+				response.getWriter().write(respuesta.toString());
 			}
 		}
 		catch(Exception e){

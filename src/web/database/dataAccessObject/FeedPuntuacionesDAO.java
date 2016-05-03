@@ -13,7 +13,7 @@ import web.database.valueObject.PuntuacionVO;
 
 public class FeedPuntuacionesDAO {
 	
-	public static ArrayList<PuntuacionVO> findFeed(int userID){
+	public static ArrayList<PuntuacionVO> findFeed(int userID) throws ClassNotFoundException, SQLException{
 		
 		Connection conn = null;
 		try{
@@ -40,14 +40,12 @@ public class FeedPuntuacionesDAO {
 			
 			//Fin de la parte interesante---------------------------------------------
 		} catch (ClassNotFoundException e){
-			e.printStackTrace();
+			throw e;
 		} catch (SQLException e){
-			e.printStackTrace();
+			throw e;
 		} finally {
 			
 			if ( conn != null ) gestorDeConexiones.releaseConnection(conn);
 		}
-		
-		return null;	
 	}
 }
