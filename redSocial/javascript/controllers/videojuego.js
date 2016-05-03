@@ -77,19 +77,20 @@ angular.module('myApp')
             $("#comentarioModal").modal("hide");
         };
 
-        
+        $scope.valoracionModal = 0;
 
         $scope.valorar = function (num) {
+            $scope.valoracionModal = num;
             $("#valorarModal").modal("hide");
             $scope.activo = true;
             $("#valorarModal").on('hidden.bs.modal', function () {
                 if ($scope.activo) {
                     $scope.activo = false;
-                    videojuegoService.guardarOpinion(false,num,showExito,showError,
+                    videojuegoService.guardarOpinion(false,$scope.valoracionModal,showExito,showError,
                         function (fecha, estrellas) {
                             $scope.videojuego.valoracion = estrellas;
                             var numEstrella = "";
-                            switch (num) {
+                            switch ($scope.valoracionModal) {
                                 case 1:
                                     numEstrella = "unaEstrella";
                                     break;
@@ -112,11 +113,24 @@ angular.module('myApp')
                                 nombreApellidos: auth.nombreApellidos(),
                                 valoracion: numEstrella
                             };
-
-                            $scope.listaValoraciones.push(valoracion);
+                            $scope.addValoracion(valoracion);
                         });
                 }
             });
+        };
+
+        $scope.addValoracion = function (valoracion) {
+            var encontrado = false;
+            for (i = 0; (i < $scope.listaValoraciones.length) && (!encontrado);i++) {
+                if ($scope.listaValoraciones[i].idUsuario == auth.idUser()) {
+                    $scope.listaValoraciones[i] = valoracion;
+                    encontrado = true;
+                }
+            };
+
+            if (!encontrado) {
+                $scope.listaValoraciones.push(valoracion);
+            };
         };
 
     }]);
