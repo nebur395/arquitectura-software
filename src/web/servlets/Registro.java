@@ -89,19 +89,26 @@ public class Registro extends HttpServlet {
 		}
 		
 		if(!error){
-			if(UsuariosDAO.addUser(usuario, "", pass)){
-				response.setStatus(HttpServletResponse.SC_OK);
-				UsuarioVO vo = UsuariosDAO.findUser(usuario);
-				JSONObject user = new JSONObject();
-				user.element("nombreUsuario", usuario);
-				user.element("id", vo.get_id());
-				user.element("nombreApellidos", vo.getNombre());
-				response.setContentType("application/json; charset=UTF-8");
-				response.getWriter().write(user.toString());
+			try{
+				if(UsuariosDAO.addUser(usuario, "", pass)){
+					response.setStatus(HttpServletResponse.SC_OK);
+					UsuarioVO vo = UsuariosDAO.findUser(usuario);
+					JSONObject user = new JSONObject();
+					user.element("nombreUsuario", usuario);
+					user.element("id", vo.get_id());
+					user.element("nombreApellidos", vo.getNombre());
+					response.setContentType("application/json; charset=UTF-8");
+					response.getWriter().write(user.toString());
+				}
+				else{
+					response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+					response.getWriter().println("El nombre de usuario ya está en uso");
+				}
 			}
-			else{
-				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-				response.getWriter().println("El nombre de usuario ya está en uso");
+			catch(Exception e){
+				e.printStackTrace();
+				response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+				response.getWriter().println("Error interno en el servidor. Vuelva intentarlo más tarde");
 			}
 		}
 	}

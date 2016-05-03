@@ -23,7 +23,7 @@ public class UsuariosDAO {
 	 * @param passwd
 	 * @return true si se ha anadido el usuario y false si ya existe o hay error.
 	 */
-	public static boolean addUser( String nickname, String nombre, String passwd){
+	public static boolean addUser( String nickname, String nombre, String passwd) throws ClassNotFoundException, SQLException{
 		Connection conn = null;
 		try{
 			Class.forName(gestorDeConexiones.JDBC_DRIVER);
@@ -35,16 +35,13 @@ public class UsuariosDAO {
 			
 			String sql = String.format("insert into usuarios (nickname, nombre, pass) values ('%s', '%s', '%s')", nickname, nombre, passwd);
 			stmt.execute(sql);
-			
 			return true;
 		} catch (MySQLIntegrityConstraintViolationException e) {
-			
-			System.out.println("Entrada ya existente");
 			//Fin de la parte interesante---------------------------------------------
 		} catch (ClassNotFoundException e){
-			e.printStackTrace();
+			throw e;
 		} catch (SQLException e){
-			e.printStackTrace();
+			throw e;
 		} finally {
 			
 			if ( conn != null ) gestorDeConexiones.releaseConnection(conn);
@@ -57,7 +54,7 @@ public class UsuariosDAO {
 	 * @param nickname
 	 * @return UsuarioVO poblado si existe el ususario y null si no existe
 	 */
-	public static UsuarioVO findUser( String nickname ){
+	public static UsuarioVO findUser( String nickname ) throws ClassNotFoundException, SQLException{
 		Connection conn = null;
 		try{
 			Class.forName(gestorDeConexiones.JDBC_DRIVER);
@@ -72,20 +69,18 @@ public class UsuariosDAO {
 			if( rs.next() ){
 				return new UsuarioVO (rs.getInt("_id"), rs.getString("nickname"), rs.getString("nombre"), rs.getString("pass"), rs.getString("fecha"));
 			}
-			System.out.println("El usuario no existe");
+			//El usuario no existe
 			return null;
 			
 			//Fin de la parte interesante---------------------------------------------
 		} catch (ClassNotFoundException e){
-			e.printStackTrace();
+			throw e;
 		} catch (SQLException e){
-			e.printStackTrace();
+			throw e;
 		} finally {
 			
 			if ( conn != null ) gestorDeConexiones.releaseConnection(conn);
 		}
-		
-		return null;
 	}
 	
 	/**Busca y devuelve un usuario por id
@@ -93,7 +88,7 @@ public class UsuariosDAO {
 	 * @param nickname
 	 * @return UsuarioVO poblado si existe el ususario y null si no existe
 	 */
-	public static UsuarioVO findUser( int id ){
+	public static UsuarioVO findUser( int id ) throws ClassNotFoundException, SQLException{
 		Connection conn = null;
 		try{
 			Class.forName(gestorDeConexiones.JDBC_DRIVER);
@@ -113,18 +108,16 @@ public class UsuariosDAO {
 			
 			//Fin de la parte interesante---------------------------------------------
 		} catch (ClassNotFoundException e){
-			e.printStackTrace();
+			throw e;
 		} catch (SQLException e){
-			e.printStackTrace();
+			throw e;
 		} finally {
 			
 			if ( conn != null ) gestorDeConexiones.releaseConnection(conn);
 		}
-		
-		return null;
 	}
 	
-	public static boolean updateUser( int userID, String newNickname, String newNombre, String newPasswd){
+	public static boolean updateUser( int userID, String newNickname, String newNombre, String newPasswd) throws ClassNotFoundException, SQLException{
 		Connection conn = null;
 		try{
 			Class.forName(gestorDeConexiones.JDBC_DRIVER);
@@ -137,19 +130,14 @@ public class UsuariosDAO {
 					newNickname, newNombre, newPasswd, userID);
 			stmt.execute(sql);
 			return true;
-		} catch (MySQLIntegrityConstraintViolationException e) {
-			
-			System.out.println("El nickname ya existe");
-			//Fin de la parte interesante---------------------------------------------
 		} catch (ClassNotFoundException e){
-			e.printStackTrace();
+			throw e;
 		} catch (SQLException e){
-			e.printStackTrace();
+			throw e;
 		} finally {
 			
 			if ( conn != null ) gestorDeConexiones.releaseConnection(conn);
 		}
-		return false;
 	}
 	
 	public static boolean deleteUser( String Nickname ){

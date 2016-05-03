@@ -45,16 +45,23 @@ public class Buscar extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		JSONArray ja = new JSONArray();
-		Iterator<VJuegoVO> iterador = (VJuegosDAO.findAllVJuegos()).iterator();
-		while(iterador.hasNext()){
-			VJuegoVO vo = iterador.next();
-			JSONObject juego = JSONObject.fromObject(vo.serialize());
-			juego.element("valoracion", PuntuacionesUtils.calcularPuntuacion(PuntuacionesDAO.listPuntuaciones(vo.get_id())));
-			ja.add(juego);
+		try{
+			JSONArray ja = new JSONArray();
+			Iterator<VJuegoVO> iterador = (VJuegosDAO.findAllVJuegos()).iterator();
+			while(iterador.hasNext()){
+				VJuegoVO vo = iterador.next();
+				JSONObject juego = JSONObject.fromObject(vo.serialize());
+				juego.element("valoracion", PuntuacionesUtils.calcularPuntuacion(PuntuacionesDAO.listPuntuaciones(vo.get_id())));
+				ja.add(juego);
+			}
+			response.setStatus(HttpServletResponse.SC_OK);
+			response.setContentType("application/json; charset=UTF-8");
+			response.getWriter().write(ja.toString());
 		}
-		response.setStatus(HttpServletResponse.SC_OK);
-		response.setContentType("application/json; charset=UTF-8");
-		response.getWriter().write(ja.toString());
+		catch(Exception e){
+			e.printStackTrace();
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			response.getWriter().println("Error interno en el servidor. Vuelva intentarlo más tarde");
+		}
 	}
 }

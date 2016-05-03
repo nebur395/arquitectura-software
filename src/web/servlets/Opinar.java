@@ -61,37 +61,43 @@ public class Opinar extends HttpServlet{
 		idJuego = json.getInt("idVideojuego");
 		DateFormat dateF = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date();
-		//Si es un comentario
-		if(json.getBoolean("tipo")){
-			String opinion = json.getString("opinion");
-			if(ComentariosDAO.addComentario(idUser, idJuego, opinion)){
-				JSONObject respuesta = new JSONObject();
-				respuesta.element("fecha", dateF.format(date));
-				response.setStatus(HttpServletResponse.SC_OK);
-				response.setContentType("application/json; charset=UTF-8");
-				response.getWriter().write(respuesta.toString());
+			try{
+			//Si es un comentario
+			if(json.getBoolean("tipo")){
+				String opinion = json.getString("opinion");
+				if(ComentariosDAO.addComentario(idUser, idJuego, opinion)){
+					JSONObject respuesta = new JSONObject();
+					respuesta.element("fecha", dateF.format(date));
+					response.setStatus(HttpServletResponse.SC_OK);
+					response.setContentType("application/json; charset=UTF-8");
+					response.getWriter().write(respuesta.toString());
+				}
+				else{
+					response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+				}
 			}
+			//Si es una valoración
 			else{
-				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+				int opinion = json.getInt("opinion");
+				if(PuntuacionesDAO.addPuntuacion(idUser, idJuego, opinion)){
+					//Extraigo la nueva puntuación total del juego
+					String valoracion = PuntuacionesUtils.calcularPuntuacion(PuntuacionesDAO.listPuntuaciones(idJuego));
+					JSONObject respuesta = new JSONObject();
+					respuesta.element("fecha", dateF.format(date));
+					respuesta.element("valoracion", valoracion);
+					response.setStatus(HttpServletResponse.SC_OK);
+					response.setContentType("application/json; charset=UTF-8");
+					response.getWriter().write(respuesta.toString());
+				}
+				else{
+					response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+				}
 			}
 		}
-		//Si es una valoración
-		else{
-			int opinion = json.getInt("opinion");
-			if(PuntuacionesDAO.addPuntuacion(idUser, idJuego, opinion)){
-				//Extraigo la nueva puntuación total del juego
-				String valoracion = PuntuacionesUtils.calcularPuntuacion(PuntuacionesDAO.listPuntuaciones(idJuego));
-				JSONObject respuesta = new JSONObject();
-				respuesta.element("fecha", dateF.format(date));
-				respuesta.element("valoracion", valoracion);
-				response.setStatus(HttpServletResponse.SC_OK);
-				response.setContentType("application/json; charset=UTF-8");
-				response.getWriter().write(respuesta.toString());
-			}
-			else{
-				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-			}
+		catch(Exception e){
+			e.printStackTrace();
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			response.getWriter().println("Error interno en el servidor. Vuelva intentarlo más tarde");
 		}
 	}
-	
 }

@@ -101,33 +101,35 @@ import web.database.valueObject.UsuarioVO;
 		}
 		//Si no hay ningún error en los datos introducidos
 		if(!error){
-			UsuarioVO vo = UsuariosDAO.findUser(usuario);
-			//Si no se quiere cambiar la contraseña, se deja la actual
-			if(newPass.trim().equals("")){ newPass = pass; }
-			//Si el usuario no existe
-			if(vo==null){
-				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-				response.getWriter().println("El usuario no existe");
+			try{
+				UsuarioVO vo = UsuariosDAO.findUser(usuario);
+				//Si no se quiere cambiar la contraseña, se deja la actual
+				if(newPass.trim().equals("")){ newPass = pass; }
+				//Si el usuario no existe
+				if(vo==null){
+					response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+					response.getWriter().println("El usuario no existe");
+				}
+				//Si la contraseña y el usuario no coinciden
+				else if(!(vo.getPasswd()).equals(pass)){
+					response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+					response.getWriter().println("El usuario y la contraseña no coinciden");
+				}
+				else{
+					UsuariosDAO.updateUser(id, usuario, nombre, newPass);
+					response.setStatus(HttpServletResponse.SC_OK);
+					JSONObject user = new JSONObject();
+					user.element("nombreUsuario", usuario);
+					user.element("id", id);
+					user.element("nombreApellidos", nombre);
+					response.setContentType("application/json; charset=UTF-8");
+					response.getWriter().write(user.toString());
+				}
 			}
-			//Si la contraseña y el usuario no coinciden
-			else if(!(vo.getPasswd()).equals(pass)){
-				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-				response.getWriter().println("El usuario y la contraseña no coinciden");
-			}
-			//Si la actualización no se realiza correctamente
-			else if(!UsuariosDAO.updateUser(id, usuario, nombre, newPass)){
-				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-				response.getWriter().println("No se han podido actualizar los datos");
-			}
-			//Todo ha ido bien y se ha actualizado
-			else{
-				response.setStatus(HttpServletResponse.SC_OK);
-				JSONObject user = new JSONObject();
-				user.element("nombreUsuario", usuario);
-				user.element("id", id);
-				user.element("nombreApellidos", nombre);
-				response.setContentType("application/json; charset=UTF-8");
-				response.getWriter().write(user.toString());
+			catch(Exception e){
+				e.printStackTrace();
+				response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+				response.getWriter().println("Error interno en el servidor. Vuelva intentarlo más tarde");
 			}
 		}	
 	}

@@ -57,11 +57,18 @@ import web.database.dataAccessObject.FollowsDAO;
 		JSONObject json = JSONObject.fromObject(jb.toString());
 		id = json.getInt("idUser");
 		idUnfollow = json.getInt("idSeguidor");
-		if(FollowsDAO.unFollow(id, idUnfollow)){
-			response.setStatus(HttpServletResponse.SC_OK);
+		try{
+			if(FollowsDAO.unFollow(id, idUnfollow)){
+				response.setStatus(HttpServletResponse.SC_OK);
+			}
+			else{
+				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			}
 		}
-		else{
-			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+		catch (Exception e){
+			e.printStackTrace();
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			response.getWriter().println("Error interno en el servidor. Vuelva intentarlo más tarde");
 		}
 	}
  }
