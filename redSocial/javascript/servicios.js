@@ -195,27 +195,17 @@ angular.module('myApp')
     .factory('buscarService', function ($http) {
         return {
             buscar: function(usuario,callback) {
-                if (usuario) {
-                    var data = [{
-                        id: 1,
-                        nombreReal: "Carlos",
-                        nombreUsuario: "Nebur"
-                    }]
-
-                    callback(data);
-                } else {
-
-                
                 $http({
                     method: 'GET',
                     url: 'Buscar',
                     headers: {
+                        'usuario': usuario,
                         'Content-Type': 'application/json; charset=UTF-8'
                     }
                 }).success(function(data){
                     callback(data);
                 }).error(function(){
-                });}
+                });
             }
         };
     })
