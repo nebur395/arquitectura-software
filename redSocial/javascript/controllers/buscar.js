@@ -11,7 +11,7 @@ angular.module('myApp')
         $scope.valoracion = "";
         
         $scope.buscar = function(){
-            buscarService.buscar(function(videojuegos) {
+            buscarService.buscar(false, function(videojuegos) {
                 $scope.listaVideojuegos = videojuegos;
             });
         };

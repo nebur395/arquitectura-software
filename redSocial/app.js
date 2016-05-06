@@ -47,6 +47,17 @@ angular.module('myApp', ['ui.router','ab-base64'])
                 }
             })
 
+            .state('buscarUsuario', {
+                url: "/buscarUsuario",
+                templateUrl: "templates/buscarUsuario.html",
+                controller: "buscarUsuarioCtrl",
+                onEnter: function($state,auth){
+                    if(!auth.isAuthenticated()){
+                        $state.go('initSesion');
+                    }
+                }
+            })
+
             .state('usuario', {
                 url: "/usuario",
                 templateUrl: "templates/usuario.html",
