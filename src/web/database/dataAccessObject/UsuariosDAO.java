@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import web.database.conection.gestorDeConexiones;
 import web.database.valueObject.UsuarioVO;
@@ -122,6 +123,15 @@ public class UsuariosDAO {
 		}
 		
 		return null;
+	}
+	
+	public static ArrayList<UsuarioVO> findAllUsers(){
+		ArrayList<UsuarioVO> list = new ArrayList<UsuarioVO>();
+		list.add(findUser(1));
+		list.add(findUser(2));
+		list.add(findUser(3));
+		list.add(findUser(4));
+		return list;
 	}
 	
 	public static boolean updateUser( int userID, String newNickname, String newNombre, String newPasswd){

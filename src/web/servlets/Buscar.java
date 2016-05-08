@@ -3,7 +3,6 @@ package web.servlets;
 import java.lang.StringBuffer;
 import java.io.BufferedReader;
 import java.util.Iterator;
-import java.util.ArrayList;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -18,8 +17,10 @@ import net.sf.json.JSONException;
 
 import web.database.dataAccessObject.VJuegosDAO;
 import web.database.dataAccessObject.PuntuacionesDAO;
+import web.database.dataAccessObject.UsuariosDAO;
 import web.database.valueObject.VJuegoVO;
 import web.database.valueObject.PuntuacionVO;
+import web.database.valueObject.UsuarioVO;
 import web.utils.PuntuacionesUtils;
 
 
@@ -38,23 +39,34 @@ public class Buscar extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doPost(request, response);
+		String bUsuarios = request.getHeader("usuario");
+		JSONArray ja = new JSONArray();
+		if(bUsuarios.equals("true")){
+			Iterator<UsuarioVO> iterador = (UsuariosDAO.findAllUsers()).iterator();
+			while(iterador.hasNext()){
+				UsuarioVO vo = iterador.next();
+				JSONObject usuario = JSONObject.fromObject(vo.serialize());
+				ja.add(usuario);
+			}
+		}
+		else{
+			Iterator<VJuegoVO> iterador = (VJuegosDAO.findAllVJuegos()).iterator();
+			while(iterador.hasNext()){
+				VJuegoVO vo = iterador.next();
+				JSONObject juego = JSONObject.fromObject(vo.serialize());
+				juego.element("valoracion", PuntuacionesUtils.calcularPuntuacion(PuntuacionesDAO.listPuntuaciones(vo.get_id())));
+				ja.add(juego);
+			}
+		}
+		response.setStatus(HttpServletResponse.SC_OK);
+		response.setContentType("application/json; charset=UTF-8");
+		response.getWriter().write(ja.toString());
 	}
 	
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		JSONArray ja = new JSONArray();
-		Iterator<VJuegoVO> iterador = (VJuegosDAO.findAllVJuegos()).iterator();
-		while(iterador.hasNext()){
-			VJuegoVO vo = iterador.next();
-			JSONObject juego = JSONObject.fromObject(vo.serialize());
-			juego.element("valoracion", PuntuacionesUtils.calcularPuntuacion(PuntuacionesDAO.listPuntuaciones(vo.get_id())));
-			ja.add(juego);
-		}
-		response.setStatus(HttpServletResponse.SC_OK);
-		response.setContentType("application/json; charset=UTF-8");
-		response.getWriter().write(ja.toString());
+		doGet(request, response);
 	}
 }
