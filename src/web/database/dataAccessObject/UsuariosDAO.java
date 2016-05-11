@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import web.database.conection.gestorDeConexiones;
 import web.database.valueObject.UsuarioVO;
+import web.database.valueObject.VJuegoVO;
 
 //Hay dos versiones de este paquete, puede dar fallos.
 //		...exceptions.jdbc4.MySQLIntegr...
@@ -125,13 +126,39 @@ public class UsuariosDAO {
 		return null;
 	}
 	
-	public static ArrayList<UsuarioVO> findAllUsers(){
-		ArrayList<UsuarioVO> list = new ArrayList<UsuarioVO>();
-		list.add(findUser(1));
-		list.add(findUser(2));
-		list.add(findUser(3));
-		list.add(findUser(4));
-		return list;
+	public static ArrayList<UsuarioVO> findAllUsers() throws SQLException, ClassNotFoundException{
+		
+		Connection conn = null;
+		try{
+			Class.forName(gestorDeConexiones.JDBC_DRIVER);
+			conn = gestorDeConexiones.requestConnection();
+			Statement stmt = conn.createStatement();
+			
+			//Parte intertesante--------------------------------------------------------
+						
+			String sql = "select _id, nickname, nombre, pass, fecha from usuarios";
+			
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			
+			ArrayList<UsuarioVO> list = new ArrayList<UsuarioVO>();
+			
+			while( rs.next() ){
+				list.add( new UsuarioVO (rs.getInt("_id"), rs.getString("nickname"), rs.getString("nombre"), 
+						rs.getString("pass"), rs.getString("fecha")) );
+			}
+						
+			return list;
+			
+			//Fin de la parte interesante---------------------------------------------
+		} catch (ClassNotFoundException e){
+			throw e;
+		} catch (SQLException e){
+			throw e;
+		} finally {
+			
+			if ( conn != null ) gestorDeConexiones.releaseConnection(conn);
+		}
 	}
 	
 	public static boolean updateUser( int userID, String newNickname, String newNombre, String newPasswd){
