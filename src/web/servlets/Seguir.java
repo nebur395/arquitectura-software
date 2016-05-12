@@ -55,11 +55,18 @@ public class Seguir extends HttpServlet {
 		id = json.getInt("idUser");
 		idFollow = json.getInt("idSeguidor");
 		
-		if(FollowsDAO.follow(id, idFollow)){
-			response.setStatus(HttpServletResponse.SC_OK);
+		try{
+			if(FollowsDAO.follow(id, idFollow)){
+				response.setStatus(HttpServletResponse.SC_OK);
+			}
+			else{
+				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			}
 		}
-		else{
-			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+		catch (Exception e){
+			e.printStackTrace();
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			response.getWriter().println("Error interno en el servidor. Vuelva intentarlo más tarde");
 		}
 	}
 }

@@ -62,44 +62,56 @@ public class Videojuego extends HttpServlet {
 		JSONObject json = JSONObject.fromObject(jb.toString());
 		idJuego = json.getInt("idVideojuego");
 		
-		VJuegoVO jVo = VJuegosDAO.findVJuego(idJuego);
-		JSONObject juego = JSONObject.fromObject(jVo.serialize());
-		juego.element("valoracion", PuntuacionesUtils.calcularPuntuacion(PuntuacionesDAO.listPuntuaciones(jVo.get_id())));
-		
-		JSONArray jaComentarios = new JSONArray();
-		Iterator<ComentarioVO> comentsIter = (ComentariosDAO.listComentario(idJuego)).iterator();
-		while(comentsIter.hasNext()){
-			ComentarioVO vo = comentsIter.next();
-			UsuarioVO uVo = UsuariosDAO.findUser(vo.getUsuarioID());
-			JSONObject comentario = new JSONObject();
-			comentario.element("idUsuario", uVo.get_id());
-			comentario.element("nombreUsuario", uVo.getNickname());
-			comentario.element("nombreApellidos", uVo.getNombre());
-			comentario.element("fecha", (vo.getFecha()).substring(0,10));
-			comentario.element("contenido", vo.getComentario());
-			jaComentarios.add(comentario);
+		try{
+			JSONArray jaComentarios = new JSONArray();
+			Iterator<ComentarioVO> comentsIter = (ComentariosDAO.listComentario(idJuego)).iterator();
+			while(comentsIter.hasNext()){
+				ComentarioVO vo = comentsIter.next();
+				UsuarioVO uVo = UsuariosDAO.findUser(vo.getUsuarioID());
+				JSONObject comentario = new JSONObject();
+				comentario.element("idUsuario", uVo.get_id());
+				comentario.element("nombreUsuario", uVo.getNickname());
+				comentario.element("nombreApellidos", uVo.getNombre());
+				comentario.element("fecha", (vo.getFecha()).substring(0,10));
+				comentario.element("contenido", vo.getComentario());
+				jaComentarios.add(comentario);
+			}
+			
+			JSONArray jaPuntuaciones = new JSONArray();
+			Iterator<PuntuacionVO> puntuacionesIter = (PuntuacionesDAO.listPuntuaciones(idJuego)).iterator();
+			while(puntuacionesIter.hasNext()){
+				PuntuacionVO vo = puntuacionesIter.next();
+				UsuarioVO uVo = UsuariosDAO.findUser(vo.getUsuarioID());
+				JSONObject puntuacion = new JSONObject();
+				puntuacion.element("idUsuario", uVo.get_id());
+				puntuacion.element("nombreUsuario", uVo.getNickname());
+				puntuacion.element("nombreApellidos", uVo.getNombre());
+				puntuacion.element("fecha", (vo.getFecha()).substring(0,10));
+				puntuacion.element("valoracion", PuntuacionesUtils.puntuacionToString(vo.getPuntuacion())+"Estrella");
+				jaPuntuaciones.add(puntuacion);
+			}
+			
+			VJuegoVO jVo = VJuegosDAO.findVJuego(idJuego);
+			if(jVo!=null){
+				JSONObject juego = JSONObject.fromObject(jVo.serialize());
+				juego.element("valoracion", PuntuacionesUtils.calcularPuntuacion(PuntuacionesDAO.listPuntuaciones(jVo.get_id())));
+				
+				JSONObject mainJson = new JSONObject();
+				mainJson.element("videojuego", juego);
+				mainJson.element("comentarios", jaComentarios);
+				mainJson.element("valoraciones", jaPuntuaciones);
+				response.setStatus(HttpServletResponse.SC_OK);
+				response.setContentType("application/json; charset=UTF-8");
+				response.getWriter().write(mainJson.toString());
+			}
+			else{
+				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			}
 		}
-		
-		JSONArray jaPuntuaciones = new JSONArray();
-		Iterator<PuntuacionVO> puntuacionesIter = (PuntuacionesDAO.listPuntuaciones(idJuego)).iterator();
-		while(puntuacionesIter.hasNext()){
-			PuntuacionVO vo = puntuacionesIter.next();
-			UsuarioVO uVo = UsuariosDAO.findUser(vo.getUsuarioID());
-			JSONObject puntuacion = new JSONObject();
-			puntuacion.element("idUsuario", uVo.get_id());
-			puntuacion.element("nombreUsuario", uVo.getNickname());
-			puntuacion.element("nombreApellidos", uVo.getNombre());
-			puntuacion.element("fecha", (vo.getFecha()).substring(0,10));
-			puntuacion.element("valoracion", PuntuacionesUtils.puntuacionToString(vo.getPuntuacion())+"Estrella");
-			jaPuntuaciones.add(puntuacion);
+		catch (Exception e){
+			e.printStackTrace();
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			response.getWriter().println("Error interno en el servidor. Vuelva intentarlo más tarde");
 		}
-		
-		JSONObject mainJson = new JSONObject();
-		mainJson.element("videojuego", juego);
-		mainJson.element("comentarios", jaComentarios);
-		mainJson.element("valoraciones", jaPuntuaciones);
-		response.setStatus(HttpServletResponse.SC_OK);
-		response.setContentType("application/json; charset=UTF-8");
-		response.getWriter().write(mainJson.toString());
 	}
 }
