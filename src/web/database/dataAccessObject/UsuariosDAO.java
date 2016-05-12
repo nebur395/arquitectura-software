@@ -126,7 +126,7 @@ public class UsuariosDAO {
 		return null;
 	}
 	
-	public static ArrayList<UsuarioVO> findAllUsers() throws SQLException, ClassNotFoundException{
+	public static ArrayList<UsuarioVO> findAllUsers(){
 		
 		Connection conn = null;
 		try{
@@ -152,13 +152,14 @@ public class UsuariosDAO {
 			
 			//Fin de la parte interesante---------------------------------------------
 		} catch (ClassNotFoundException e){
-			throw e;
+			e.printStackTrace();
 		} catch (SQLException e){
-			throw e;
+			e.printStackTrace();
 		} finally {
 			
 			if ( conn != null ) gestorDeConexiones.releaseConnection(conn);
 		}
+		return null;
 	}
 	
 	public static boolean updateUser( int userID, String newNickname, String newNombre, String newPasswd){
