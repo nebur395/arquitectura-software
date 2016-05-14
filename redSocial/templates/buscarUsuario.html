@@ -7,7 +7,8 @@
         <div class="form-group">
           <label class="control-label col-sm-2" for="buscar">Buscar:</label>
           <div class="col-sm-10">
-            <input type="text" class="form-control" id="buscar" ng-model="busqueda"
+            <input type="text" class="form-control" id="buscar"
+                   ng-model="busqueda"
                    placeholder="Introduzca el nombre de un usuario">
           </div>
         </div>
@@ -20,7 +21,8 @@
         <li class="list-group-item" ng-repeat=
             "usuario in listaUsuarios | filter: {'nombreUsuario':busqueda}">
           <h2 class="media-heading">
-            <a ng-click="entrarUsuario(usuario.id)" class="theme-color-text-action">
+            <a ng-click="entrarUsuario(usuario.id)"
+               class="theme-color-text-action">
               {{usuario.nombreUsuario}}</a></h2>
           <p>({{usuario.nombreReal}})</p>
         </li>

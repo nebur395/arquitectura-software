@@ -1,7 +1,7 @@
 angular.module('myApp')
 
-    .controller('videojuegoCtrl', ['$scope','$state','usuarioService','videojuegoService','auth',function($scope,$state,usuarioService,videojuegoService,auth){
-        $scope.mostrar = ["Comentarios","Valoraciones"];
+    .controller('videojuegoCtrl', ['$scope', '$state', 'usuarioService', 'videojuegoService', 'auth', function ($scope, $state, usuarioService, videojuegoService, auth) {
+        $scope.mostrar = ["Comentarios", "Valoraciones"];
         $scope.opinion = "Comentarios";
         $scope.listaComentarios;
         $scope.listaValoraciones;
@@ -30,9 +30,9 @@ angular.module('myApp')
         var showExito = function () {
             $scope.exito = true;
         };
-        
-        $scope.cogerInfo = function(){
-            videojuegoService.getInfo(function(videojuego,comentarios,valoraciones) {
+
+        $scope.cogerInfo = function () {
+            videojuegoService.getInfo(function (videojuego, comentarios, valoraciones) {
                 $scope.videojuego = videojuego;
                 $scope.listaComentarios = comentarios;
                 $scope.listaValoraciones = valoraciones;
@@ -57,8 +57,8 @@ angular.module('myApp')
             $("#comentarioModal").on('hidden.bs.modal', function () {
                 if ($scope.activo) {
                     $scope.activo = false;
-                    videojuegoService.guardarOpinion(true,$scope.comentario,
-                        showExito,showError, function (fecha) {
+                    videojuegoService.guardarOpinion(true, $scope.comentario,
+                        showExito, showError, function (fecha) {
                             var comentario = {
                                 idUsuario: auth.idUser(),
                                 nombreUsuario: auth.identity(),
@@ -86,7 +86,7 @@ angular.module('myApp')
             $("#valorarModal").on('hidden.bs.modal', function () {
                 if ($scope.activo) {
                     $scope.activo = false;
-                    videojuegoService.guardarOpinion(false,$scope.valoracionModal,showExito,showError,
+                    videojuegoService.guardarOpinion(false, $scope.valoracionModal, showExito, showError,
                         function (fecha, estrellas) {
                             $scope.videojuego.valoracion = estrellas;
                             var numEstrella = "";
@@ -121,16 +121,18 @@ angular.module('myApp')
 
         $scope.addValoracion = function (valoracion) {
             var encontrado = false;
-            for (i = 0; (i < $scope.listaValoraciones.length) && (!encontrado);i++) {
+            for (i = 0; (i < $scope.listaValoraciones.length) && (!encontrado); i++) {
                 if ($scope.listaValoraciones[i].idUsuario == auth.idUser()) {
                     $scope.listaValoraciones[i] = valoracion;
                     encontrado = true;
                 }
-            };
+            }
+            ;
 
             if (!encontrado) {
                 $scope.listaValoraciones.push(valoracion);
-            };
+            }
+            ;
         };
 
     }]);

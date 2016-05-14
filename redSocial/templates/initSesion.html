@@ -4,23 +4,31 @@
     <div id="container" class="well">
       <!--caja iniciar sesion-->
       <div class="col-md-6">
-        <h1 id="tituloIniciarSesion" class="theme-color-text font">Iniciar sesión</h1>
-        <form id="formIniciarSesion" ng-submit="iniciarSesion()" class="w3-container">
+        <h1 id="tituloIniciarSesion" class="theme-color-text font">Iniciar
+          sesión</h1>
+        <form id="formIniciarSesion" ng-submit="iniciarSesion()"
+              class="w3-container">
           <!--input usuario-->
           <p><label>Usuario:</label>
             <input type="text" class="w3-input" placeholder="Introduzca usuario"
-                   ng-model="usarioIniciar" ng-click="hideErrorIniciar()" required></p>
+                   ng-model="usarioIniciar" ng-click="hideErrorIniciar()"
+                   required></p>
           <!--input contraseña-->
           <p><label>Contraseña:</label>
-            <input type="password" class="w3-input" placeholder="Introduzca contraseña"
-                   ng-model="pwdIniciar" ng-click="hideErrorIniciar()" required></p>
+            <input type="password" class="w3-input"
+                   placeholder="Introduzca contraseña"
+                   ng-model="pwdIniciar" ng-click="hideErrorIniciar()" required>
+          </p>
           <!--submit-->
           <p id="botonIniciarSesion">
             <button type="submit" class="w3-btn w3-round-large theme-accent">
-              Iniciar sesión</button></p>
+              Iniciar sesión
+            </button>
+          </p>
         </form>
         <div class="alert alert-danger" ng-hide="hiddenErrorIniciar">
-          <strong>Woops!</strong> Contraseña o usuario incorrectos, parece que alguien está de "Hangover".
+          <strong>Woops!</strong> Contraseña o usuario incorrectos, parece que
+          alguien está de "Hangover".
         </div>
       </div>
 
@@ -31,19 +39,26 @@
           <!--input usuario-->
           <p><label>Usuario:</label>
             <input type="text" class="w3-input" placeholder="Introduzca usuario"
-                   ng-model="usarioRegistrar" ng-click="hideErrorRegistrar()" required></p>
+                   ng-model="usarioRegistrar" ng-click="hideErrorRegistrar()"
+                   required></p>
           <!--input contraseña-->
           <p><label>Contraseña:</label>
-            <input type="password" class="w3-input" placeholder="Introduzca contraseña"
-                   ng-model="pwd1Registrar" ng-click="hideErrorRegistrar()" required></p>
+            <input type="password" class="w3-input"
+                   placeholder="Introduzca contraseña"
+                   ng-model="pwd1Registrar" ng-click="hideErrorRegistrar()"
+                   required></p>
           <!--input contraseña-->
           <p><label>Repetir contraseña:</label>
-            <input type="password" class="w3-input" placeholder="Repita contraseña"
-                   ng-model="pwd2Registrar" ng-click="hideErrorRegistrar()" required></p>
+            <input type="password" class="w3-input"
+                   placeholder="Repita contraseña"
+                   ng-model="pwd2Registrar" ng-click="hideErrorRegistrar()"
+                   required></p>
           <!--submit-->
           <p style="text-align:center;">
             <button type="submit" class="w3-btn w3-round-large theme-accent">
-              Registrarse</button></p>
+              Registrarse
+            </button>
+          </p>
         </form>
         <div class="alert alert-danger" ng-hide="hiddenErrorRegistrar">
           <strong>Woops!</strong> {{errorRegistrar}}

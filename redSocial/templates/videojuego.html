@@ -5,7 +5,8 @@
     <div class="col-md-12">
       <h1 id="primerContenido" class="font">{{videojuego.nombre}}</h1>
       <div class="col-md-4 w3-card-4" style="padding:1%;text-align:center">
-        <img ng-src="{{'img/' + videojuego.id + '.jpg'}}" style="max-width:100%">
+        <img ng-src="{{'img/' + videojuego.id + '.jpg'}}"
+             style="max-width:100%">
         <p>Valoracion media:</p>
         <span ng-class="videojuego.valoracion"></span>
       </div>
@@ -23,14 +24,20 @@
     <div class="col-md-12" id="listaComentarios">
       <div class="row">
         <button class="col-md-2 w3-btn w3-round-large theme-accent-s w3-small"
-                data-toggle="modal" data-target="#comentarioModal" style="margin:1%">Comentar</button>
+                data-toggle="modal" data-target="#comentarioModal"
+                style="margin:1%">Comentar
+        </button>
         <button class="col-md-2 w3-btn w3-round-large theme-accent-s w3-small"
-                data-toggle="modal" data-target="#valorarModal" style="margin:1%">Valorar</button>
-        <h2 class="col-md-4 theme-color-text" style="text-align:center">Opiniones</h2>
-        <div class="form-inline col-md-3" style="margin-bottom: 1%;margin-top: 1%;">
+                data-toggle="modal" data-target="#valorarModal"
+                style="margin:1%">Valorar
+        </button>
+        <h2 class="col-md-4 theme-color-text" style="text-align:center">
+          Opiniones</h2>
+        <div class="form-inline col-md-3"
+             style="margin-bottom: 1%;margin-top: 1%;">
           <label for="mostrar">Mostrar: </label>
-          <select  id="mostrar" class="form-control" ng-model="opinion"
-                   ng-options="x for x in mostrar">
+          <select id="mostrar" class="form-control" ng-model="opinion"
+                  ng-options="x for x in mostrar">
           </select>
         </div>
       </div>
@@ -47,10 +54,13 @@
       <!-- lista de comentarios -->
       <div ng-if="opinion == 'Comentarios'">
         <ul class="list-group" style="margin-top: 5%">
-          <li class="list-group-item" ng-repeat="comentario in listaComentarios">
-            <h3><a class="theme-color-text-action" ng-click="entrarUsuario(comentario.idUsuario)">
+          <li class="list-group-item"
+              ng-repeat="comentario in listaComentarios">
+            <h3><a class="theme-color-text-action"
+                   ng-click="entrarUsuario(comentario.idUsuario)">
               {{comentario.nombreUsuario}}</a>
-              <span class="fecha"> ({{comentario.nombreApellidos}}) {{comentario.fecha}}</span></h3>
+              <span class="fecha"> ({{comentario.nombreApellidos}}) {{comentario.fecha}}</span>
+            </h3>
             <p>{{comentario.contenido}}</p>
           </li>
         </ul>
@@ -59,10 +69,13 @@
       <!-- lista de valoraciones -->
       <div ng-if="opinion == 'Valoraciones'">
         <ul class="list-group" style="margin-top: 5%">
-          <li class="list-group-item" ng-repeat="valoracion in listaValoraciones">
-            <a ng-click="entrarUsuario(valoracion.idUsuario)" class="theme-color-text-action">
+          <li class="list-group-item"
+              ng-repeat="valoracion in listaValoraciones">
+            <a ng-click="entrarUsuario(valoracion.idUsuario)"
+               class="theme-color-text-action">
               {{valoracion.nombreUsuario}}</a>
-            ({{valoracion.nombreApellidos}}) le ha dado una puntiación el {{valoracion.fecha}}
+            ({{valoracion.nombreApellidos}}) le ha dado una puntiación el
+            {{valoracion.fecha}}
             de <span ng-class="valoracion.valoracion"></span></li>
         </ul>
       </div>
@@ -80,14 +93,18 @@
             <form role="form" ng-submit="guardarComentario()">
               <!-- comentario textarea -->
               <div class="form-group">
-                <label for="comentarioTextArea"><strong>Deje su comentario: </strong></label>
+                <label for="comentarioTextArea"><strong>Deje su
+                  comentario: </strong></label>
                 <textarea id="comentarioTextArea" rows="5" ng-model="comentario"
                           class="form-control" required></textarea>
               </div>
-              <button class="w3-btn w3-round-large theme-accent2" ng-click="cerrarModal()">
-                Cancelar</button>
+              <button class="w3-btn w3-round-large theme-accent2"
+                      ng-click="cerrarModal()">
+                Cancelar
+              </button>
               <button type="submit" class="w3-btn w3-round-large theme-accent">
-                Guardar</button>
+                Guardar
+              </button>
             </form>
           </div>
         </div>
@@ -114,8 +131,10 @@
                   <span class="estrellaOff" ng-click="valorar(5)"></span></p>
 
               </div>
-              <button class="w3-btn w3-round-large theme-accent2" data-dismiss="modal">
-                Cancelar</button>
+              <button class="w3-btn w3-round-large theme-accent2"
+                      data-dismiss="modal">
+                Cancelar
+              </button>
             </form>
           </div>
         </div>

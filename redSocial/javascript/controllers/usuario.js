@@ -1,7 +1,7 @@
 angular.module('myApp')
 
-    .controller('usuarioCtrl', ['$scope','$state','usuarioService','videojuegoService',function($scope,$state,usuarioService,videojuegoService){
-        $scope.mostrar = ["Comentarios","Valoraciones"];
+    .controller('usuarioCtrl', ['$scope', '$state', 'usuarioService', 'videojuegoService', function ($scope, $state, usuarioService, videojuegoService) {
+        $scope.mostrar = ["Comentarios", "Valoraciones"];
         $scope.opinion = "Comentarios";
         $scope.listaComentarios;
         $scope.listaValoraciones;
@@ -13,8 +13,8 @@ angular.module('myApp')
         $scope.usuarioSeguido = false;
 
 
-        $scope.cogerInfo = function(){
-            usuarioService.getInfo(function(usuario,comentarios,valoraciones) {
+        $scope.cogerInfo = function () {
+            usuarioService.getInfo(function (usuario, comentarios, valoraciones) {
                 $scope.usuario = usuario;
                 $scope.listaComentarios = comentarios;
                 $scope.listaValoraciones = valoraciones;
@@ -51,17 +51,17 @@ angular.module('myApp')
         $scope.irAjustes = function () {
             $state.go('ajustes');
         };
-        
+
         $scope.seguir = function () {
             usuarioService.seguir($scope.usuario, function () {
                 $scope.elegirBoton();
             });
         };
-        
+
         $scope.dejarSeguir = function () {
             usuarioService.dejarSeguir($scope.usuario, function () {
                 $scope.elegirBoton();
             });
         }
-        
+
     }]);

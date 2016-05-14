@@ -7,9 +7,6 @@
   padding-left: 0;
   box-shadow: 0 0 5px 5px #4d4d4d;
 }
-#estiloAdmin #ajustes {
-  border-bottom: 1px solid rgba(155, 38, 175,0.6);
-}
 #estiloAdmin #listaSeguidores {
   margin-bottom: 0;
 }

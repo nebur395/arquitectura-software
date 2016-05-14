@@ -1,6 +1,6 @@
 angular.module('myApp')
 
-    .controller('initSesionCtrl', [ '$scope', '$http', '$state', 'auth', function($scope,$http,$state,auth){
+    .controller('initSesionCtrl', ['$scope', '$http', '$state', 'auth', function ($scope, $http, $state, auth) {
         $scope.usarioIniciar = "";
         $scope.pwdIniciar = "";
         $scope.pwd1Registrar = "";
@@ -28,30 +28,30 @@ angular.module('myApp')
             $scope.hiddenErrorRegistrar = false;
         };
 
-        $scope.iniciarSesion = function(){
+        $scope.iniciarSesion = function () {
 
             var user = $scope.usarioIniciar;
             var password = $scope.pwdIniciar;
             // Estandard 'authorization basic'
-           auth.enviarSesion(user,password,showErrorIniciar);
+            auth.enviarSesion(user, password, showErrorIniciar);
 
         };
 
-        $scope.registrarse = function(){
-            
+        $scope.registrarse = function () {
+
             var user = $scope.usarioRegistrar;
             var password1 = $scope.pwd1Registrar;
             var password2 = $scope.pwd2Registrar;
-            if ( password1 !== password2 ) {
+            if (password1 !== password2) {
                 $scope.hiddenErrorRegistrar = false;
                 $scope.errorRegistrar = 'Las contraseñas no coinciden.';
-            }else {
+            } else {
                 var userObject = {
                     name: user,
                     pass1: password1,
                     pass2: password2
                 };
-                auth.enviarRegistro(userObject,showErrorRegistrar);
+                auth.enviarRegistro(userObject, showErrorRegistrar);
             }
         }
     }]);

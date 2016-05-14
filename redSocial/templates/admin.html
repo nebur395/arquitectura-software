@@ -2,8 +2,9 @@
   <div class="container" id="cuerpo">
     <!--pantalla de ajustes-->
     <div class="col-md-12">
-      <h1 id="primerContenido" class="theme-color-text font">Inserta un videojuego</h1>
-      <form class="w3-container" ng-submit="insertarVideojuego()" id="ajustes">
+      <h1 id="primerContenido" class="theme-color-text font">Inserta un
+        videojuego</h1>
+      <form class="w3-container" ng-submit="insertarVideojuego()">
         <p><label>Nombre del videojuego:</label>
           <input ng-click="hideError();hideExito()" class="w3-input" type="text"
                  ng-model="nombre" required></p>
@@ -13,23 +14,32 @@
         <p><label>Nombre de la distribuidora:</label>
           <input ng-click="hideError();hideExito()" class="w3-input" type="text"
                  ng-model="distribuidora" required></p>
-        <p><label>Fecha del lanzamiento ():</label>
+        <p><label>Fecha del lanzamiento del videojuego():</label>
           <input ng-click="hideError();hideExito()" class="w3-input" type="text"
                  ng-model="lanzamiento" required></p>
-        <p><select  class="form-control" ng-model="genero" ng-options="x for x in listaGenero">
+        <p><label>Género del videojuego:</label>
+          <select class="form-control" ng-model="genero"
+                  ng-options="x for x in listaGenero">
             <option value="" disabled selected>Género</option>
           </select></p>
-        <p><select  class="form-control" ng-model="plataforma" ng-options="x for x in listaPlataforma">
+        <p><label>Plataforma del videojuego:</label>
+          <select class="form-control" ng-model="plataforma"
+                  ng-options="x for x in listaPlataforma">
             <option value="" disabled selected>Plataforma</option>
           </select></p>
         <p><label>Descripción del videojuego:</label>
-          <textarea rows="5" ng-model="descripcion" class="form-control"></textarea></p>
+          <textarea rows="5" ng-model="descripcion" class="form-control"
+                    style="max-width: 100%"></textarea></p>
         <p style="text-align: center">
-          <button ng-click="limpiarCambios()" class="w3-btn w3-round-large theme-accent2"
+          <button ng-click="limpiarCambios()"
+                  class="w3-btn w3-round-large theme-accent2"
                   id="cancelButton">
-            Cancelar</button>
+            Cancelar
+          </button>
           <button type="submit" class="w3-btn w3-round-large theme-accent">
-            Guardar</button></p>
+            Guardar
+          </button>
+        </p>
         <!-- mensaje que se mostrará cuando la operación tenga éxito -->
         <div ng-if="exitoAdmin" class="alert alert-success">
           <strong>¡Éxito!</strong> Se ha insertado el videojuego correctamente.
@@ -42,6 +52,6 @@
       </form>
     </div>
 
-    
+
   </div>
 </div>

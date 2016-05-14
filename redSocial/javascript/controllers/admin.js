@@ -1,10 +1,11 @@
 angular.module('myApp')
 
-    .controller('adminCtrl', ['$scope','adminService',function($scope,adminService){
-        
-        $scope.listaGenero = ["MMORPG","Survival horror","Acción-Aventura"];
+    .controller('adminCtrl', ['$scope', 'adminService', function ($scope, adminService) {
+
+        $scope.listaGenero = ["MMORPG", "Survival horror", "Acción-Aventura"];
         $scope.genero = "";
-        $scope.listaPlataforma = ["PC","PlayStation 3","PlayStation 4"];
+        $scope.listaPlataforma = ["PC", "PlayStation 2", "PlayStation 3", 
+            "PlayStation 4", "XboxOne", "Xbox 360", "Wii U"];
         $scope.plataforma = "";
         $scope.descripcion = "";
         $scope.lanzamiento = "";
@@ -12,15 +13,15 @@ angular.module('myApp')
         $scope.distribuidora = "";
         $scope.nombre = "";
 
-        $scope.errorAdmin = true;
-        $scope.exitoAdmin = true;
+        $scope.errorAdmin = false;
+        $scope.exitoAdmin = false;
         $scope.errorMsgAdmin = "";
 
         $scope.hideError = function () {
             $scope.errorMsgAdmin = "";
             $scope.errorAdmin = false;
         };
-        
+
         $scope.hideExito = function () {
             $scope.exitoAdmin = false;
         };
@@ -34,7 +35,7 @@ angular.module('myApp')
             $scope.exitoAdmin = true;
         };
 
-        $scope.insertarVideojuego = function(){
+        $scope.insertarVideojuego = function () {
             var videojuego = {
                 nombre: $scope.nombre,
                 distribuidora: $scope.distribuidora,
@@ -42,7 +43,7 @@ angular.module('myApp')
                 lanzamiento: $scope.lanzamiento,
                 descripcion: $scope.descripcion,
             }
-            adminService.insertarVideojuego(videojuego,showExito,showError);
+            adminService.insertarVideojuego(videojuego, showExito, showError);
         };
-        
+
     }]);
