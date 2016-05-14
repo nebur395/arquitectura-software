@@ -10,6 +10,8 @@ angular.module('myApp', ['ui.router','ab-base64'])
                 onEnter: function($state,auth){
                     if(!auth.isAuthenticated()){
                         $state.go('initSesion');
+                    } else if (auth.isAdmin()) {
+                        $state.go('admin');
                     }
                 }
             })
@@ -21,6 +23,8 @@ angular.module('myApp', ['ui.router','ab-base64'])
                 onEnter: function($state,auth){
                     if(!auth.isAuthenticated()){
                         $state.go('initSesion');
+                    } else if (auth.isAdmin()) {
+                        $state.go('admin');
                     }
                 }
             })
@@ -32,6 +36,8 @@ angular.module('myApp', ['ui.router','ab-base64'])
                 onEnter: function($state,auth){
                     if(!auth.isAuthenticated()){
                         $state.go('initSesion');
+                    } else if (auth.isAdmin()) {
+                        $state.go('admin');
                     }
                 }
             })
@@ -43,6 +49,8 @@ angular.module('myApp', ['ui.router','ab-base64'])
                 onEnter: function($state,auth){
                     if(!auth.isAuthenticated()){
                         $state.go('initSesion');
+                    } else if (auth.isAdmin()) {
+                        $state.go('admin');
                     }
                 }
             })
@@ -54,6 +62,21 @@ angular.module('myApp', ['ui.router','ab-base64'])
                 onEnter: function($state,auth){
                     if(!auth.isAuthenticated()){
                         $state.go('initSesion');
+                    } else if (auth.isAdmin()) {
+                        $state.go('admin');
+                    }
+                }
+            })
+
+            .state('admin', {
+                url: "/admin",
+                templateUrl: "templates/admin.html",
+                controller: "adminCtrl",
+                onEnter: function($state,auth){
+                    if(!auth.isAuthenticated()){
+                        $state.go('initSesion');
+                    } else if (!auth.isAdmin()) {
+                        $state.go('novedades');
                     }
                 }
             })
@@ -65,6 +88,8 @@ angular.module('myApp', ['ui.router','ab-base64'])
                 onEnter: function($state,auth){
                     if(!auth.isAuthenticated()){
                         $state.go('initSesion');
+                    } else if (auth.isAdmin()) {
+                        $state.go('admin');
                     }
                 }
             })
@@ -75,7 +100,11 @@ angular.module('myApp', ['ui.router','ab-base64'])
                 controller: "initSesionCtrl",
                 onEnter: function($state,auth){
                     if(auth.isAuthenticated()){
-                        $state.go('novedades');
+                        if (auth.isAdmin()) {
+                            $state.go('admin');
+                        } else {
+                            $state.go('novedades');
+                        }
                     }
                 }
             });

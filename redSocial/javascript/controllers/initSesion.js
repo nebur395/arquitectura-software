@@ -24,7 +24,6 @@ angular.module('myApp')
         };
 
         var showErrorRegistrar = function (error) {
-            debugger;
             $scope.errorRegistrar = error;
             $scope.hiddenErrorRegistrar = false;
         };

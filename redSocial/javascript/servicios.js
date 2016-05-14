@@ -28,6 +28,9 @@ angular.module('myApp')
             identity: function () {
                 return _identity.nombreUsuario;
             },
+            isAdmin: function () {
+                return _identity.admin;
+            },
             nombreApellidos: function () {
                 return _identity.nombreApellidos;
             },
@@ -205,6 +208,25 @@ angular.module('myApp')
                 }).success(function(data){
                     callback(data);
                 }).error(function(){
+                });
+            }
+        };
+    })
+
+    .factory('adminService', function ($http) {
+        return {
+            insertarVideojuego: function(videojuego,callbackExito,callbackError) {
+                $http({
+                    method: 'POST',
+                    url: 'Admin',
+                    data: JSON.stringify(videojuego),
+                    headers: {
+                        'Content-Type': 'application/json; charset=UTF-8'
+                    }
+                }).success(function(){
+                    callbackExito();
+                }).error(function(data){
+                    callback(data);
                 });
             }
         };
