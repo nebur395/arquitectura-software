@@ -65,49 +65,60 @@ public class Usuario extends HttpServlet {
 		JSONObject json = JSONObject.fromObject(jb.toString());
 		idUser = json.getInt("idUser");
 		idProfile = json.getInt("idUsuario");
-		
-		JSONArray jaComentarios = new JSONArray();
-		ArrayList<ComentarioVO> list = ComentariosDAO.listComentarioUser(idProfile);
-		Iterator<ComentarioVO> comentsIter = list.iterator();
-		while(comentsIter.hasNext()){
-			ComentarioVO cVo = comentsIter.next();
-			VJuegoVO jVo = VJuegosDAO.findVJuego(cVo.getvJuego());
-			JSONObject comentario = new JSONObject();
-			comentario.element("idJuego", jVo.get_id());
-			comentario.element("nombre", jVo.getTitulo());
-			comentario.element("fecha", (cVo.getFecha()).substring(0,10));
-			comentario.element("contenido", cVo.getComentario());
-			jaComentarios.add(comentario);
+		try{
+			JSONArray jaComentarios = new JSONArray();
+			ArrayList<ComentarioVO> list = ComentariosDAO.listComentarioUser(idProfile);
+			Iterator<ComentarioVO> comentsIter = list.iterator();
+			while(comentsIter.hasNext()){
+				ComentarioVO cVo = comentsIter.next();
+				VJuegoVO jVo = VJuegosDAO.findVJuego(cVo.getvJuego());
+				JSONObject comentario = new JSONObject();
+				comentario.element("idJuego", jVo.get_id());
+				comentario.element("nombre", jVo.getTitulo());
+				comentario.element("fecha", (cVo.getFecha()).substring(0,10));
+				comentario.element("contenido", cVo.getComentario());
+				jaComentarios.add(comentario);
+			}
+			
+			JSONArray jaPuntuaciones = new JSONArray();
+			Iterator<PuntuacionVO> puntuacionesIter = (PuntuacionesDAO.listPuntuacionesUser(idProfile)).iterator();
+			while(puntuacionesIter.hasNext()){
+				PuntuacionVO pVo = puntuacionesIter.next();
+				VJuegoVO jVo = VJuegosDAO.findVJuego(pVo.getvJuego());
+				JSONObject puntuacion = new JSONObject();
+				puntuacion.element("idJuego", jVo.get_id());
+				puntuacion.element("nombre", jVo.getTitulo());
+				puntuacion.element("fecha", (pVo.getFecha()).substring(0,10));
+				puntuacion.element("valoracion", PuntuacionesUtils.puntuacionToString(pVo.getPuntuacion())+"Estrella");
+				jaPuntuaciones.add(puntuacion);
+			}
+			
+			UsuarioVO vo = UsuariosDAO.findUser(idProfile);
+			if(vo!=null){
+				JSONObject usuario = JSONObject.fromObject(vo.serialize());
+				usuario.element("comentarios", list.size());
+				int tipo;
+				if(idUser == idProfile){ tipo=1; }
+				else if(FollowsDAO.isFollower(idUser, idProfile)){ tipo=3; }
+				else { tipo=2; }
+				usuario.element("tipo", tipo);
+				
+				JSONObject mainJson = new JSONObject();
+				mainJson.element("usuario", usuario);
+				mainJson.element("comentarios", jaComentarios);
+				mainJson.element("valoraciones", jaPuntuaciones);
+				response.setStatus(HttpServletResponse.SC_OK);
+				response.setContentType("application/json; charset=UTF-8");
+				response.getWriter().write(mainJson.toString());
+			}
+			else{
+				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			}
 		}
-		
-		JSONArray jaPuntuaciones = new JSONArray();
-		Iterator<PuntuacionVO> puntuacionesIter = (PuntuacionesDAO.listPuntuacionesUser(idProfile)).iterator();
-		while(puntuacionesIter.hasNext()){
-			PuntuacionVO pVo = puntuacionesIter.next();
-			VJuegoVO jVo = VJuegosDAO.findVJuego(pVo.getvJuego());
-			JSONObject puntuacion = new JSONObject();
-			puntuacion.element("idJuego", jVo.get_id());
-			puntuacion.element("nombre", jVo.getTitulo());
-			puntuacion.element("fecha", (pVo.getFecha()).substring(0,10));
-			puntuacion.element("valoracion", PuntuacionesUtils.puntuacionToString(pVo.getPuntuacion())+"Estrella");
-			jaPuntuaciones.add(puntuacion);
+		catch (Exception e){
+			e.printStackTrace();
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			response.getWriter().println("Error interno en el servidor. Vuelva intentarlo más tarde");
 		}
-		
-		UsuarioVO vo = UsuariosDAO.findUser(idProfile);
-		JSONObject usuario = JSONObject.fromObject(vo.serialize());
-		usuario.element("comentarios", list.size());
-		int tipo;
-		if(idUser == idProfile){ tipo=1; }
-		else if(FollowsDAO.isFollower(idUser, idProfile)){ tipo=3; }
-		else { tipo=2; }
-		usuario.element("tipo", tipo);
-		
-		JSONObject mainJson = new JSONObject();
-		mainJson.element("usuario", usuario);
-		mainJson.element("comentarios", jaComentarios);
-		mainJson.element("valoraciones", jaPuntuaciones);
-		response.setStatus(HttpServletResponse.SC_OK);
-		response.setContentType("application/json; charset=UTF-8");
-		response.getWriter().write(mainJson.toString());
 	}
 }

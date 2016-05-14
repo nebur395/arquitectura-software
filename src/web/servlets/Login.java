@@ -51,25 +51,32 @@ public class Login extends HttpServlet {
 		}
 		
 		if(!error){
-			UsuarioVO vo = UsuariosDAO.findUser(usuario);
-			//Si no existe ese usuario
-			if (vo==null){
-				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			try{
+				UsuarioVO vo = UsuariosDAO.findUser(usuario);
+				//Si no existe ese usuario
+				if (vo==null){
+					response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+				}
+				//Si la contraseña no coincide
+				else if(!(vo.getPasswd()).equals(pass)){
+					response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+				}
+				//Si todo ha ido correctamente
+				else{
+					response.setStatus(HttpServletResponse.SC_OK);
+					JSONObject user = new JSONObject();
+					user.element("nombreUsuario", vo.getNickname());
+					user.element("id", vo.get_id());
+					user.element("nombreApellidos", vo.getNombre());
+					response.setContentType("application/json; charset=UTF-8");
+					response.getWriter().write(user.toString());
+				}
 			}
-			//Si la contraseña no coincide
-			else if(!(vo.getPasswd()).equals(pass)){
-				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			catch (Exception e){
+				e.printStackTrace();
+				response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+				response.getWriter().println("Error interno en el servidor. Vuelva intentarlo más tarde");
 			}
-			//Si todo ha ido correctamente
-			else{
-				response.setStatus(HttpServletResponse.SC_OK);
-				JSONObject user = new JSONObject();
-				user.element("nombreUsuario", vo.getNickname());
-				user.element("id", vo.get_id());
-				user.element("nombreApellidos", vo.getNombre());
-				response.setContentType("application/json; charset=UTF-8");
-				response.getWriter().write(user.toString());
-			}	
 		}	
 	}
 

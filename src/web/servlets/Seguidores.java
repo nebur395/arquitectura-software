@@ -58,21 +58,27 @@ public class Seguidores extends HttpServlet {
 		}
 		JSONObject json = JSONObject.fromObject(jb.toString());
 		id = json.getInt("idUser");
-		
-		JSONArray ja = new JSONArray();
-		Iterator<UsuarioVO> iterador = (FollowsDAO.getFollows(id)).iterator();
-		while(iterador.hasNext()){
-			UsuarioVO vo = iterador.next();
-			JSONObject user = new JSONObject();
-			user.element("nombreUsuario", vo.getNickname());
-			user.element("id", vo.get_id());
-			user.element("nombreApellidos", vo.getNombre());
-			ja.add(user);
+		try{
+			JSONArray ja = new JSONArray();
+			Iterator<UsuarioVO> iterador = (FollowsDAO.getFollows(id)).iterator();
+			while(iterador.hasNext()){
+				UsuarioVO vo = iterador.next();
+				JSONObject user = new JSONObject();
+				user.element("nombreUsuario", vo.getNickname());
+				user.element("id", vo.get_id());
+				user.element("nombreApellidos", vo.getNombre());
+				ja.add(user);
+			}
+			JSONObject mainJson = new JSONObject();
+			mainJson.element("seguidores", ja);
+			response.setStatus(HttpServletResponse.SC_OK);
+			response.setContentType("application/json; charset=UTF-8");
+			response.getWriter().write(mainJson.toString());
 		}
-		JSONObject mainJson = new JSONObject();
-		mainJson.element("seguidores", ja);
-		response.setStatus(HttpServletResponse.SC_OK);
-		response.setContentType("application/json; charset=UTF-8");
-		response.getWriter().write(mainJson.toString());
+		catch (Exception e){
+			e.printStackTrace();
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			response.getWriter().println("Error interno en el servidor. Vuelva intentarlo más tarde");
+		}
 	}   
 }

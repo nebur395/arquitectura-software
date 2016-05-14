@@ -60,7 +60,7 @@ public class VJuegosDAO {
 	 * @param nickname
 	 * @return UsuarioVO poblado si existe el ususario y null si no existe
 	 */
-	public static VJuegoVO findVJuego( int id ){
+	public static VJuegoVO findVJuego( int id ) throws ClassNotFoundException, SQLException{
 		Connection conn = null;
 		try{
 			Class.forName(gestorDeConexiones.JDBC_DRIVER);
@@ -82,15 +82,13 @@ public class VJuegosDAO {
 			
 			//Fin de la parte interesante---------------------------------------------
 		} catch (ClassNotFoundException e){
-			e.printStackTrace();
+			throw e;
 		} catch (SQLException e){
-			e.printStackTrace();
+			throw e;
 		} finally {
 			
 			if ( conn != null ) gestorDeConexiones.releaseConnection(conn);
 		}
-		
-		return null;
 	}
 	
 	
@@ -153,7 +151,7 @@ public class VJuegosDAO {
 		return false;
 	}
 	
-	public static ArrayList<VJuegoVO> findAllVJuegos( ){
+	public static ArrayList<VJuegoVO> findAllVJuegos( ) throws ClassNotFoundException, SQLException{
 
 		Connection conn = null;
 		try{
@@ -180,15 +178,13 @@ public class VJuegosDAO {
 			
 			//Fin de la parte interesante---------------------------------------------
 		} catch (ClassNotFoundException e){
-			e.printStackTrace();
+			throw e;
 		} catch (SQLException e){
-			e.printStackTrace();
+			throw e;
 		} finally {
 			
 			if ( conn != null ) gestorDeConexiones.releaseConnection(conn);
-		}
-		
-		return null;												
+		}												
 	}
 
 	
