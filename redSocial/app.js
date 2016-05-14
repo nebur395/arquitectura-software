@@ -1,4 +1,4 @@
-angular.module('myApp', ['ui.router', 'ab-base64', 'lr.upload'])
+angular.module('myApp', ['ui.router', 'ab-base64'])
 
     .config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider
@@ -72,13 +72,13 @@ angular.module('myApp', ['ui.router', 'ab-base64', 'lr.upload'])
                 url: "/admin",
                 templateUrl: "templates/admin.html",
                 controller: "adminCtrl",
-                /*onEnter: function($state,auth){
+                onEnter: function($state,auth){
                  if(!auth.isAuthenticated()){
                  $state.go('initSesion');
                  } else if (!auth.isAdmin()) {
                  $state.go('novedades');
                  }
-                 }*/
+                 }
             })
 
             .state('usuario', {
@@ -109,5 +109,5 @@ angular.module('myApp', ['ui.router', 'ab-base64', 'lr.upload'])
                 }
             });
 
-        $urlRouterProvider.otherwise('admin');
+        $urlRouterProvider.otherwise('initSesion');
     });
