@@ -30,9 +30,9 @@
         <p><label>Descripción del videojuego:</label>
           <textarea rows="5" ng-model="descripcion" class="form-control"
                     style="max-width: 100%"></textarea></p>
-        <p><label>Imágen del videojuego:</label>
-          <input type="file" name="file" size="50" />
-        </p>
+        <p><label>Imágen del videojuego (url de la imágen):</label>
+          <input ng-click="hideError();hideExito()" class="w3-input" type="text"
+                 ng-model="imagen" required></p>
         <p style="text-align: center">
           <button ng-click="limpiarCambios()"
                   class="w3-btn w3-round-large theme-accent2"

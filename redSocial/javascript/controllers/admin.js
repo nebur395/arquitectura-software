@@ -12,6 +12,7 @@ angular.module('myApp')
         $scope.desarrolladora = "";
         $scope.distribuidora = "";
         $scope.nombre = "";
+        $scope.imagen = "";
 
         $scope.errorAdmin = false;
         $scope.exitoAdmin = false;
@@ -39,9 +40,12 @@ angular.module('myApp')
             var videojuego = {
                 nombre: $scope.nombre,
                 distribuidora: $scope.distribuidora,
+                genero: $scope.genero,
+                plataforma: $scope.plataforma,
                 desarrolladora: $scope.desarrolladora,
                 lanzamiento: $scope.lanzamiento,
                 descripcion: $scope.descripcion,
+                imagen: $scope.imagen = ""
             }
             adminService.insertarVideojuego(videojuego, showExito, showError);
         };
