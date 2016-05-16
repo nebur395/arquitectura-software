@@ -19,7 +19,7 @@ import web.database.valueObject.UsuarioVO;
 /**
  * Servlet implementation class Ajustes
  */
- public class Ajustes extends HttpServlet {
+ public class Ajustes extends AbstractServlet {
 	private static final long serialVersionUID = 1L;
 	
 	/**
@@ -49,18 +49,13 @@ import web.database.valueObject.UsuarioVO;
 		String newPass = "";
 		String reNewPass = "";
 		
-		StringBuffer jb = new StringBuffer();
-		String line = null;
+		JSONObject json = null;
 		try{
-			BufferedReader reader = request.getReader();
-			while ((line = reader.readLine()) != null){
-			  jb.append(line);
-			}
+			json = readJSON(request.getReader());
 		}
 		catch (Exception e){
 			System.out.printf("Error al leer el JSON");
 		}
-		JSONObject json = JSONObject.fromObject(jb.toString());
 		id = json.getInt("id");
 		usuario = json.getString("nombreUsuario");
 		nombre = json.getString("nombreApellidos");

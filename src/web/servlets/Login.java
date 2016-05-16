@@ -64,10 +64,7 @@ public class Login extends HttpServlet {
 				//Si todo ha ido correctamente
 				else{
 					response.setStatus(HttpServletResponse.SC_OK);
-					JSONObject user = new JSONObject();
-					user.element("nombreUsuario", vo.getNickname());
-					user.element("id", vo.get_id());
-					user.element("nombreApellidos", vo.getNombre());
+					JSONObject user = JSONObject.fromObject(vo.serialize());
 					response.setContentType("application/json; charset=UTF-8");
 					response.getWriter().write(user.toString());
 				}

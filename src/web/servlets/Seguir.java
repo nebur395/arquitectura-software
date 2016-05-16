@@ -16,7 +16,7 @@ import net.sf.json.JSONException;
 
 import web.database.dataAccessObject.FollowsDAO;
 
-public class Seguir extends HttpServlet {
+public class Seguir extends AbstractServlet{
 	
 	/**
      * @see HttpServlet#HttpServlet()
@@ -40,18 +40,13 @@ public class Seguir extends HttpServlet {
 		int id;
 		int idFollow;
 		
-		StringBuffer jb = new StringBuffer();
-		String line = null;
+		JSONObject json = null;
 		try{
-			BufferedReader reader = request.getReader();
-			while ((line = reader.readLine()) != null){
-			  jb.append(line);
-			}
+			json = readJSON(request.getReader());
 		}
 		catch (Exception e){
 			System.out.printf("Error al leer el JSON");
 		}
-		JSONObject json = JSONObject.fromObject(jb.toString());
 		id = json.getInt("idUser");
 		idFollow = json.getInt("idSeguidor");
 		

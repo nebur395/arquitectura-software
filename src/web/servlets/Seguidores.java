@@ -21,7 +21,7 @@ import web.database.valueObject.UsuarioVO;
 /**
  * Servlet implementation class Seguidores
  */ 
-public class Seguidores extends HttpServlet {
+public class Seguidores extends AbstractServlet {
 	private static final long serialVersionUID = 1L;
 	
 	/**
@@ -45,28 +45,21 @@ public class Seguidores extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int id;
 		
-		StringBuffer jb = new StringBuffer();
-		String line = null;
+		JSONObject json = null;
 		try{
-			BufferedReader reader = request.getReader();
-			while ((line = reader.readLine()) != null){
-			  jb.append(line);
-			}
+			json = readJSON(request.getReader());
 		}
 		catch (Exception e){
 			System.out.printf("Error al leer el JSON");
 		}
-		JSONObject json = JSONObject.fromObject(jb.toString());
 		id = json.getInt("idUser");
+		
 		try{
 			JSONArray ja = new JSONArray();
 			Iterator<UsuarioVO> iterador = (FollowsDAO.getFollows(id)).iterator();
 			while(iterador.hasNext()){
 				UsuarioVO vo = iterador.next();
-				JSONObject user = new JSONObject();
-				user.element("nombreUsuario", vo.getNickname());
-				user.element("id", vo.get_id());
-				user.element("nombreApellidos", vo.getNombre());
+				JSONObject user = JSONObject.fromObject(vo.serialize());
 				ja.add(user);
 			}
 			JSONObject mainJson = new JSONObject();

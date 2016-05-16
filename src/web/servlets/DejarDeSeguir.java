@@ -19,7 +19,7 @@ import web.database.dataAccessObject.FollowsDAO;
 /**
  * Servlet implementation class DejarDeSeguir
  */ 
- public class DejarDeSeguir extends HttpServlet {
+ public class DejarDeSeguir extends AbstractServlet {
 	 
 	/**
      * @see HttpServlet#HttpServlet()
@@ -43,18 +43,13 @@ import web.database.dataAccessObject.FollowsDAO;
 		int id;
 		int idUnfollow;
 		
-		StringBuffer jb = new StringBuffer();
-		String line = null;
+		JSONObject json = null;
 		try{
-			BufferedReader reader = request.getReader();
-			while ((line = reader.readLine()) != null){
-			  jb.append(line);
-			}
+			json = readJSON(request.getReader());
 		}
 		catch (Exception e){
 			System.out.printf("Error al leer el JSON");
 		}
-		JSONObject json = JSONObject.fromObject(jb.toString());
 		id = json.getInt("idUser");
 		idUnfollow = json.getInt("idSeguidor");
 		try{

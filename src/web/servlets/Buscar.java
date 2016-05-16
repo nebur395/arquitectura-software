@@ -21,10 +21,9 @@ import web.database.dataAccessObject.UsuariosDAO;
 import web.database.valueObject.VJuegoVO;
 import web.database.valueObject.PuntuacionVO;
 import web.database.valueObject.UsuarioVO;
-import web.utils.PuntuacionesUtils;
 
 
-public class Buscar extends HttpServlet {
+public class Buscar extends AbstractServletP {
 	private static final long serialVersionUID = 1L;
 	
 	/**
@@ -55,7 +54,7 @@ public class Buscar extends HttpServlet {
 				while(iterador.hasNext()){
 					VJuegoVO vo = iterador.next();
 					JSONObject juego = JSONObject.fromObject(vo.serialize());
-					juego.element("valoracion", PuntuacionesUtils.calcularPuntuacion(PuntuacionesDAO.listPuntuaciones(vo.get_id())));
+					juego.element("valoracion", calcularPuntuacion(PuntuacionesDAO.listPuntuaciones(vo.get_id())));
 					ja.add(juego);
 				}
 			}

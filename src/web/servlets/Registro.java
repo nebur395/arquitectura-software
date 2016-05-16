@@ -22,7 +22,7 @@ import web.database.valueObject.UsuarioVO;
  * Servlet implementation class Registro
  */
 //@WebServlet("/Registro")
-public class Registro extends HttpServlet {
+public class Registro extends AbstractServlet{
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -49,18 +49,13 @@ public class Registro extends HttpServlet {
 		String pass = "";
 		String repass = "";
 		
-		StringBuffer jb = new StringBuffer();
-		String line = null;
+		JSONObject json = null;
 		try{
-			BufferedReader reader = request.getReader();
-			while ((line = reader.readLine()) != null){
-			  jb.append(line);
-			}
+			json = readJSON(request.getReader());
 		}
 		catch (Exception e){
 			System.out.printf("Error al leer el JSON");
 		}
-		JSONObject json = JSONObject.fromObject(jb.toString());
 		usuario = json.getString("name");
 		pass = json.getString("pass1");
 		repass = json.getString("pass2");
@@ -93,10 +88,7 @@ public class Registro extends HttpServlet {
 				if(UsuariosDAO.addUser(usuario, "", pass)){
 					response.setStatus(HttpServletResponse.SC_OK);
 					UsuarioVO vo = UsuariosDAO.findUser(usuario);
-					JSONObject user = new JSONObject();
-					user.element("nombreUsuario", usuario);
-					user.element("id", vo.get_id());
-					user.element("nombreApellidos", vo.getNombre());
+					JSONObject user = JSONObject.fromObject(vo.serialize());
 					response.setContentType("application/json; charset=UTF-8");
 					response.getWriter().write(user.toString());
 				}

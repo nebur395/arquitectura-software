@@ -19,9 +19,8 @@ import net.sf.json.JSONException;
 
 import web.database.dataAccessObject.PuntuacionesDAO;
 import web.database.dataAccessObject.ComentariosDAO;
-import web.utils.PuntuacionesUtils;
 
-public class Opinar extends HttpServlet{
+public class Opinar extends AbstractServletP{
 	
 	/**
      * @see HttpServlet#HttpServlet()
@@ -45,18 +44,13 @@ public class Opinar extends HttpServlet{
 		int idUser;
 		int idJuego;
 		
-		StringBuffer jb = new StringBuffer();
-		String line = null;
+		JSONObject json = null;
 		try{
-			BufferedReader reader = request.getReader();
-			while ((line = reader.readLine()) != null){
-			  jb.append(line);
-			}
+			json = readJSON(request.getReader());
 		}
 		catch (Exception e){
 			System.out.printf("Error al leer el JSON");
 		}
-		JSONObject json = JSONObject.fromObject(jb.toString());
 		idUser = json.getInt("idUser");
 		idJuego = json.getInt("idVideojuego");
 		DateFormat dateF = new SimpleDateFormat("yyyy-MM-dd");
@@ -77,7 +71,7 @@ public class Opinar extends HttpServlet{
 				int opinion = json.getInt("opinion");
 				PuntuacionesDAO.addPuntuacion(idUser, idJuego, opinion);
 				//Extraigo la nueva puntuación total del juego
-				String valoracion = PuntuacionesUtils.calcularPuntuacion(PuntuacionesDAO.listPuntuaciones(idJuego));
+				String valoracion = calcularPuntuacion(PuntuacionesDAO.listPuntuaciones(idJuego));
 				JSONObject respuesta = new JSONObject();
 				respuesta.element("fecha", dateF.format(date));
 				respuesta.element("valoracion", valoracion);
