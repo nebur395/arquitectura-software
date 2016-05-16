@@ -47,7 +47,7 @@
           <li class="list-group-item"
               ng-repeat="comentario in listaComentarios">
             <h3><a class="theme-color-text-action"
-                   ng-click="entrarVideojuego(comentario.idJuego)">{{comentario.nombre}}</a>
+                   ng-click="entrarVideojuego(comentario.idJuego)">{{comentario.juego}}</a>
               <span class="fecha">{{comentario.fecha}}</span></h3>
             <p>{{comentario.contenido}}</p>
           </li>
@@ -60,7 +60,7 @@
           <li class="list-group-item"
               ng-repeat="valoracion in listaValoraciones">
             Ha puntuado <a class="theme-color-text-action" ng-click=
-              "entrarVideojuego(valoracion.idJuego)">{{valoracion.nombre}}</a>
+              "entrarVideojuego(valoracion.idJuego)">{{valoracion.juego}}</a>
             el {{valoracion.fecha}} con <span
               ng-class="valoracion.valoracion"></span></li>
         </ul>

@@ -3,11 +3,11 @@ angular.module('myApp')
     .controller('ajustesCtrl', ['$scope', '$state', 'auth', 'ajustesService', 'usuarioService', function ($scope, $state, auth, ajustesService, usuarioService) {
 
         $scope.nombreUsuarioPrimario = auth.identity();
-        $scope.nombreApellidosPrimario = auth.nombreApellidos();
+        $scope.nombreRealPrimario = auth.nombreReal();
         $scope.seguidores;
 
         $scope.nombreUsuario = $scope.nombreUsuarioPrimario;
-        $scope.nombreApellidos = $scope.nombreApellidosPrimario;
+        $scope.nombreReal = $scope.nombreRealPrimario;
         $scope.oldPassword = "";
         $scope.password = "";
         $scope.rePassword = "";
@@ -43,7 +43,7 @@ angular.module('myApp')
                 var userObject = {
                     id: auth.idUser(),
                     nombreUsuario: $scope.nombreUsuario,
-                    nombreApellidos: $scope.nombreApellidos,
+                    nombreReal: $scope.nombreReal,
                     oldPass: $scope.oldPassword,
                     pass: $scope.password,
                     rePass: $scope.rePassword
@@ -54,7 +54,7 @@ angular.module('myApp')
 
         $scope.limpiarCambios = function () {
             $scope.nombreUsuario = $scope.nombreUsuarioPrimario;
-            $scope.nombreApellidos = $scope.nombreApellidosPrimario;
+            $scope.nombreReal = $scope.nombreRealPrimario;
             $scope.oldPassword = "";
             $scope.password = "";
             $scope.rePassword = "";

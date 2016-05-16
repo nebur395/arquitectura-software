@@ -31,8 +31,8 @@ angular.module('myApp')
             isAdmin: function () {
                 return _identity.admin;
             },
-            nombreApellidos: function () {
-                return _identity.nombreApellidos;
+            nombreReal: function () {
+                return _identity.nombreReal;
             },
             idUser: function () {
                 return _identity.id;

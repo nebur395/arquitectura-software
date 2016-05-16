@@ -10,7 +10,7 @@
                  ng-model="nombreUsuario" required></p>
         <p><label>Nombre y apellidos:</label>
           <input ng-click="hideError();hideExito()" class="w3-input" type="text"
-                 ng-model="nombreApellidos"></p>
+                 ng-model="nombreReal"></p>
         <p><label>Contraseña actual:</label>
           <input ng-click="hideError();hideExito()" class="w3-input"
                  type="password"
@@ -53,7 +53,7 @@
         <li class="list-group-item" ng-repeat="seguidor in seguidores">
           <a ng-click="entrarUsuario(seguidor.idUsuario)"
              class="theme-color-text-action">{{seguidor.nombreUsuario}}</a>
-          ({{seguidor.nombreApellidos}})
+          ({{seguidor.nombreReal}})
           <button ng-click="dejarSeguir(seguidor.id)" style="float:right"
                   class="w3-btn w3-round-large theme-accent-s w3-small">
             Dejar de seguir

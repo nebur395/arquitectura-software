@@ -59,7 +59,7 @@
             <h3><a class="theme-color-text-action"
                    ng-click="entrarUsuario(comentario.idUsuario)">
               {{comentario.nombreUsuario}}</a>
-              <span class="fecha"> ({{comentario.nombreApellidos}}) {{comentario.fecha}}</span>
+              <span class="fecha"> ({{comentario.nombreReal}}) {{comentario.fecha}}</span>
             </h3>
             <p>{{comentario.contenido}}</p>
           </li>
@@ -74,7 +74,7 @@
             <a ng-click="entrarUsuario(valoracion.idUsuario)"
                class="theme-color-text-action">
               {{valoracion.nombreUsuario}}</a>
-            ({{valoracion.nombreApellidos}}) le ha dado una puntiación el
+            ({{valoracion.nombreReal}}) le ha dado una puntiación el
             {{valoracion.fecha}}
             de <span ng-class="valoracion.valoracion"></span></li>
         </ul>

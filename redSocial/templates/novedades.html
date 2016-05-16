@@ -20,7 +20,7 @@
             ng-repeat="comentario in novedadesComentarios">
           <a ng-click="entrarUsuario(comentario.idUsuario)"
              class="theme-color-text-action">{{comentario.nombreUsuario}}</a>
-          ({{comentario.nombreApellidos}}) ha comentado el juego
+          ({{comentario.nombreReal}}) ha comentado el juego
           <a ng-click="entrarVideojuego(comentario.idJuego)" class=
               "theme-color-text-action">{{comentario.juego}}</a></li>
       </ul>
@@ -33,7 +33,7 @@
             ng-repeat="valoracion in novedadesValoraciones">
           <a ng-click="entrarUsuario(valoracion.idUsuario)"
              class="theme-color-text-action">{{valoracion.nombreUsuario}}</a>
-          ({{valoracion.nombreApellidos}}) ha valorado el juego
+          ({{valoracion.nombreReal}}) ha valorado el juego
           <a ng-click="entrarVideojuego(valoracion.idJuego)"
              class="theme-color-text-action">
             {{valoracion.juego}}</a>con <span

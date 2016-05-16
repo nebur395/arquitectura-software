@@ -63,7 +63,7 @@ angular.module('myApp')
                                 idUsuario: auth.idUser(),
                                 nombreUsuario: auth.identity(),
                                 fecha: fecha,
-                                nombreApellidos: auth.nombreApellidos(),
+                                nombreReal: auth.nombreReal(),
                                 contenido: $scope.comentario
                             };
                             $scope.listaComentarios.push(comentario);
@@ -110,7 +110,7 @@ angular.module('myApp')
                                 idUsuario: auth.idUser(),
                                 nombreUsuario: auth.identity(),
                                 fecha: fecha,
-                                nombreApellidos: auth.nombreApellidos(),
+                                nombreReal: auth.nombreReal(),
                                 valoracion: numEstrella
                             };
                             $scope.addValoracion(valoracion);
