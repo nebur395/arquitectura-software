@@ -9,8 +9,9 @@ public class VJuegoVO {
 	private String plataforma;
 	private String genero;
 	private int anyo;
+	private String imagen;
 	
-	public VJuegoVO (int _id, String titulo, String descripcion, String desarrollador, String distribuidor, String plataforma, String genero, int anyo){
+	public VJuegoVO (int _id, String titulo, String descripcion, String desarrollador, String distribuidor, String plataforma, String genero, int anyo, String imagen){
 		this._id =_id;
 		this.titulo = titulo;
 		this.descripcion = descripcion;
@@ -19,6 +20,7 @@ public class VJuegoVO {
 		this.plataforma = plataforma;
 		this.genero = genero;
 		this.anyo = anyo;
+		this.imagen = imagen;
 	}
 	
 	public int get_id() {
@@ -45,6 +47,9 @@ public class VJuegoVO {
 	public int getAnyo() {
 		return anyo;
 	}
+	public String getImagen(){
+		return imagen;
+	}
 	
 	@Override
 	public String toString() {
@@ -55,8 +60,8 @@ public class VJuegoVO {
 	
 	public String serialize(){	
 		return String.format("{\"id\": %s, \"nombre\": \"%s\", \"desarrolladora\": \"%s\", \"descripcion\": \"%s\"," +
-				" \"distribuidora\": \"%s\", \"plataforma\": \"%s\", \"genero\": \"%s\", \"lanzamiento\": \"%s\" }", 
-				_id, titulo, desarrollador, descripcion, distribuidor, plataforma, genero, anyo);
+				" \"distribuidora\": \"%s\", \"plataforma\": \"%s\", \"genero\": \"%s\", \"lanzamiento\": \"%s\", \"imagen\": \"%s\" }", 
+				_id, titulo, desarrollador, descripcion, distribuidor, plataforma, genero, anyo, imagen);
 	}
 		
 }

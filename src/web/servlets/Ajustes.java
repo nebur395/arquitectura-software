@@ -1,8 +1,5 @@
 package web.servlets;
 
-import java.lang.StringBuffer;
-import java.io.BufferedReader;
-
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
