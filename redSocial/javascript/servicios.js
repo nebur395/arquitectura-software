@@ -240,7 +240,7 @@ angular.module('myApp')
                 }).success(function () {
                     callbackExito();
                 }).error(function (data) {
-                    callback(data);
+                    callbackError(data);
                 });
             }
         };

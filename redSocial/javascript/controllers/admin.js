@@ -45,8 +45,8 @@ angular.module('myApp')
                 desarrolladora: $scope.desarrolladora,
                 lanzamiento: $scope.lanzamiento,
                 descripcion: $scope.descripcion,
-                imagen: $scope.imagen = ""
-            }
+                imagen: $scope.imagen
+            };
             adminService.insertarVideojuego(videojuego, showExito, showError);
         };
 

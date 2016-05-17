@@ -36,7 +36,7 @@ public class VJuegosDAO {
 			//Parte intertesante--------------------------------------------------------
 			
 			String sql = String.format("INSERT INTO `videojuegos`(`titulo`, `descripcion`, `desarrollador`, `distribuidor`, `plataforma`, `genero`, `año`, `imagen`) " +
-					"VALUES ('%s','%s','%s','%s','%s','%s','%s','%s')", titulo, desarrollador, descripcion, distribuidor, plataforma, genero, anyo, imagen);
+					"VALUES ('%s','%s','%s','%s','%s','%s','%s','%s')", titulo, descripcion, desarrollador, distribuidor, plataforma, genero, anyo, imagen);
 			stmt.execute(sql);
 			
 			return true;

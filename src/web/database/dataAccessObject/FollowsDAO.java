@@ -83,7 +83,7 @@ public class FollowsDAO {
 			ArrayList<UsuarioVO> list = new ArrayList<UsuarioVO>();
 			
 			while( rs.next() ){
-				list.add(new UsuarioVO (rs.getInt("_id"), rs.getString("nickname"), rs.getString("nombre"), rs.getString("pass"), "--add campo fecha--"));
+				list.add(new UsuarioVO (rs.getInt("_id"), rs.getString("nickname"), rs.getString("nombre"), rs.getString("pass"), "--add campo fecha--", false));
 				
 			}			
 			return list;

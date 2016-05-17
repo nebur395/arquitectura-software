@@ -35,7 +35,7 @@ public class UsuariosDAO {
 			
 			//Parte intertesante--------------------------------------------------------
 			
-			String sql = String.format("insert into usuarios (nickname, nombre, pass) values ('%s', '%s', '%s')", nickname, nombre, passwd);
+			String sql = String.format("insert into usuarios (nickname, nombre, pass, admin) values ('%s', '%s', '%s', %s)", nickname, nombre, passwd, false);
 			stmt.execute(sql);
 			return true;
 		} catch (MySQLIntegrityConstraintViolationException e) {
@@ -65,11 +65,11 @@ public class UsuariosDAO {
 			
 			//Parte intertesante--------------------------------------------------------
 			
-			String sql = String.format("select _id, nickname, nombre, pass, fecha from usuarios where nickname='%s'", nickname);
+			String sql = String.format("select _id, nickname, nombre, pass, fecha, admin from usuarios where nickname='%s'", nickname);
 			ResultSet rs = stmt.executeQuery(sql);
 			
 			if( rs.next() ){
-				return new UsuarioVO (rs.getInt("_id"), rs.getString("nickname"), rs.getString("nombre"), rs.getString("pass"), rs.getString("fecha"));
+				return new UsuarioVO (rs.getInt("_id"), rs.getString("nickname"), rs.getString("nombre"), rs.getString("pass"), rs.getString("fecha"), rs.getBoolean("admin"));
 			}
 			//El usuario no existe
 			return null;
@@ -99,11 +99,11 @@ public class UsuariosDAO {
 			
 			//Parte intertesante--------------------------------------------------------
 			
-			String sql = String.format("select _id, nickname, nombre, pass, fecha from usuarios where _id='%s'", id);
+			String sql = String.format("select _id, nickname, nombre, pass, fecha, admin from usuarios where _id='%s'", id);
 			ResultSet rs = stmt.executeQuery(sql);
 			
 			if( rs.next() ){
-				return new UsuarioVO (rs.getInt("_id"), rs.getString("nickname"), rs.getString("nombre"), rs.getString("pass"), rs.getString("fecha"));
+				return new UsuarioVO (rs.getInt("_id"), rs.getString("nickname"), rs.getString("nombre"), rs.getString("pass"), rs.getString("fecha"), rs.getBoolean("admin"));
 			}
 			System.out.println("El usuario no existe");
 			return null;
@@ -138,7 +138,7 @@ public class UsuariosDAO {
 			
 			while( rs.next() ){
 				list.add( new UsuarioVO (rs.getInt("_id"), rs.getString("nickname"), rs.getString("nombre"), 
-						rs.getString("pass"), rs.getString("fecha")) );
+						rs.getString("pass"), rs.getString("fecha"), false) );
 			}
 						
 			return list;
