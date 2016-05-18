@@ -2,10 +2,11 @@ angular.module('myApp')
 
     .controller('adminCtrl', ['$scope', 'adminService', function ($scope, adminService) {
 
-        $scope.listaGenero = ["MMORPG", "Survival horror", "Acción-Aventura"];
+        $scope.listaGenero = ["MMORPG", "Survival horror", "Acción-Aventura", "Shooter",
+            "MOBA", "Simulación", "Estrategia", "RPG", "Conducción", "Indie"];
         $scope.genero = "";
         $scope.listaPlataforma = ["PC", "PlayStation 2", "PlayStation 3", 
-            "PlayStation 4", "XboxOne", "Xbox 360", "Wii U"];
+            "PlayStation 4", "XboxOne", "Xbox 360", "Wii U", "PSVita", "N3DS"];
         $scope.plataforma = "";
         $scope.descripcion = "";
         $scope.lanzamiento = "";

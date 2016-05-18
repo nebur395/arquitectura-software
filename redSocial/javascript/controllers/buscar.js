@@ -3,10 +3,11 @@ angular.module('myApp')
     .controller('buscarCtrl', ['$scope', '$state', 'auth', 'buscarService', 'videojuegoService', function ($scope, $state, auth, buscarService, videojuegoService) {
         $scope.listaVideojuegos;
         $scope.busqueda = "";
-        $scope.listaGenero = ["MMORPG", "Survival horror", "Acción-Aventura"];
+        $scope.listaGenero = ["MMORPG", "Survival horror", "Acción-Aventura", "Shooter",
+            "MOBA", "Simulación", "Estrategia", "RPG", "Conducción", "Indie"];
         $scope.genero = "";
-        $scope.listaPlataforma = ["PC", "PlayStation 2", "PlayStation 3",
-            "PlayStation 4", "XboxOne", "Xbox 360", "Wii U"];
+        $scope.listaPlataforma = ["PC", "PlayStation 2", "PlayStation 3", 
+            "PlayStation 4", "XboxOne", "Xbox 360", "Wii U", "PSVita", "N3DS"];
         $scope.plataforma = "";
         $scope.listaValoraciones = [false, false, false, false, false];
         $scope.valoracion = "";
