@@ -7,8 +7,8 @@
     <div class="row form-inline">
       <div class="form-group" style="float: right;">
         <label for="mostrar">Mostrar: </label>
-        <select  id="mostrar" class="form-control" ng-model="novedades"
-                 ng-options="x for x in mostrar">
+        <select id="mostrar" class="form-control" ng-model="novedades"
+                ng-options="x for x in mostrar">
         </select>
       </div>
     </div>
@@ -16,9 +16,11 @@
     <!-- lista de novedades de comentarios -->
     <div ng-if="novedades == 'Comentarios'" class="row">
       <ul class="list-group" id="novedades">
-        <li class="list-group-item" ng-repeat="comentario in novedadesComentarios">
-          <a ng-click="entrarUsuario(comentario.idUsuario)" class="theme-color-text-action">{{comentario.nombreUsuario}}</a>
-          ({{comentario.nombreApellidos}}) ha comentado el juego
+        <li class="list-group-item"
+            ng-repeat="comentario in novedadesComentarios">
+          <a ng-click="entrarUsuario(comentario.idUsuario)"
+             class="theme-color-text-action">{{comentario.nombreUsuario}}</a>
+          ({{comentario.nombreReal}}) ha comentado el juego
           <a ng-click="entrarVideojuego(comentario.idJuego)" class=
               "theme-color-text-action">{{comentario.juego}}</a></li>
       </ul>
@@ -27,11 +29,15 @@
     <!-- lista de novedades de valoraciones -->
     <div ng-if="novedades == 'Valoraciones'" class="row">
       <ul class="list-group" id="novedades">
-        <li class="list-group-item" ng-repeat="valoracion in novedadesValoraciones">
-          <a ng-click="entrarUsuario(valoracion.idUsuario)" class="theme-color-text-action">{{valoracion.nombreUsuario}}</a>
-          ({{valoracion.nombreApellidos}}) ha valorado el juego
-          <a ng-click="entrarVideojuego(valoracion.idJuego)" class="theme-color-text-action">
-            {{valoracion.juego}}</a>con <span ng-class="valoracion.valoracion"></span></li>
+        <li class="list-group-item"
+            ng-repeat="valoracion in novedadesValoraciones">
+          <a ng-click="entrarUsuario(valoracion.idUsuario)"
+             class="theme-color-text-action">{{valoracion.nombreUsuario}}</a>
+          ({{valoracion.nombreReal}}) ha valorado el juego
+          <a ng-click="entrarVideojuego(valoracion.idJuego)"
+             class="theme-color-text-action">
+            {{valoracion.juego}}</a>con <span
+            ng-class="valoracion.valoracion"></span></li>
       </ul>
     </div>
 

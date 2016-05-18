@@ -1,13 +1,13 @@
 angular.module('myApp')
 
-    .controller('novedadesCtrl', ['$scope','$state','auth','novedadesService','videojuegoService','usuarioService',function($scope,$state,auth,novedadesService,videojuegoService,usuarioService){
-        $scope.mostrar = ["Comentarios","Valoraciones"];
+    .controller('novedadesCtrl', ['$scope', '$state', 'auth', 'novedadesService', 'videojuegoService', 'usuarioService', function ($scope, $state, auth, novedadesService, videojuegoService, usuarioService) {
+        $scope.mostrar = ["Comentarios", "Valoraciones"];
         $scope.novedades = "Comentarios";
         $scope.novedadesComentarios;
         $scope.novedadesValoraciones;
 
-        $scope.cogerNovedades = function(){
-            novedadesService.novedades( auth.idUser(), function(comentarios,valoraciones) {
+        $scope.cogerNovedades = function () {
+            novedadesService.novedades(auth.idUser(), function (comentarios, valoraciones) {
                 $scope.novedadesComentarios = comentarios;
                 $scope.novedadesValoraciones = valoraciones;
             });
@@ -23,5 +23,5 @@ angular.module('myApp')
             usuarioService.setUsuario(id);
             $state.go('usuario');
         };
-        
+
     }]);

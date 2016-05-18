@@ -1,9 +1,6 @@
 package web.servlets;
 
 import java.io.IOException;
-import java.util.Base64;
-import java.lang.StringBuffer;
-import java.io.BufferedReader;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,7 +19,7 @@ import web.database.valueObject.UsuarioVO;
  * Servlet implementation class Registro
  */
 //@WebServlet("/Registro")
-public class Registro extends HttpServlet {
+public class Registro extends AbstractServlet{
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -49,18 +46,13 @@ public class Registro extends HttpServlet {
 		String pass = "";
 		String repass = "";
 		
-		StringBuffer jb = new StringBuffer();
-		String line = null;
+		JSONObject json = null;
 		try{
-			BufferedReader reader = request.getReader();
-			while ((line = reader.readLine()) != null){
-			  jb.append(line);
-			}
+			json = readJSON(request.getReader());
 		}
 		catch (Exception e){
 			System.out.printf("Error al leer el JSON");
 		}
-		JSONObject json = JSONObject.fromObject(jb.toString());
 		usuario = json.getString("name");
 		pass = json.getString("pass1");
 		repass = json.getString("pass2");
@@ -89,19 +81,23 @@ public class Registro extends HttpServlet {
 		}
 		
 		if(!error){
-			if(UsuariosDAO.addUser(usuario, "", pass)){
-				response.setStatus(HttpServletResponse.SC_OK);
-				UsuarioVO vo = UsuariosDAO.findUser(usuario);
-				JSONObject user = new JSONObject();
-				user.element("nombreUsuario", usuario);
-				user.element("id", vo.get_id());
-				user.element("nombreApellidos", vo.getNombre());
-				response.setContentType("application/json; charset=UTF-8");
-				response.getWriter().write(user.toString());
+			try{
+				if(UsuariosDAO.addUser(usuario, "", pass)){
+					response.setStatus(HttpServletResponse.SC_OK);
+					UsuarioVO vo = UsuariosDAO.findUser(usuario);
+					JSONObject user = JSONObject.fromObject(vo.serialize());
+					response.setContentType("application/json; charset=UTF-8");
+					response.getWriter().write(user.toString());
+				}
+				else{
+					response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+					response.getWriter().println("El nombre de usuario ya está en uso");
+				}
 			}
-			else{
-				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-				response.getWriter().println("El nombre de usuario ya está en uso");
+			catch(Exception e){
+				e.printStackTrace();
+				response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+				response.getWriter().println("Error interno en el servidor. Vuelva intentarlo más tarde");
 			}
 		}
 	}

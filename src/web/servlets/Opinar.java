@@ -1,9 +1,9 @@
 package web.servlets;
 
 import java.io.IOException;
-import java.util.Base64;
-import java.lang.StringBuffer;
-import java.io.BufferedReader;
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,7 +17,7 @@ import net.sf.json.JSONException;
 import web.database.dataAccessObject.PuntuacionesDAO;
 import web.database.dataAccessObject.ComentariosDAO;
 
-public class Opinar extends HttpServlet{
+public class Opinar extends AbstractServletP{
 	
 	/**
      * @see HttpServlet#HttpServlet()
@@ -41,45 +41,46 @@ public class Opinar extends HttpServlet{
 		int idUser;
 		int idJuego;
 		
-		StringBuffer jb = new StringBuffer();
-		String line = null;
+		JSONObject json = null;
 		try{
-			BufferedReader reader = request.getReader();
-			while ((line = reader.readLine()) != null){
-			  jb.append(line);
-			}
+			json = readJSON(request.getReader());
 		}
 		catch (Exception e){
 			System.out.printf("Error al leer el JSON");
 		}
-		JSONObject json = JSONObject.fromObject(jb.toString());
 		idUser = json.getInt("idUser");
 		idJuego = json.getInt("idVideojuego");
-		//Si es un comentario
-		if(json.getBoolean("tipo")){
-			String opinion = json.getString("opinion");
-			if(ComentariosDAO.addComentario(idUser, idJuego, opinion)){
+		DateFormat dateF = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = new Date();
+			try{
+			//Si es un comentario
+			if(json.getBoolean("tipo")){
+				String opinion = json.getString("opinion");
+				ComentariosDAO.addComentario(idUser, idJuego, opinion);
+				JSONObject respuesta = new JSONObject();
+				respuesta.element("fecha", dateF.format(date));
 				response.setStatus(HttpServletResponse.SC_OK);
+				response.setContentType("application/json; charset=UTF-8");
+				response.getWriter().write(respuesta.toString());
 			}
+			//Si es una valoración
 			else{
-				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+				int opinion = json.getInt("opinion");
+				PuntuacionesDAO.addPuntuacion(idUser, idJuego, opinion);
+				//Extraigo la nueva puntuación total del juego
+				String valoracion = calcularPuntuacion(PuntuacionesDAO.listPuntuaciones(idJuego));
+				JSONObject respuesta = new JSONObject();
+				respuesta.element("fecha", dateF.format(date));
+				respuesta.element("valoracion", valoracion);
+				response.setStatus(HttpServletResponse.SC_OK);
+				response.setContentType("application/json; charset=UTF-8");
+				response.getWriter().write(respuesta.toString());
 			}
 		}
-		//Si es una valoración
-		else if(!(PuntuacionesDAO.existsPuntuacion(idUser, idJuego))){
-			int opinion = json.getInt("opinion");
-			if(PuntuacionesDAO.addPuntuacion(idUser, idJuego, opinion)){
-				response.setStatus(HttpServletResponse.SC_OK);
-			}
-			else{
-				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-			}
-		}
-		else{
-			response.setContentType("text/html; charset=UTF-8");
-			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-			response.getWriter().println("Ya has valorado este videojuego");
+		catch(Exception e){
+			e.printStackTrace();
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			response.getWriter().println("Error interno en el servidor. Vuelva intentarlo más tarde");
 		}
 	}
-	
 }

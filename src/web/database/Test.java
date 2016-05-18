@@ -32,6 +32,7 @@ public class Test {
 		//Limpiamos la base de datos
 		dbAdapter.ejecutarFicheroSQL("resources/limpiarBD.sql");
 		
+		
 		testUsuarios();
 		testVideojuegos();
 		testComentarios();
@@ -83,7 +84,9 @@ public class Test {
 		UsuariosDAO.deleteUser("hombreEfimero");
 		System.out.println("OK\n");
 		
-		
+		System.out.println("Buscamos a hombrefimero");
+		System.out.println(UsuariosDAO.findUser("hombreEfimero"));
+		System.out.println("OK\n");
 	}
 	
 	private static void testVideojuegos(){
@@ -105,6 +108,20 @@ public class Test {
 		System.out.println(VJuegosDAO.findVJuego(3)); //Imprimimos la vuelo
 		System.out.println("OK\n");
 		
+		System.out.println("Buscamos videojuego con: capturar");
+		ArrayList<VJuegoVO> list = VJuegosDAO.searchVideojuego("capturar");
+		for(VJuegoVO i:list){
+			System.out.println(i.toString());
+		}
+		System.out.println("OK\n");
+		
+		System.out.println("Buscamos videojuego con: kratos");
+		list = VJuegosDAO.searchVideojuego("kratos");
+		for(VJuegoVO i:list){
+			System.out.println(i.toString());
+		}
+		System.out.println("OK\n");
+		
 		
 		System.out.println("Actualizamos la plataforma de Pokemon");
 		VJuegosDAO.updateVJuego(pok.get_id(), "Pokemon", "Va de campturar bichos", "Nintendo", "Nintendo", "GameBoy", "RPG", 1995);
@@ -112,12 +129,22 @@ public class Test {
 		System.out.println(pok);
 		System.out.println("OK\n");
 		
-		System.out.println("Borramos a hombrefimero");
+		System.out.println("Borramos a efímero");
 		VJuegosDAO.deleteVJuego(3);
 		System.out.println("OK\n");
+		
+		System.out.println("Buscamos todos los videojuegos");
+		list = VJuegosDAO.findAllVJuegos();
+		for(VJuegoVO i:list){
+			System.out.println(i.toString());
+		}
+		System.out.println("OK\n");
+		
+		
 	}
 	
 	private static void testComentarios(){
+		
 		System.out.println("TEST DE COMENTARIOS");
 		System.out.println("Añadimos los comentarios:");
 		
@@ -135,10 +162,20 @@ public class Test {
 		
 		System.out.println("Gandalf comenta God of War: " + "Comentario efimero");
 		ComentariosDAO.addComentario(gandalf.get_id(), gow.get_id(), "Comentario efimero");
+		
+		System.out.println("Gandalf comenta Pokemon: " + "Comentario efimero");
+		ComentariosDAO.addComentario(gandalf.get_id(), pok.get_id(), "Nadie creería que esos bichos existen");
 		System.out.println("OK\n");
 		
 		System.out.println("Listamos los comentarios de GOW");
 		ArrayList<ComentarioVO> listaDeComentarios = ComentariosDAO.listComentario(gow.get_id());
+		for(ComentarioVO com: listaDeComentarios){
+			System.out.println(com);
+		}
+		System.out.println("OK\n");
+		
+		System.out.println("Listamos los comentarios de gandalf");
+		listaDeComentarios = ComentariosDAO.listComentarioUser(gandalf.get_id());
 		for(ComentarioVO com: listaDeComentarios){
 			System.out.println(com);
 		}
@@ -154,7 +191,6 @@ public class Test {
 			System.out.println(com);
 		}
 		System.out.println("OK\n");
-		
 	}
 	
 	private static void testPuntuaciones(){
@@ -170,10 +206,19 @@ public class Test {
 		PuntuacionesDAO.addPuntuacion(hector.get_id(), gow.get_id(), 7);
 		System.out.println("Gandalf puntua God of War con un 10");
 		PuntuacionesDAO.addPuntuacion(gandalf.get_id(), gow.get_id(), 10);
+		System.out.println("Gandalf puntua Pokemon con un 10");
+		PuntuacionesDAO.addPuntuacion(gandalf.get_id(), pok.get_id(), 4);
 		System.out.println("OK\n");
 	
 		System.out.println("Listamos las puntuaciones de GOW");
 		ArrayList<PuntuacionVO> listaDePuntuaciones = PuntuacionesDAO.listPuntuaciones(gow.get_id());
+		for(PuntuacionVO com: listaDePuntuaciones){
+			System.out.println(com);
+		}
+		System.out.println("OK\n");
+		
+		System.out.println("Listamos las puntuaciones de GOW");
+		listaDePuntuaciones = PuntuacionesDAO.listPuntuaciones(gow.get_id());
 		for(PuntuacionVO com: listaDePuntuaciones){
 			System.out.println(com);
 		}
@@ -190,6 +235,13 @@ public class Test {
 		}
 		System.out.println("OK\n");
 		
+		System.out.println("Listamos las puntuaciones de gandalf");
+		listaDePuntuaciones = PuntuacionesDAO.listPuntuacionesUser(gandalf.get_id());
+		for(PuntuacionVO com: listaDePuntuaciones){
+			System.out.println(com);
+		}
+		System.out.println("OK\n");
+		
 		System.out.println("Gandalf elimina su puntuacion God of War");
 		PuntuacionesDAO.deletePuntuacion(gandalf.get_id(), gow.get_id());
 		System.out.println("OK\n");
@@ -200,8 +252,6 @@ public class Test {
 			System.out.println(com);
 		}
 		System.out.println("OK\n");
-		
-		
 	}
 	
 	private static void testSeguimientos(){
@@ -232,6 +282,15 @@ public class Test {
 		}
 		System.out.println("OK\n");
 		
+		System.out.println("Comprobamos los seguimientos");
+		System.out.printf("%s sigue a %s?: %s\n",gandalf.getNombre(), pepe.getNombre(), 
+				FollowsDAO.isFollower( gandalf.get_id(), pepe.get_id() ));
+		System.out.printf("%s sigue a %s?: %s\n",gandalf.getNombre(), hector.getNombre(), 
+				FollowsDAO.isFollower( gandalf.get_id(), hector.get_id() ));
+		System.out.printf("%s sigue a %s?: %s\n",gandalf.getNombre(), juan.getNombre(), 
+				FollowsDAO.isFollower( gandalf.get_id(), juan.get_id() ));
+		System.out.println("OK\n");
+		
 		System.out.println("Borramos el seguimiento de Gandalf hacia Juan");
 		FollowsDAO.unFollow(gandalf.get_id(), juan.get_id());
 		System.out.println("OK\n");
@@ -242,7 +301,6 @@ public class Test {
 			System.out.println(user);
 		}
 		System.out.println("OK\n");
-		
 	}
 	
 	private static void testFeed(){

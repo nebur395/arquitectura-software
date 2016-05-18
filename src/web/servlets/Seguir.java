@@ -1,9 +1,6 @@
 package web.servlets;
 
 import java.io.IOException;
-import java.util.Base64;
-import java.lang.StringBuffer;
-import java.io.BufferedReader;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,7 +13,7 @@ import net.sf.json.JSONException;
 
 import web.database.dataAccessObject.FollowsDAO;
 
-public class Seguir extends HttpServlet {
+public class Seguir extends AbstractServlet{
 	
 	/**
      * @see HttpServlet#HttpServlet()
@@ -40,26 +37,28 @@ public class Seguir extends HttpServlet {
 		int id;
 		int idFollow;
 		
-		StringBuffer jb = new StringBuffer();
-		String line = null;
+		JSONObject json = null;
 		try{
-			BufferedReader reader = request.getReader();
-			while ((line = reader.readLine()) != null){
-			  jb.append(line);
-			}
+			json = readJSON(request.getReader());
 		}
 		catch (Exception e){
 			System.out.printf("Error al leer el JSON");
 		}
-		JSONObject json = JSONObject.fromObject(jb.toString());
 		id = json.getInt("idUser");
 		idFollow = json.getInt("idSeguidor");
 		
-		if(FollowsDAO.follow(id, idFollow)){
-			response.setStatus(HttpServletResponse.SC_OK);
+		try{
+			if(FollowsDAO.follow(id, idFollow)){
+				response.setStatus(HttpServletResponse.SC_OK);
+			}
+			else{
+				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			}
 		}
-		else{
-			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+		catch (Exception e){
+			e.printStackTrace();
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			response.getWriter().println("Error interno en el servidor. Vuelva intentarlo más tarde");
 		}
 	}
 }

@@ -15,7 +15,7 @@ import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationExceptio
 
 public class PuntuacionesDAO {
 	
-	public static boolean addPuntuacion( int userID, int vJuegoID, int puntuacion){
+	public static void addPuntuacion( int userID, int vJuegoID, int puntuacion) throws ClassNotFoundException, SQLException{
 		Connection conn = null;
 		try{
 			Class.forName(gestorDeConexiones.JDBC_DRIVER);
@@ -40,19 +40,17 @@ public class PuntuacionesDAO {
 			}
 			
 			
-			return true;
 		}  catch (ClassNotFoundException e){
-			e.printStackTrace();
+			throw e;
 		} catch (SQLException e){
-			e.printStackTrace();
+			throw e;
 		} finally {
 			
 			if ( conn != null ) gestorDeConexiones.releaseConnection(conn);
 		}
-		return false;
 	}
 		
-	public static ArrayList<PuntuacionVO> listPuntuaciones( int id ){
+	public static ArrayList<PuntuacionVO> listPuntuaciones( int id ) throws ClassNotFoundException, SQLException{
 		Connection conn = null;
 		try{
 			Class.forName(gestorDeConexiones.JDBC_DRIVER);
@@ -75,13 +73,44 @@ public class PuntuacionesDAO {
 			
 			//Fin de la parte interesante---------------------------------------------
 		} catch (ClassNotFoundException e){
-			e.printStackTrace();
+			throw e;
 		} catch (SQLException e){
-			e.printStackTrace();
+			throw e;
 		} finally {
 			if ( conn != null ) gestorDeConexiones.releaseConnection(conn);
 		}
-		return null;
+	}
+	
+	//TODO: Testear listPuntuacionesUser
+	public static ArrayList<PuntuacionVO> listPuntuacionesUser( int idUser ) throws ClassNotFoundException, SQLException{
+		Connection conn = null;
+		try{
+			Class.forName(gestorDeConexiones.JDBC_DRIVER);
+			conn = gestorDeConexiones.requestConnection();
+			Statement stmt = conn.createStatement();
+			
+			//Parte intertesante--------------------------------------------------------
+			
+			String sql = String.format("SELECT usuario, videojuego, nota, tiempo FROM notas " +
+					"WHERE usuario='%s'", idUser);
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			ArrayList<PuntuacionVO> list = new ArrayList<PuntuacionVO>();
+			
+			while( rs.next() ){
+				
+				list.add( new PuntuacionVO(rs.getInt("usuario"), rs.getInt("videojuego"), rs.getInt("nota"), rs.getString("tiempo")) );
+			}			
+			return list;
+			
+			//Fin de la parte interesante---------------------------------------------
+		} catch (ClassNotFoundException e){
+			throw e;
+		} catch (SQLException e){
+			throw e;
+		} finally {
+			if ( conn != null ) gestorDeConexiones.releaseConnection(conn);
+		}
 	}
 	
 	public static boolean deletePuntuacion( int usuarioID, int vJID  ){
@@ -111,10 +140,4 @@ public class PuntuacionesDAO {
 		}
 		return false;
 	}
-	
-	public static boolean existsPuntuacion( int usuarioID, int vJID ){
-		
-		return false;
-	}
-
 }

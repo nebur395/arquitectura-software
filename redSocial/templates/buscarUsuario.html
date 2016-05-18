@@ -1,0 +1,33 @@
+<div id="estiloBuscar">
+  <div class="container" id="cuerpo">
+    <!--Region de filtros-->
+    <div class="col-md-12" id="primerContenido">
+      <h1 class="theme-color-text font">Busca a tus amigos</h1>
+      <div class="row" style="margin-bottom: 1%">
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="buscar">Buscar:</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="buscar"
+                   ng-model="busqueda"
+                   placeholder="Introduzca el nombre de un usuario">
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--listado de peliculas-->
+    <div class="col-md-12 borderTop" style="padding:1%">
+      <ul class="list-group">
+
+        <li class="list-group-item" ng-repeat=
+            "usuario in listaUsuarios | filter: {'nombreUsuario':busqueda}">
+          <h2 class="media-heading">
+            <a ng-click="entrarUsuario(usuario.id)"
+               class="theme-color-text-action">
+              {{usuario.nombreUsuario}}</a></h2>
+          <p>({{usuario.nombreReal}})</p>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+</div>

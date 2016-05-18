@@ -13,7 +13,7 @@ import web.database.valueObject.ComentarioVO;
 
 public class FeedComentariosDAO {
 	
-	public static ArrayList<ComentarioVO> findFeed(int userID){
+	public static ArrayList<ComentarioVO> findFeed(int userID) throws ClassNotFoundException, SQLException{
 		
 		Connection conn = null;
 		try{
@@ -40,14 +40,12 @@ public class FeedComentariosDAO {
 			
 			//Fin de la parte interesante---------------------------------------------
 		} catch (ClassNotFoundException e){
-			e.printStackTrace();
+			throw e;
 		} catch (SQLException e){
-			e.printStackTrace();
+			throw e;
 		} finally {
 			
 			if ( conn != null ) gestorDeConexiones.releaseConnection(conn);
-		}
-		
-		return null;	
+		}	
 	}
 }

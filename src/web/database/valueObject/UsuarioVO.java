@@ -6,14 +6,16 @@ public class UsuarioVO {
 	private String nombre;
 	private String passwd;
 	private String fecha;
+	private boolean admin;
 	
 	
-	public UsuarioVO (int _id, String nickname, String nombre, String passwd, String fecha){
+	public UsuarioVO (int _id, String nickname, String nombre, String passwd, String fecha, boolean admin){
 		this._id = _id; 
 		this.nickname = nickname;
 		this.nombre = nombre;
 		this.passwd = passwd;
 		this.fecha = fecha;
+		this.admin = admin;
 	}
 	
 	public int get_id() {
@@ -31,6 +33,9 @@ public class UsuarioVO {
 	public String getFecha() {
 		return fecha;
 	}
+	public boolean getAdmin(){
+		return admin;
+	}
 	
 	@Override
 	public String toString() {
@@ -39,8 +44,8 @@ public class UsuarioVO {
 	}
 	
 	public String serialize(){	
-		return String.format("{\"id\": %s, \"nickname\": \"%s\",  \"nombre\": \"%s\",\"passwd\": \"%s\", \"fecha\": \"%s\" }", 
-				_id, nickname, nombre, passwd, fecha);
+		return String.format("{\"id\": %s, \"nombreUsuario\": \"%s\",  \"nombreReal\": \"%s\", \"fecha\": \"%s\", \"admin\": %s }", 
+				_id, nickname, nombre, fecha, admin);
 	}
 		
 }

@@ -2,6 +2,7 @@ package web.servlets;
 
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,17 +16,18 @@ import net.sf.json.JSONException;
 
 import web.database.dataAccessObject.PuntuacionesDAO;
 import web.database.dataAccessObject.ComentariosDAO;
-import web.database.dataAccessObject.VJuegosDAO;
-import web.database.valueObject.VJuegoVO;
+import web.database.dataAccessObject.UsuariosDAO;
+import web.database.dataAccessObject.FollowsDAO;
+import web.database.valueObject.UsuarioVO;
 import web.database.valueObject.ComentarioVO;
 import web.database.valueObject.PuntuacionVO;
 
-public class Videojuego extends AbstractServletCYV {
+public class Usuario extends AbstractServletCYV {
 	
 	/**
      * @see HttpServlet#HttpServlet()
      */
-    public Videojuego() {
+    public Usuario() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -41,7 +43,8 @@ public class Videojuego extends AbstractServletCYV {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int idJuego;
+		int idUser;
+		int idProfile;
 		
 		JSONObject json = null;
 		try{
@@ -50,23 +53,29 @@ public class Videojuego extends AbstractServletCYV {
 		catch (Exception e){
 			System.out.printf("Error al leer el JSON");
 		}
-		idJuego = json.getInt("idVideojuego");
+		idUser = json.getInt("idUser");
+		idProfile = json.getInt("idUsuario");
 		
 		try{
-			
-			Iterator<ComentarioVO> comentsIter = (ComentariosDAO.listComentario(idJuego)).iterator();
+			ArrayList<ComentarioVO> list = ComentariosDAO.listComentarioUser(idProfile);
+			Iterator<ComentarioVO> comentsIter = list.iterator();
 			JSONArray jaComentarios = getComentarios(comentsIter);
 			
-			Iterator<PuntuacionVO> puntuacionesIter = (PuntuacionesDAO.listPuntuaciones(idJuego)).iterator();
+			Iterator<PuntuacionVO> puntuacionesIter = (PuntuacionesDAO.listPuntuacionesUser(idProfile)).iterator();
 			JSONArray jaPuntuaciones = getValoraciones(puntuacionesIter);
 			
-			VJuegoVO jVo = VJuegosDAO.findVJuego(idJuego);
-			if(jVo!=null){
-				JSONObject juego = JSONObject.fromObject(jVo.serialize());
-				juego.element("valoracion", calcularPuntuacion(PuntuacionesDAO.listPuntuaciones(jVo.get_id())));
+			UsuarioVO vo = UsuariosDAO.findUser(idProfile);
+			if(vo!=null){
+				JSONObject usuario = JSONObject.fromObject(vo.serialize());
+				usuario.element("comentarios", list.size());
+				int tipo;
+				if(idUser == idProfile){ tipo=1; }
+				else if(FollowsDAO.isFollower(idUser, idProfile)){ tipo=3; }
+				else { tipo=2; }
+				usuario.element("tipo", tipo);
 				
 				JSONObject mainJson = new JSONObject();
-				mainJson.element("videojuego", juego);
+				mainJson.element("usuario", usuario);
 				mainJson.element("comentarios", jaComentarios);
 				mainJson.element("valoraciones", jaPuntuaciones);
 				response.setStatus(HttpServletResponse.SC_OK);
