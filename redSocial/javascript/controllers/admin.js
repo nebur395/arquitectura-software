@@ -37,6 +37,17 @@ angular.module('myApp')
             $scope.exitoAdmin = true;
         };
 
+        $scope.limpiarCambios = function () {
+            $scope.genero = "";
+            $scope.plataforma = "";
+            $scope.descripcion = "";
+            $scope.lanzamiento = "";
+            $scope.desarrolladora = "";
+            $scope.distribuidora = "";
+            $scope.nombre = "";
+            $scope.imagen = "";
+        };
+
         $scope.insertarVideojuego = function () {
             var videojuego = {
                 nombre: $scope.nombre,
