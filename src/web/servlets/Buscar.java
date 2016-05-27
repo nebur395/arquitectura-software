@@ -43,8 +43,10 @@ public class Buscar extends AbstractServletP {
 				Iterator<UsuarioVO> iterador = (UsuariosDAO.findAllUsers()).iterator();
 				while(iterador.hasNext()){
 					UsuarioVO vo = iterador.next();
-					JSONObject usuario = JSONObject.fromObject(vo.serialize());
-					ja.add(usuario);
+					if(!vo.getAdmin()){
+						JSONObject usuario = JSONObject.fromObject(vo.serialize());
+						ja.add(usuario);
+					}
 				}
 			}
 			else{

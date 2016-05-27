@@ -129,7 +129,7 @@ public class UsuariosDAO {
 			
 			//Parte intertesante--------------------------------------------------------
 						
-			String sql = "select _id, nickname, nombre, pass, fecha from usuarios";
+			String sql = "select _id, nickname, nombre, pass, fecha, admin from usuarios";
 			
 			ResultSet rs = stmt.executeQuery(sql);
 			
@@ -138,7 +138,7 @@ public class UsuariosDAO {
 			
 			while( rs.next() ){
 				list.add( new UsuarioVO (rs.getInt("_id"), rs.getString("nickname"), rs.getString("nombre"), 
-						rs.getString("pass"), rs.getString("fecha"), false) );
+						rs.getString("pass"), rs.getString("fecha"), rs.getBoolean("admin") ));
 			}
 						
 			return list;
