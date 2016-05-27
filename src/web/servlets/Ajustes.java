@@ -55,7 +55,7 @@ import web.database.valueObject.UsuarioVO;
 		}
 		id = json.getInt("id");
 		usuario = json.getString("nombreUsuario");
-		nombre = json.getString("nombreApellidos");
+		nombre = json.getString("nombreReal");
 		pass = json.getString("oldPass");
 		newPass = json.getString("pass");
 		reNewPass = json.getString("rePass");
@@ -113,7 +113,7 @@ import web.database.valueObject.UsuarioVO;
 					JSONObject user = new JSONObject();
 					user.element("nombreUsuario", usuario);
 					user.element("id", id);
-					user.element("nombreApellidos", nombre);
+					user.element("nombreReal", nombre);
 					response.setContentType("application/json; charset=UTF-8");
 					response.getWriter().write(user.toString());
 				}
