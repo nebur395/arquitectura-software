@@ -94,7 +94,7 @@ import web.database.valueObject.UsuarioVO;
 		//Si no hay ningún error en los datos introducidos
 		if(!error){
 			try{
-				UsuarioVO vo = UsuariosDAO.findUser(usuario);
+				UsuarioVO vo = UsuariosDAO.findUser(id);
 				//Si no se quiere cambiar la contraseña, se deja la actual
 				if(newPass.trim().equals("")){ newPass = pass; }
 				//Si el usuario no existe
